@@ -76,17 +76,17 @@
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
-<p>Load in all the tems from a directory. The code below loads images built into {webmorph} from the CC-BY licensed <a href="https://doi.org/10.6084/m9.figshare.5047666.v3">Face Resaerch Lab London Set</a>.</p>
+<p>Load in all the tems from a directory. The code below loads images built into {webmorph} from the CC-BY licensed <a href="https://doi.org/10.6084/m9.figshare.4055130.v1">Young Adult Composite Faces</a>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">webmorph</span><span class="op">)</span>
 <span class="co">## basic example code</span>
 
-<span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata/demo"</span>, package <span class="op">=</span> <span class="st">"webmorph"</span><span class="op">)</span>
+<span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata/composite"</span>, package <span class="op">=</span> <span class="st">"webmorph"</span><span class="op">)</span>
 
-<span class="va">tems</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_tem.html">read_tem</a></span><span class="op">(</span><span class="va">path</span>, pattern <span class="op">=</span> <span class="st">"00._03\\.tem"</span><span class="op">)</span></pre></div>
+<span class="va">tems</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_tem.html">read_tem</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span></pre></div>
 <p>You can plot an image with the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">tems</span><span class="op">$</span><span class="va">`001_03`</span>, image <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">tems</span><span class="op">$</span><span class="va">f_multi</span>, image <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-2-1.png" width="50%"></p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
 <span class="va">plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">tems</span>, <span class="va">plot</span>, 
@@ -94,7 +94,7 @@
                 image <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">plots</span>,
-                   labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">tems</span><span class="op">)</span><span class="op">)</span></pre></div>
+                   labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">tems</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-3-1.png" width="100%"></p>
 <p>You can also visualise just the templates. If you omit the image and don’t manually set a width and height, the x- and y-axis limit will be set automatically.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
@@ -106,7 +106,7 @@
                 image <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">plots</span>,
-                   labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">tems</span><span class="op">)</span><span class="op">)</span></pre></div>
+                   labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">tems</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%"></p>
 </div>
 </div>

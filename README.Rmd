@@ -30,37 +30,37 @@ devtools::install_github("facelab/webmorph")
 ```
 ## Example
 
-Load in all the tems from a directory. The code below loads images built into {webmorph} from the CC-BY licensed [Face Research Lab London Set](https://doi.org/10.6084/m9.figshare.5047666.v3).
+Load in all the tems from a directory. The code below loads images built into {webmorph} from the CC-BY licensed [Young Adult Composite Faces](https://doi.org/10.6084/m9.figshare.4055130.v1).
 
 ```{r example}
 library(webmorph)
 ## basic example code
 
-path <- system.file("extdata/demo", package = "webmorph")
+path <- system.file("extdata/composite", package = "webmorph")
 
-tems <- read_tem(path, pattern = "00._03\\.tem")
+tems <- read_tem(path)
 ```
 
 You can plot an image with the `plot()` function.
 
 ```{r, out.width = "50%", fig.width = 3, fig.height = 3}
-plot(tems$`001_03`, image = TRUE)
+plot(tems$f_multi, image = TRUE)
 ```
 
 
-```{r, out.width = "100%", fig.width = 9, fig.height = 9}
+```{r, out.width = "100%", fig.width = 15, fig.height = 6}
 plots <- lapply(tems, plot, 
                 color = "blue",
                 image = TRUE)
 
 cowplot::plot_grid(plotlist = plots,
-                   labels = names(tems))
+                   labels = names(tems), nrow = 2)
 ```
 
 
 You can also visualise just the templates. If you omit the image and don't manually set a width and height, the x- and y-axis limit will be set automatically.
 
-```{r, out.width = "100%", fig.width = 9, fig.height = 9}
+```{r, out.width = "100%", fig.width = 12, fig.height = 6}
 plots <- lapply(tems, plot, 
                 color = "#FF0000",
                 pt.size = 2,
@@ -69,5 +69,5 @@ plots <- lapply(tems, plot,
                 image = FALSE)
 
 cowplot::plot_grid(plotlist = plots,
-                   labels = names(tems))
+                   labels = names(tems), nrow = 2)
 ```

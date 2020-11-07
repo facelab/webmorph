@@ -23,22 +23,22 @@ devtools::install_github("facelab/webmorph")
 ## Example
 
 Load in all the tems from a directory. The code below loads images built
-into {webmorph} from the CC-BY licensed [Face Research Lab London
-Set](https://doi.org/10.6084/m9.figshare.5047666.v3).
+into {webmorph} from the CC-BY licensed [Young Adult Composite
+Faces](https://doi.org/10.6084/m9.figshare.4055130.v1).
 
 ``` r
 library(webmorph)
 ## basic example code
 
-path <- system.file("extdata/demo", package = "webmorph")
+path <- system.file("extdata/composite", package = "webmorph")
 
-tems <- read_tem(path, pattern = "00._03\\.tem")
+tems <- read_tem(path)
 ```
 
 You can plot an image with the `plot()` function.
 
 ``` r
-plot(tems$`001_03`, image = TRUE)
+plot(tems$f_multi, image = TRUE)
 ```
 
 <img src="man/figures/README-unnamed-chunk-2-1.png" width="50%" />
@@ -49,7 +49,7 @@ plots <- lapply(tems, plot,
                 image = TRUE)
 
 cowplot::plot_grid(plotlist = plots,
-                   labels = names(tems))
+                   labels = names(tems), nrow = 2)
 ```
 
 <img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
@@ -67,7 +67,7 @@ plots <- lapply(tems, plot,
                 image = FALSE)
 
 cowplot::plot_grid(plotlist = plots,
-                   labels = names(tems))
+                   labels = names(tems), nrow = 2)
 ```
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
