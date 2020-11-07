@@ -71,3 +71,15 @@ plots <- lapply(tems, plot,
 cowplot::plot_grid(plotlist = plots,
                    nrow = 2)
 ```
+
+You can average and visualise templates, as well.
+
+```{r, out.width = "50%", fig.width = 3, fig.height = 3}
+system.file("extdata/london", package = "webmorph") %>%
+  read_tem(images = FALSE) %>%
+  average() %>%
+  plot(pt.colour = "orchid", bg.fill = "grey30",
+       width =1350, height = 1350)
+```
+
+

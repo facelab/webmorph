@@ -71,3 +71,15 @@ cowplot::plot_grid(plotlist = plots,
 ```
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+
+You can average and visualise templates, as well.
+
+``` r
+system.file("extdata/london", package = "webmorph") %>%
+  read_tem(images = FALSE) %>%
+  average() %>%
+  plot(pt.colour = "orchid", bg.fill = "grey30",
+       width =1350, height = 1350)
+```
+
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="50%" />
