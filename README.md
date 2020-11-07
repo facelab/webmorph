@@ -23,7 +23,7 @@ devtools::install_github("facelab/webmorph")
 ## Example
 
 Load in all the tems from a directory. The code below loads images built
-into {webmorph} from the CC-BY licensed [Face Resaerch Lab London
+into {webmorph} from the CC-BY licensed [Face Research Lab London
 Set](https://doi.org/10.6084/m9.figshare.5047666.v3).
 
 ``` r
