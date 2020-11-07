@@ -44,12 +44,10 @@ plot(tems$f_multi, image = TRUE)
 <img src="man/figures/README-unnamed-chunk-2-1.png" width="50%" />
 
 ``` r
-plots <- lapply(tems, plot, 
-                color = "blue",
-                image = TRUE)
-
-cowplot::plot_grid(plotlist = plots,
-                   labels = names(tems), nrow = 2)
+plot(tems,
+     color = "blue",
+     image = TRUE,
+     nrow = 2)
 ```
 
 <img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
@@ -59,15 +57,13 @@ don’t manually set a width and height, the x- and y-axis limit will be
 set automatically.
 
 ``` r
-plots <- lapply(tems, plot, 
-                color = "#FF0000",
-                pt.size = 2,
-                pt.shape = 1,
-                bg.fill = "black",
-                image = FALSE)
-
-cowplot::plot_grid(plotlist = plots,
-                   nrow = 2)
+plot(tems, 
+    color = "#FF0000",
+    pt.size = 2,
+    pt.shape = 1,
+    bg.fill = "black",
+    image = FALSE,
+    nrow = 2)
 ```
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />

@@ -49,27 +49,23 @@ plot(tems$f_multi, image = TRUE)
 
 
 ```{r, out.width = "100%", fig.width = 15, fig.height = 6}
-plots <- lapply(tems, plot, 
-                color = "blue",
-                image = TRUE)
-
-cowplot::plot_grid(plotlist = plots,
-                   labels = names(tems), nrow = 2)
+plot(tems,
+     color = "blue",
+     image = TRUE,
+     nrow = 2)
 ```
 
 
 You can also visualise just the templates. If you omit the image and don't manually set a width and height, the x- and y-axis limit will be set automatically.
 
 ```{r, out.width = "100%", fig.width = 12, fig.height = 6}
-plots <- lapply(tems, plot, 
-                color = "#FF0000",
-                pt.size = 2,
-                pt.shape = 1,
-                bg.fill = "black",
-                image = FALSE)
-
-cowplot::plot_grid(plotlist = plots,
-                   nrow = 2)
+plot(tems, 
+    color = "#FF0000",
+    pt.size = 2,
+    pt.shape = 1,
+    bg.fill = "black",
+    image = FALSE,
+    nrow = 2)
 ```
 
 You can average and visualise templates, as well.

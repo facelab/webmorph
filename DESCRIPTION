@@ -20,6 +20,7 @@ Imports:
     ggplot2,
     grid,
     dplyr,
+    cowplot,
     magick
 Suggests: 
     testthat

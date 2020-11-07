@@ -27,7 +27,7 @@ read_tem <- function (path, pattern = "*.tem",
   img_ext <- "\\\\\\.(jpg|jpeg|gif|png|bmp)$"
 
   # process each temfile ----
-  tems <- lapply(temfiles, function(temfile) {
+  temlist <- lapply(temfiles, function(temfile) {
     # read and clean  ----
     tem_txt <- readLines(temfile) %>%
       trimws() %>%
@@ -54,7 +54,7 @@ read_tem <- function (path, pattern = "*.tem",
       as.integer() %>%
       as.logical()
 
-    # create tem list ----
+    # create tem object ----
     tem <- list(
       name = temfile,
       dirpath = dirname(temfile),
@@ -92,17 +92,22 @@ read_tem <- function (path, pattern = "*.tem",
                    "/", args$breaks)
   remove_ext <- ifelse(is.null(args$remove_ext),
                        TRUE, args$remove_ext)
-  unames <- list.files(path, pattern=pattern) %>%
-    unique_names(breaks, remove_ext)
+  if (dir.exists(path)) {
+    unames <- list.files(path, pattern=pattern)
+  } else {
+    unames <- path
+  }
+  unames <- unique_names(unames, breaks, remove_ext)
 
-  tems <- lapply(seq_along(tems), function(i) {
-    tems[[i]]$name <- unames[[i]]
-    tems[[i]]
+  temlist <- lapply(seq_along(temlist), function(i) {
+    temlist[[i]]$name <- unames[[i]]
+    temlist[[i]]
   })
 
-  names(tems) <- unames
+  names(temlist) <- unames
+  class(temlist) <- list("webmorph_temlist", "list")
 
-  tems
+  temlist
 }
 
 #' Print webmorph templates
@@ -205,3 +210,30 @@ plot.webmorph_tem <- function(x, y, ...) {
 }
 
 
+#' Plot webmorph template list
+#'
+#' @param x webmorph_temlist list
+#' @param y omitted
+#' @param ... Arguments to be passed to ggplot2 (width, height, pt.color, pt.size, pt.shape, bg.color, bg.fill)
+#'
+#' @return plot
+#' @export
+#'
+plot.webmorph_temlist <- function(x, y, ...) {
+  plots <- lapply(x, function(xx) {
+    do.call(plot, c(list(x = xx), list(...)))
+  })
+
+  # check args ----
+  arg <- list(...)
+
+  nrow <- arg$nrow %||% NULL
+  ncol <- arg$ncol %||% NULL
+  labels <- arg$labels %||%
+    sapply(x, `[[`, "name")
+
+  cowplot::plot_grid(plotlist = plots,
+                     nrow = nrow,
+                     ncol = ncol,
+                     labels = labels)
+}

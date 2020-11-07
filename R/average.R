@@ -7,8 +7,8 @@
 #' @export
 #'
 average <- function(temlist, name = "average") {
-  pt <- sapply(temlist, `[[`, "points", simplify = "array")
   # dim is coord (x/y), pt_i, tem_n
+  pt <- sapply(temlist, `[[`, "points", simplify = "array")
 
   avg <- apply(pt, c(1, 2), mean)
 
