@@ -4,12 +4,14 @@
 \alias{read_tem}
 \title{Read Webmorph template file}
 \usage{
-read_tem(path, pattern = "*.tem", ...)
+read_tem(path, pattern = "*.tem", images = TRUE, ...)
 }
 \arguments{
 \item{path}{Path to directory containing template files (or a single template file)}
 
 \item{pattern}{Pattern to use to search for files}
+
+\item{images}{Whether to include images}
 
 \item{...}{further arguments to pass on to other functions, e.g., breaks argument for unique_names()}
 }
@@ -20,7 +22,7 @@ a list of lists with class webmorph_tem
 Read Webmorph template file
 }
 \examples{
-path <- system.file("extdata/demo", package = "webmorph")
-tems <- read_tem(path)
+path <- system.file("extdata/composite", package = "webmorph")
+tems <- read_tem(path, images = FALSE)
 
 }

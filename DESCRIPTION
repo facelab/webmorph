@@ -19,6 +19,7 @@ Imports:
     magrittr,
     ggplot2,
     grid,
-    dplyr
+    dplyr,
+    magick
 Suggests: 
     testthat

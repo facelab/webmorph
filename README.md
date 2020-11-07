@@ -67,7 +67,7 @@ plots <- lapply(tems, plot,
                 image = FALSE)
 
 cowplot::plot_grid(plotlist = plots,
-                   labels = names(tems), nrow = 2)
+                   nrow = 2)
 ```
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />

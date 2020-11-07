@@ -8,8 +8,8 @@
 #' @return a list of lists with class webmorph_tem
 #'
 #' @examples
-#' path <- system.file("extdata/demo", package = "webmorph")
-#' tems <- read_tem(path)
+#' path <- system.file("extdata/composite", package = "webmorph")
+#' tems <- read_tem(path, images = FALSE)
 #'
 #' @export
 #'
@@ -170,7 +170,7 @@ plot.webmorph_tem <- function(x, y, ...) {
   bg.fill <- arg$bg.fill %||% "transparent"
 
   # set up plot ----
-  pt.aes <- ggplot2::aes(x, y, color = color)
+  pt.aes <- ggplot2::aes(x, y, color = pt.color)
   pborder <- ggplot2::element_rect(
     color = bg.color, fill = bg.fill)
 
