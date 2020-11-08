@@ -52,7 +52,7 @@ temlist %>%
 ```
 
 
-```{r, out.width = "100%", fig.width = 6, fig.height = 4, fig.cap="Cropped Images and Templates"}
+```{r, out.width = "100%", fig.width = 8, fig.height = 4, fig.cap="Cropped Images and Templates"}
 temlist %>%
   crop(width = 1.2, height = 1.2, 
        x_off = -0.1, y_off = -0.1,
