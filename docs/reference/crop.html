@@ -171,37 +171,7 @@
 <span class='fu'><a href='read_tem.html'>read_tem</a></span><span class='op'>(</span><span class='va'>path</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>crop</span><span class='op'>(</span><span class='fl'>.5</span>, <span class='fl'>.5</span>, <span class='fl'>.25</span>, <span class='fl'>.25</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span>image <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Called from: eval(expr, p)
-#&gt; debug at /Users/lisad/rproj/facelab/webmorph/R/crop.R#23: for (i in seq_along(temlist)) {
-#&gt;     origw &lt;- temlist[[i]]$width
-#&gt;     origh &lt;- temlist[[i]]$height
-#&gt;     w &lt;- width %||% origw
-#&gt;     h &lt;- height %||% origh
-#&gt;     if (w &lt;= 2) 
-#&gt;         w &lt;- w * origw
-#&gt;     if (h &lt;= 2) 
-#&gt;         h &lt;- h * origh
-#&gt;     if (abs(x_off) &lt;= 2) 
-#&gt;         x_off &lt;- x_off * origw
-#&gt;     if (abs(y_off) &lt;= 2) 
-#&gt;         y_off &lt;- y_off * origh
-#&gt;     temlist[[i]]$width &lt;- w
-#&gt;     temlist[[i]]$height &lt;- h
-#&gt;     if (class(temlist[[i]]$img) == "magick-image") {
-#&gt;         ga &lt;- magick::geometry_area(width = min(w, origw), height = min(h, 
-#&gt;             origh), x_off = max(0, x_off), y_off = max(0, y_off))
-#&gt;         newimg &lt;- magick::image_crop(image = temlist[[i]]$img, 
-#&gt;             geometry = ga, gravity = "NorthWest")
-#&gt;         bg &lt;- magick::image_blank(w, h, color = fill)
-#&gt;         offset &lt;- magick::geometry_point(x = max(0, -x_off), 
-#&gt;             y = max(0, -y_off))
-#&gt;         temlist[[i]]$img &lt;- magick::image_composite(image = bg, 
-#&gt;             composite_image = newimg, offset = offset)
-#&gt;     }
-#&gt;     temlist[[i]]$points &lt;- apply(temlist[[i]]$points, 2, function(pt) {
-#&gt;         pt - c(x_off, y_off)
-#&gt;     })
-#&gt; }</div><div class='img'><img src='crop-1.png' alt='' width='700' height='700' /></div><div class='input'>
+</div><div class='img'><img src='crop-1.png' alt='' width='700' height='700' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
