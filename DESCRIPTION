@@ -23,4 +23,7 @@ Imports:
     cowplot,
     magick
 Suggests: 
-    testthat
+    testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

@@ -1,0 +1,32 @@
+articles:
+- title: Demos
+  navbar: ~
+  contents:
+  - img-manip
+
+reference:
+- title: Loading
+  desc: ~
+  contents:
+  - '`read_tem`'
+  - '`write_tem`'
+- title: Manipulation
+  desc: ~
+  contents:
+  - '`average`'
+  - '`crop`'
+  - '`rotate`'
+- title: Helper functions
+  desc: ~
+  contents:
+  - '`unique_names`'
+figures:
+  dev: ragg::agg_png
+  dpi: 96
+  dev.args: []
+  fig.ext: png
+  fig.width: 7.2916667
+  fig.height: 7.2916667
+  fig.retina: 2
+  fig.asp: 1
+  bg: NA

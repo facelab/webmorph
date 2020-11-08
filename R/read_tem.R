@@ -13,7 +13,7 @@
 #'
 #' @export
 #'
-read_tem <- function (path, pattern = "*.tem",
+read_tem <- function (path, pattern = "\\.tem$",
                       images = TRUE, ...) {
   # get paths to temfiles ----
   if (dir.exists(path)) {
@@ -107,7 +107,7 @@ read_tem <- function (path, pattern = "*.tem",
   names(temlist) <- unames
   class(temlist) <- list("webmorph_temlist", "list")
 
-  temlist
+  invisible(temlist)
 }
 
 #' Print webmorph templates

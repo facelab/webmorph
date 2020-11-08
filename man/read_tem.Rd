@@ -4,7 +4,7 @@
 \alias{read_tem}
 \title{Read Webmorph template file}
 \usage{
-read_tem(path, pattern = "*.tem", images = TRUE, ...)
+read_tem(path, pattern = "\\\\.tem$", images = TRUE, ...)
 }
 \arguments{
 \item{path}{Path to directory containing template files (or a single template file)}

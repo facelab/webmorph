@@ -17,3 +17,10 @@ webmorph_tem list
 \description{
 Average templates
 }
+\examples{
+path <- system.file("extdata/composite/", package = "webmorph")
+read_tem(path) \%>\%
+  average() \%>\%
+  plot()
+
+}

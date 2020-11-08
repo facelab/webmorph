@@ -1,0 +1,98 @@
+---
+title: "Image Manipulations"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Image Manipulations}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(webmorph)
+```
+
+## Load your images
+
+```{r}
+path <- system.file("extdata/composite/", 
+                    package = "webmorph")
+
+temlist <- read_tem(path, pattern = "multi\\.tem")
+```
+
+```{r, out.width = "100%", fig.width = 8, fig.height = 4, fig.cap="Original Images and Templates"}
+plot(temlist, images = TRUE)
+```
+
+## Rotate
+
+```{r, out.width = "100%", fig.width = 8, fig.height = 4, fig.cap="Rotated Images and Templates"}
+temlist %>%
+  rotate(45) %>%
+  plot(images = TRUE)
+```
+
+
+## Crop
+
+You can set the new width, height, x-offset and y-offset in pixels (must be > 2) or proportions.
+
+```{r, out.width = "100%", fig.width = 6, fig.height = 4, fig.cap="Cropped Images and Templates"}
+temlist %>%
+  crop(width = .6, height = .8, 
+       x_off = .2, y_off = .1) %>%
+  plot(images = TRUE)
+```
+
+
+```{r, out.width = "100%", fig.width = 6, fig.height = 4, fig.cap="Cropped Images and Templates"}
+temlist %>%
+  crop(width = 1.2, height = 1.2, 
+       x_off = -0.1, y_off = -0.1,
+       fill = "hotpink") %>%
+  plot(images = TRUE)
+```
+
+## Chaining
+
+You can also chain image manipulation commands.
+
+```{r, out.width = "100%", fig.width = 8, fig.height = 4, fig.cap="Manipulated Images and Templates"}
+temlist %>%
+  rotate(45) %>%
+  crop(.5, .5, .25, .25) %>%
+  plot(images = TRUE)
+```
+
+
+## Fun things
+
+You can do some more fun things to the images (but not templates) with the {magick} package that is installed with {webmorph}.
+
+```{r, out.width = "100%", fig.width = 6, fig.height = 4}
+image <- temlist[[1]]$img
+
+imglist <- list(
+  magick::image_blur(image, radius = 10, sigma = 5),
+  magick::image_charcoal(image, radius = 5, sigma = 2),
+  magick::image_oilpaint(image, radius = 10),
+  magick::image_implode(image, factor = 0.25),
+  magick::image_implode(image, factor = -0.25),
+  magick::image_negate(image)
+)
+
+labs <- c("Blur", "Charcoal", "Oilpaint", 
+          "Implode", "Explode", "Negate")
+
+lapply(imglist, magick::image_ggplot) %>%
+  cowplot::plot_grid(plotlist = ., nrow = 2,
+                     labels = labs)
+
+```

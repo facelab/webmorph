@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Average templates — average • webmorph</title>
+<title>Image size after rotation — rotated_size • webmorph</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Average templates — average" />
-<meta property="og:description" content="Average templates" />
+<meta property="og:title" content="Image size after rotation — rotated_size" />
+<meta property="og:description" content="Image size after rotation" />
 
 
 
@@ -115,41 +115,46 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Average templates</h1>
+    <h1>Image size after rotation</h1>
     
-    <div class="hidden name"><code>average.Rd</code></div>
+    <div class="hidden name"><code>rotated_size.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Average templates</p>
+    <p>Image size after rotation</p>
     </div>
 
-    <pre class="usage"><span class='fu'>average</span><span class='op'>(</span><span class='va'>temlist</span>, name <span class='op'>=</span> <span class='st'>"average"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>rotated_size</span><span class='op'>(</span><span class='va'>width</span>, <span class='va'>height</span>, <span class='va'>degrees</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>temlist</th>
-      <td><p>list of webmorph templates</p></td>
+      <th>width</th>
+      <td><p>Width of the original image</p></td>
     </tr>
     <tr>
-      <th>name</th>
-      <td><p>Name for the average</p></td>
+      <th>height</th>
+      <td><p>Height of the original image</p></td>
+    </tr>
+    <tr>
+      <th>degrees</th>
+      <td><p>Rotation in degreed</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>webmorph_tem list</p>
+    <p>list of rotated width and height</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata/composite/"</span>, package <span class='op'>=</span> <span class='st'>"webmorph"</span><span class='op'>)</span>
-<span class='fu'><a href='read_tem.html'>read_tem</a></span><span class='op'>(</span><span class='va'>path</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>average</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='img'><img src='average-1.png' alt='' width='700' height='700' /></div><div class='input'>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>rotated_size</span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>100</span>, <span class='fl'>45</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $width
+#&gt; [1] 141.4214
+#&gt; 
+#&gt; $height
+#&gt; [1] 141.4214
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

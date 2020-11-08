@@ -6,6 +6,12 @@
 #' @return webmorph_tem list
 #' @export
 #'
+#' @examples
+#' path <- system.file("extdata/composite/", package = "webmorph")
+#' read_tem(path) %>%
+#'   average() %>%
+#'   plot()
+#'
 average <- function(temlist, name = "average") {
   # dim is coord (x/y), pt_i, tem_n
   pt <- sapply(temlist, `[[`, "points", simplify = "array")
