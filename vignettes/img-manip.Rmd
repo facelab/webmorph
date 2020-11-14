@@ -10,7 +10,11 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.width = 4,
+  fig.height = 4,
+  out.width = "100%",
+  dev = "quartz_png" # otherwise faces inverted!
 )
 ```
 
