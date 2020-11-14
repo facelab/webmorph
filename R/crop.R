@@ -20,6 +20,8 @@
 #'
 crop <- function(temlist, width = NULL, height = NULL,
                  x_off = 0, y_off = 0, fill = "white") {
+  temlist <- check_temlist(temlist)
+
   for (i in seq_along(temlist)) {
     origw <- temlist[[i]]$width
     origh <- temlist[[i]]$height

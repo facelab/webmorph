@@ -38,18 +38,18 @@ library(webmorph)
 
 path <- system.file("extdata/composite", package = "webmorph")
 
-tems <- read_tem(path)
+temlist <- read_tem(path)
 ```
 
 You can plot an image with the `plot()` function.
 
-```{r, out.width = "50%", fig.width = 3, fig.height = 3}
-plot(tems$f_multi, image = TRUE)
+```{r basic-plot, out.width = "50%", fig.width = 3, fig.height = 3}
+plot(temlist$f_multi, image = TRUE)
 ```
 
 
-```{r, out.width = "100%", fig.width = 15, fig.height = 6}
-plot(tems,
+```{r group-plot, out.width = "100%", fig.width = 15, fig.height = 6}
+plot(temlist,
      color = "blue",
      image = TRUE,
      nrow = 2)
@@ -58,8 +58,8 @@ plot(tems,
 
 You can also visualise just the templates. If you omit the image and don't manually set a width and height, the x- and y-axis limit will be set automatically.
 
-```{r, out.width = "100%", fig.width = 12, fig.height = 6}
-plot(tems, 
+```{r tem-plot, out.width = "100%", fig.width = 12, fig.height = 6}
+plot(temlist, 
     color = "#FF0000",
     pt.size = 2,
     pt.shape = 1,
@@ -68,14 +68,20 @@ plot(tems,
     nrow = 2)
 ```
 
-You can average and visualise templates, as well.
+You can average and visualise templates, as well. Set `line.plot` to `TRUE` to visualise the lines as straight lines. Set `line.plot` to "bezier" to see the really buggy bezier curves.
 
-```{r, out.width = "50%", fig.width = 3, fig.height = 3}
+```{r avg-plot, out.width = "50%", fig.width = 3, fig.height = 4}
 system.file("extdata/london", package = "webmorph") %>%
   read_tem(images = FALSE) %>%
   average() %>%
-  plot(pt.colour = "orchid", bg.fill = "grey30",
-       width =1350, height = 1350)
+  plot(pt.colour = "orchid", 
+       bg.fill = "grey30",
+       line.plot = "bezier",
+       line.colour = "yellow",
+       line.alpha = 0.25,
+       width = c(375, 975), 
+       height = c(250, 1050)
+  )
 ```
 
 

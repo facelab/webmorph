@@ -13,6 +13,8 @@
 #'   plot(image = TRUE)
 #'
 rotate <- function(temlist, degrees = 0) {
+  temlist <- check_temlist(temlist)
+
   degrees <- degrees %% 360 %>%
     rep(length.out = length(temlist))
   radians <- degrees * (pi/180)

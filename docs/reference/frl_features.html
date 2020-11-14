@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>case_when with JinT Evaluation — case_when_jit • webmorph</title>
+<title>Get point indices for FRL features — frl_features • webmorph</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="case_when with JinT Evaluation — case_when_jit" />
-<meta property="og:description" content="Works like dplyr::case_when, but RHS doesn't all need to be the same data type, RHS isn't evaluated in LHS is FALSE, and LHE isn't evaluated unless all previous LHS are FALSE" />
+<meta property="og:title" content="Get point indices for FRL features — frl_features" />
+<meta property="og:description" content="Get point indices for FRL features" />
 
 
 
@@ -87,6 +87,18 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/img-manip.html">Image Manipulations</a>
+    </li>
+  </ul>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -103,33 +115,30 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>case_when with JinT Evaluation</h1>
+    <h1>Get point indices for FRL features</h1>
     
-    <div class="hidden name"><code>case_when_jit.Rd</code></div>
+    <div class="hidden name"><code>frl_features.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Works like dplyr::case_when, but RHS doesn't all need to be the same data type, RHS isn't evaluated in LHS is FALSE, and LHE isn't evaluated unless all previous LHS are FALSE</p>
+    <p>Get point indices for FRL features</p>
     </div>
 
-    <pre class="usage"><span class='fu'>case_when_jit</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>frl_features</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>...</th>
-      <td><p>formulae to evaluate</p></td>
+      <td><p>a vector of feature names or "imprecise" to choose undereyes, ears, halo, mouth2, smile_lines, cheekbones, philtrum, chin, neck points</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>first true value or NULL</p>
+    <p>vector of corresponding FRL template indices</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>case_when_jit</span><span class='op'>(</span><span class='cn'>F</span> <span class='op'>~</span> <span class='st'>"A"</span>, <span class='cn'>T</span> <span class='op'>~</span> <span class='fl'>1.1</span>, <span class='va'>bad_val</span> <span class='op'>~</span> <span class='st'>"B"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 1.1</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

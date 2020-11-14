@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Average templates — average • webmorph</title>
+<title>Delete template points — pt_delete • webmorph</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Average templates — average" />
-<meta property="og:description" content="Average templates" />
+<meta property="og:title" content="Delete template points — pt_delete" />
+<meta property="og:description" content="Delete template points" />
 
 
 
@@ -115,16 +115,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Average templates</h1>
+    <h1>Delete template points</h1>
     
-    <div class="hidden name"><code>average.Rd</code></div>
+    <div class="hidden name"><code>pt_delete.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Average templates</p>
+    <p>Delete template points</p>
     </div>
 
-    <pre class="usage"><span class='fu'>average</span><span class='op'>(</span><span class='va'>temlist</span>, name <span class='op'>=</span> <span class='st'>"average"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>pt_delete</span><span class='op'>(</span><span class='va'>temlist</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -134,22 +134,15 @@
       <td><p>list of webmorph templates</p></td>
     </tr>
     <tr>
-      <th>name</th>
-      <td><p>Name for the average</p></td>
+      <th>...</th>
+      <td><p>vectors of points to delete</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>webmorph_tem list</p>
+    <p>temlist with altered tems</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata/composite/"</span>, package <span class='op'>=</span> <span class='st'>"webmorph"</span><span class='op'>)</span>
-<span class='fu'><a href='read_tem.html'>read_tem</a></span><span class='op'>(</span><span class='va'>path</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>average</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='img'><img src='average-1.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

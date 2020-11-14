@@ -16,7 +16,9 @@ reference:
   - '`average`'
   - '`crop`'
   - '`rotate`'
+  - '`pt_delete`'
 - title: Helper functions
   desc: ~
   contents:
+  - '`frl_features`'
   - '`unique_names`'

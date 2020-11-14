@@ -73,17 +73,19 @@ read_tem <- function (path, pattern = "\\.tem$",
                             ignore.case = TRUE)
 
       if (length(imgpath) > 0) {
-        tem$img <- file.path(dirname(temfile),
-                         imgpath[[1]]) %>%
+        img <- file.path(dirname(temfile), imgpath[[1]]) %>%
           magick::image_read()
+
         tem$imgpath = imgpath[[1]]
-        img_info <- magick::image_info(tem$img)
+        #tem$img_attr <- magick::image_attributes(img)
+        tem$img <- magick::image_strip(img) # strip for rotation
+        img_info <- magick::image_info(img)
         tem$width <- img_info$width
         tem$height <- img_info$height
       }
     }
 
-    class(tem) <- c("webmorph_tem", "list")
+    class(tem) <- "webmorph_tem"
     tem
   })
 
@@ -105,7 +107,7 @@ read_tem <- function (path, pattern = "\\.tem$",
   })
 
   names(temlist) <- unames
-  class(temlist) <- list("webmorph_temlist", "list")
+  class(temlist) <- "webmorph_temlist"
 
   invisible(temlist)
 }
@@ -129,111 +131,3 @@ print.webmorph_tem <- function(x, ...) {
 }
 
 
-#' Plot webmorph template
-#'
-#' @param x webmorph_tem list
-#' @param y omitted
-#' @param ... Arguments to be passed to ggplot2 (width, height, pt.color, pt.size, pt.shape, bg.color, bg.fill)
-#'
-#' @return plot
-#' @export
-#'
-plot.webmorph_tem <- function(x, y, ...) {
-
-  points <- x$points %>%
-    t() %>%
-    as.data.frame()
-  names(points) <- c("x", "y")
-
-  # check args ----
-  arg <- list(...)
-
-  width <- arg$width %||% NULL
-  if (isTRUE(arg$image)) width <- x$width %||% NULL
-  xlim <- if (!is.null(width)) c(0, width)
-
-  height <- arg$height %||% NULL
-  if (isTRUE(arg$image)) height <- x$height %||% NULL
-  ylim <- if (!is.null(height)) c(0, height)
-
-  pt.size <-  arg$pt.size %||% arg$size %||% 1
-
-  pt.shape <- arg$pt.shape %||% arg$shape %||% 3
-
-  # point colour
-  pt.color <- arg$pt.colour %||%
-              arg$pt.color %||%
-              arg$colour %||%
-              arg$color %||%
-              "#00AA00"
-  points$color <- as.factor(pt.color)
-
-  bg.color <- arg$bg.colour %||%
-              arg$bg.color %||%
-              "black"
-
-  bg.fill <- arg$bg.fill %||% "transparent"
-
-  # set up plot ----
-  pt.aes <- ggplot2::aes(x, y, color = pt.color)
-  pborder <- ggplot2::element_rect(
-    color = bg.color, fill = bg.fill)
-
-  # plot setup ----
-  g <- ggplot2::ggplot() +
-    ggplot2::theme_void() +
-    ggplot2::scale_y_reverse() +
-    ggplot2::coord_fixed(xlim = xlim,
-                         ylim = ylim) +
-    ggplot2::scale_color_manual(values = levels(points$color)) +
-    ggplot2::theme(legend.position = "none",
-                   plot.background = pborder,
-                   plot.margin = ggplot2::margin(0,0,0,0, "cm"))
-
-  # add image ----
-  if (isTRUE(arg$image)) {
-    i <- grid::rasterGrob(x$img, interpolate = FALSE)
-    g <- g + ggplot2::annotation_custom(
-      i, 0, width, -height, 0)
-  } else {
-
-  }
-
-  # add points ----
-  g <- g +
-    ggplot2::geom_point(data = points,
-                        mapping = pt.aes,
-                        size = pt.size,
-                        shape = pt.shape)
-
-  g
-}
-
-
-#' Plot webmorph template list
-#'
-#' @param x webmorph_temlist list
-#' @param y omitted
-#' @param ... Arguments to be passed to ggplot2 (width, height, pt.color, pt.size, pt.shape, bg.color, bg.fill)
-#'
-#' @return plot
-#' @export
-#'
-plot.webmorph_temlist <- function(x, y, ...) {
-  plots <- lapply(x, function(xx) {
-    do.call(plot, c(list(x = xx), list(...)))
-  })
-
-  # check args ----
-  arg <- list(...)
-
-  nrow <- arg$nrow %||% NULL
-  ncol <- arg$ncol %||% NULL
-  labels <- arg$labels %||%
-    sapply(x, `[[`, "name")
-
-  cowplot::plot_grid(plotlist = plots,
-                     nrow = nrow,
-                     ncol = ncol,
-                     labels = labels)
-}
