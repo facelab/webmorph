@@ -3,5 +3,6 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   img-manip: img-manip.html
-last_built: 2020-11-14T12:46Z
+  iris: iris.html
+last_built: 2020-11-14T17:24Z
 

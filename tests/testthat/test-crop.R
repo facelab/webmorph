@@ -1,6 +1,7 @@
+path <- system.file("extdata/composite/f_multi.tem", package = "webmorph")
+temlist <- read_tem(path)
+
 test_that("works", {
-  path <- system.file("extdata/composite/f_multi.tem", package = "webmorph")
-  temlist <- read_tem(path)
   ctems <- crop(temlist, 100, 200)
   info <- magick::image_info(ctems[[1]]$img)
 

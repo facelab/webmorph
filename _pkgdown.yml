@@ -3,6 +3,7 @@ articles:
   navbar: ~
   contents:
   - img-manip
+  - iris
 
 reference:
 - title: Loading

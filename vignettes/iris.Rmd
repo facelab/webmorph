@@ -1,0 +1,52 @@
+---
+title: "For Iris"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{For Iris}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 8,
+  fig.height = 8,
+  out.width = "100%",
+  dev = "quartz_png" # otherwise faces inverted!
+)
+```
+
+```{r setup}
+library(webmorph)
+library(geomorph)
+```
+
+
+## Load a directory of templates
+```{r}
+path <- system.file("extdata/composite/", package = "webmorph")
+temlist <- read_tem(path, images = FALSE)
+```
+
+## Save as TPS and read from TPS
+
+```{r}
+path_to_tps <- tempfile(fileext = ".tps")
+write_tps(temlist, path_to_tps)
+gm_data <- readland.tps(path_to_tps, specID = "ID")
+
+plotAllSpecimens(gm_data)
+```
+
+## Or, just get from temlist
+
+```{r}
+wm_data <- tems_to_array(temlist)
+
+plotAllSpecimens(wm_data)
+```
+
+
+

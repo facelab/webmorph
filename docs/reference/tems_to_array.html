@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Print webmorph templates — print.webmorph_tem • webmorph</title>
+<title>Convert temlist to array for geomorph — tems_to_array • webmorph</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Print webmorph templates — print.webmorph_tem" />
-<meta property="og:description" content="Print webmorph templates" />
+<meta property="og:title" content="Convert temlist to array for geomorph — tems_to_array" />
+<meta property="og:description" content="Convert temlist to array for geomorph" />
 
 
 
@@ -123,34 +123,29 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Print webmorph templates</h1>
-    <small class="dont-index">Source: <a href='https://github.com/facelab/webmorph/blob/master/R/read_tem.R'><code>R/read_tem.R</code></a></small>
-    <div class="hidden name"><code>print.webmorph_tem.Rd</code></div>
+    <h1>Convert temlist to array for geomorph</h1>
+    <small class="dont-index">Source: <a href='https://github.com/facelab/webmorph/blob/master/R/write_tps.R'><code>R/write_tps.R</code></a></small>
+    <div class="hidden name"><code>tems_to_array.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Print webmorph templates</p>
+    <p>Convert temlist to array for geomorph</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for webmorph_tem</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>tems_to_array</span><span class='op'>(</span><span class='va'>temlist</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>a list of class webmorph_tem</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>arguments passed to or from other methods</p></td>
+      <th>temlist</th>
+      <td><p>list of webmorph templates</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>prints the template info</p>
+    <p>3D array</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
