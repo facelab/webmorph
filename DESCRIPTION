@@ -18,6 +18,7 @@ RoxygenNote: 7.1.1
 Imports: 
     magrittr,
     ggplot2,
+    ggforce,
     grid,
     dplyr,
     cowplot,
@@ -27,3 +28,5 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+URL: https://github.com/facelab/webmorph
+BugReports: https://github.com/facelab/webmorph/issues
