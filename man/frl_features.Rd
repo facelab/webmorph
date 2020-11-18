@@ -15,3 +15,8 @@ vector of corresponding FRL template indices
 \description{
 Get point indices for FRL features
 }
+\examples{
+frl_features("mouth")
+frl_features("left_eye", "right_eye")
+
+}

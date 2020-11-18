@@ -19,3 +19,35 @@ plot
 \description{
 Plot webmorph template
 }
+\examples{
+# default values
+plot(faces("test")[[1]],
+     width = NULL,  # get from image or tem
+     height = NULL, # get from image or tem
+     img.plot = TRUE,
+     pt.plot = FALSE,
+     pt.color = "#00AA00",
+     pt.size = 1,
+     pt.shape = 3,
+     pt.alpha = 1,
+     line.plot = FALSE, # T, F, or "bezier"
+     line.color = "#FFFF66",
+     line.alpha = 0.5,
+     font.size = 3,
+     bf.fill = "transparent",
+     bg.color = "transparent"
+)
+
+#custom settings
+plot(faces("test")[[1]],
+     img.plot = FALSE,
+     pt.plot = TRUE,
+     pt.color = "dodgerblue",
+     pt.shape = 1,
+     pt.alpha = 0.5,
+     line.plot = TRUE,
+     bg.fill = "grey70",
+     bg.color = "black"
+)
+
+}

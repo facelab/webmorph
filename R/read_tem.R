@@ -9,7 +9,7 @@
 #'
 #' @examples
 #' path <- system.file("extdata/composite", package = "webmorph")
-#' tems <- read_tem(path, images = FALSE)
+#' temlist <- read_tem(path)
 #'
 #' @export
 #'
@@ -109,25 +109,6 @@ read_tem <- function (path, pattern = "\\.tem$",
   names(temlist) <- unames
   class(temlist) <- "webmorph_temlist"
 
-  invisible(temlist)
+  temlist
 }
-
-#' Print webmorph templates
-#'
-#' @param x a list of class webmorph_tem
-#' @param ... arguments passed to or from other methods
-#'
-#' @return prints the template info
-#' @export
-#'
-print.webmorph_tem <- function(x, ...) {
-  sprintf("%s [%i points, %i lines]",
-          x$name,
-          length(x$points),
-          length(x$lines)
-  ) %>% cat()
-
-  invisible(x)
-}
-
 

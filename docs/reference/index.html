@@ -8,6 +8,13 @@
 
 <title>Function reference • webmorph</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -71,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">webmorph</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
       </span>
     </div>
 
@@ -100,6 +107,9 @@
       <a href="../articles/iris.html">For Iris</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -185,15 +195,33 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="rotate.html">rotate()</a></code> </p>
+          <p><code><a href="mirror.html">mirror()</a></code> </p>
         </td>
-        <td><p>Rotate templates and images</p></td>
+        <td><p>Mirror templates and images</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="pt_delete.html">pt_delete()</a></code> </p>
         </td>
         <td><p>Delete template points</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="rename.html">rename()</a></code> </p>
+        </td>
+        <td><p>Rename temlist</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="resize.html">resize()</a></code> </p>
+        </td>
+        <td><p>Resize templates and images</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="rotate.html">rotate()</a></code> </p>
+        </td>
+        <td><p>Rotate templates and images</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -210,15 +238,64 @@
       <tr>
         
         <td>
+          <p><code><a href="faces.html">faces()</a></code> </p>
+        </td>
+        <td><p>Webmorph Faces</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="frl_features.html">frl_features()</a></code> </p>
         </td>
         <td><p>Get point indices for FRL features</p></td>
       </tr><tr>
         
         <td>
+          <p><code><a href="frl_sym.html">frl_sym()</a></code> </p>
+        </td>
+        <td><p>FRL Symmetry Map</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="patch.html">patch()</a></code> </p>
+        </td>
+        <td><p>Median patch colour</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot.webmorph_tem.html">plot(<i>&lt;webmorph_tem&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Plot webmorph template</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="unique_names.html">unique_names()</a></code> </p>
         </td>
         <td><p>Get unique names</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-geomorph-functions" class="hasAnchor"><a href="#section-geomorph-functions" class="anchor"></a>Geomorph functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="tems_to_array.html">tems_to_array()</a></code> </p>
+        </td>
+        <td><p>Convert temlist to array for geomorph</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="write_tps.html">write_tps()</a></code> </p>
+        </td>
+        <td><p>Create a TPS file from a list of webmorph templates</p></td>
       </tr>
     </tbody>
     </table>

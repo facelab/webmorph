@@ -4,12 +4,16 @@
 \alias{rotate}
 \title{Rotate templates and images}
 \usage{
-rotate(temlist, degrees = 0)
+rotate(temlist, degrees = 0, fill = "none", patch = FALSE)
 }
 \arguments{
 \item{temlist}{list of webmorph templates}
 
 \item{degrees}{degrees to rotate}
+
+\item{fill}{background color}
+
+\item{patch}{whether to use the patch function to set the background color}
 }
 \value{
 temlist with rotated tems and/or images
@@ -18,9 +22,12 @@ temlist with rotated tems and/or images
 Rotate templates and images
 }
 \examples{
-path <- system.file("extdata/composite/f_multi.tem", package = "webmorph")
-read_tem(path) \%>\%
-  rotate(45) \%>\%
-  plot(image = TRUE)
+faces("test") \%>\%
+  rotate(45, fill = "dodgerblue") \%>\%
+  plot(pt.plot = TRUE)
+
+faces("test") \%>\%
+  rotate(45, patch = TRUE) \%>\%
+  plot()
 
 }

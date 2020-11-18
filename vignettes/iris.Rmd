@@ -13,8 +13,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.width = 8,
   fig.height = 8,
-  out.width = "100%",
-  dev = "quartz_png" # otherwise faces inverted!
+  out.width = "100%"
 )
 ```
 
@@ -48,5 +47,13 @@ wm_data <- tems_to_array(temlist)
 plotAllSpecimens(wm_data)
 ```
 
+## Buggy Bezier Curves
 
-
+```{r avg-plot, fig.height = 4}
+faces("test") %>%
+  plot(pt.plot = TRUE,
+       line.plot = "bezier",
+       line.colour = "blue",
+       line.alpha = 0.25
+  )
+```

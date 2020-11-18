@@ -1,5 +1,6 @@
 Package: webmorph
 Title: Morph Faces
+Date: 2020-11-17
 Version: 0.0.0.9000
 Authors@R: 
     person(
@@ -30,3 +31,5 @@ Suggests:
 VignetteBuilder: knitr
 URL: https://github.com/facelab/webmorph
 BugReports: https://github.com/facelab/webmorph/issues
+Depends: 
+    R (>= 2.10)

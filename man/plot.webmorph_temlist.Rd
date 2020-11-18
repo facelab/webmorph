@@ -19,3 +19,7 @@ plot
 \description{
 Plot webmorph template list
 }
+\examples{
+faces("test") \%>\% plot(pt.plot = TRUE)
+
+}

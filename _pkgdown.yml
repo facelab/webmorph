@@ -1,9 +1,28 @@
+url: https://facelab.github.io/webmorph/
+
+development:
+  mode: auto
+
+figures:
+  dev: grDevices::png
+  dpi: 96
+  dev.args: []
+  fig.ext: png
+  fig.width: 7.2916667
+  fig.height: ~
+  fig.retina: 2
+  fig.asp: 0.5
+  bg: NA
+
 articles:
 - title: Demos
   navbar: ~
   contents:
   - img-manip
   - iris
+  twitter:
+         icon: "fab fa-twitter fa-lg"
+         href: https://twitter.com/webmorph_org
 
 reference:
 - title: Loading
@@ -16,10 +35,22 @@ reference:
   contents:
   - '`average`'
   - '`crop`'
-  - '`rotate`'
+  - '`mirror`'
   - '`pt_delete`'
+  - '`rename`'
+  - '`resize`'
+  - '`rotate`'
 - title: Helper functions
   desc: ~
   contents:
+  - '`faces`'
   - '`frl_features`'
+  - '`frl_sym`'
+  - '`patch`'
+  - '`plot.webmorph_tem`'
   - '`unique_names`'
+- title: Geomorph functions
+  desc: ~
+  contents:
+  - '`tems_to_array`'
+  - '`write_tps`'

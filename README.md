@@ -23,67 +23,54 @@ devtools::install_github("facelab/webmorph")
 ## Example
 
 Load in all the tems from a directory. The code below loads images built
-into {webmorph} from the CC-BY licensed [Young Adult Composite
+into webmorph from the CC-BY licensed [Young Adult Composite
 Faces](https://doi.org/10.6084/m9.figshare.4055130.v1).
 
 ``` r
 library(webmorph)
-## basic example code
 
-path <- system.file("extdata/composite", package = "webmorph")
-
+path <- system.file("extdata/test", package = "webmorph")
 temlist <- read_tem(path)
 ```
 
 You can plot an image with the `plot()` function.
 
 ``` r
-plot(temlist$f_multi, image = TRUE)
+plot(temlist, line.plot = TRUE)
 ```
 
-<img src="man/figures/README-basic-plot-1.png" width="50%" />
+<img src="man/figures/README-basic-plot-1.png" width="100%" />
+
+## Reproducible stimulus construction
+
+Load faces from the CC-BY licensed [Face Research Lab London
+Set](https://doi.org/10.6084/m9.figshare.5047666.v3).
 
 ``` r
-plot(temlist,
-     color = "blue",
-     image = TRUE,
-     nrow = 2)
+path <- system.file("extdata/london", package = "webmorph")
+
+face_set <- read_tem(path)[5:7] %>%
+  rename(prefix = "orig_", pattern = "_03", replacement = "")
+
+stimuli <- face_set %>%
+  mirror(frl_sym()) %>%
+  rename(pattern = "orig", replacement = "mirror") %>%
+  c(face_set, .) %>%
+  resize(1/3) %>%
+  crop(0.6, 0.8) %>%
+  crop(1.05, 1.05, fill = rainbow(3)) 
 ```
 
-<img src="man/figures/README-group-plot-1.png" width="100%" />
-
-You can also visualise just the templates. If you omit the image and
-don’t manually set a width and height, the x- and y-axis limit will be
-set automatically.
+Save your stimuli
 
 ``` r
-plot(temlist, 
-    color = "#FF0000",
-    pt.size = 2,
-    pt.shape = 1,
-    bg.fill = "black",
-    image = FALSE,
-    nrow = 2)
+write_tem(stimuli, dir = "mystimuli")
 ```
 
-<img src="man/figures/README-tem-plot-1.png" width="100%" />
-
-You can average and visualise templates, as well. Set `line.plot` to
-`TRUE` to visualise the lines as straight lines. Set `line.plot` to
-“bezier” to see the really buggy bezier curves.
+Easily create figures to illustrate your research.
 
 ``` r
-system.file("extdata/london", package = "webmorph") %>%
-  read_tem(images = FALSE) %>%
-  average() %>%
-  plot(pt.colour = "orchid", 
-       bg.fill = "grey30",
-       line.plot = "bezier",
-       line.colour = "yellow",
-       line.alpha = 0.25,
-       width = c(375, 975), 
-       height = c(250, 1050)
-  )
+plot(stimuli, nrow = 2)
 ```
 
-<img src="man/figures/README-avg-plot-1.png" width="50%" />
+<img src="man/figures/README-repro-plot-1.png" width="100%" />

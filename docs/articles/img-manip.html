@@ -6,6 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Image Manipulations • webmorph</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -31,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">webmorph</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
       </span>
     </div>
 
@@ -60,6 +66,9 @@
       <a href="../articles/iris.html">For Iris</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -98,13 +107,11 @@
 <h2 class="hasAnchor">
 <a href="#load-your-images" class="anchor"></a>Load your images</h2>
 <div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata/composite/"</span>, 
-                    package <span class="op">=</span> <span class="st">"webmorph"</span><span class="op">)</span>
-
-<span class="va">temlist</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_tem.html">read_tem</a></span><span class="op">(</span><span class="va">path</span>, pattern <span class="op">=</span> <span class="st">"multi\\.tem"</span><span class="op">)</span></pre></div>
+<span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata/test/"</span>, package <span class="op">=</span> <span class="st">"webmorph"</span><span class="op">)</span>
+<span class="va">temlist</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_tem.html">read_tem</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span></pre></div>
 <p>The lines are currently plotted as straight lines, but Lisa will add in the proper bezier curves soon.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">temlist</span>, images <span class="op">=</span> <span class="cn">TRUE</span>, line.plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">temlist</span>, pt.plot <span class="op">=</span> <span class="cn">TRUE</span>, line.plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
 <div class="figure">
 <img src="img-manip_files/figure-html/unnamed-chunk-3-1.png" alt="Original Images and Templates" width="100%"><p class="caption">
 Original Images and Templates
@@ -119,26 +126,42 @@ Original Images and Templates
 <span class="va">remove_points</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/frl_features.html">frl_features</a></span><span class="op">(</span><span class="st">"imprecise"</span><span class="op">)</span>
 <span class="va">temlist</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/pt_delete.html">pt_delete</a></span><span class="op">(</span><span class="va">remove_points</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>pt.shape <span class="op">=</span> <span class="st">"index"</span>, 
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>img.plot <span class="op">=</span> <span class="cn">FALSE</span>,
+       pt.plot <span class="op">=</span> <span class="cn">TRUE</span>,
+       pt.shape <span class="op">=</span> <span class="st">"index"</span>, 
        pt.colour <span class="op">=</span> <span class="st">"black"</span>, 
        line.plot <span class="op">=</span> <span class="cn">TRUE</span>, 
-       line.colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"orange"</span>, <span class="st">"yellow"</span>, 
-                       <span class="st">"green"</span>, <span class="st">"blue"</span>, <span class="st">"purple"</span><span class="op">)</span><span class="op">)</span></pre></div>
+       line.colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"black"</span>,
+                          <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html">rainbow</a></span><span class="op">(</span><span class="fl">6</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></pre></div>
 <div class="figure">
 <img src="img-manip_files/figure-html/unnamed-chunk-4-1.png" alt="Point removal" width="100%"><p class="caption">
 Point removal
 </p>
 </div>
 </div>
+<div id="resize" class="section level2">
+<h2 class="hasAnchor">
+<a href="#resize" class="anchor"></a>Resize</h2>
+<p>Resizing your images at the start of a chain can make everything go faster if you’re working with very large images, but can make them blurry if you make them too small.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="va">temlist</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span><span class="fl">.1</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+<div class="figure">
+<img src="img-manip_files/figure-html/resize-1.png" alt="Resized Images and Templates" width="100%"><p class="caption">
+Resized Images and Templates
+</p>
+</div>
+</div>
 <div id="rotate" class="section level2">
 <h2 class="hasAnchor">
 <a href="#rotate" class="anchor"></a>Rotate</h2>
-<div class="sourceCode" id="cb5"><pre class="downlit">
+<div class="sourceCode" id="cb6"><pre class="downlit">
 <span class="va">temlist</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/rotate.html">rotate</a></span><span class="op">(</span><span class="fl">45</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>images <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+  <span class="fu"><a href="../reference/rotate.html">rotate</a></span><span class="op">(</span><span class="fl">45</span>, patch <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>pt.plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
 <div class="figure">
-<img src="img-manip_files/figure-html/unnamed-chunk-5-1.png" alt="Rotated Images and Templates" width="100%"><p class="caption">
+<img src="img-manip_files/figure-html/rotate-1.png" alt="Rotated Images and Templates" width="100%"><p class="caption">
 Rotated Images and Templates
 </p>
 </div>
@@ -147,25 +170,37 @@ Rotated Images and Templates
 <h2 class="hasAnchor">
 <a href="#crop" class="anchor"></a>Crop</h2>
 <p>You can set the new width, height, x-offset and y-offset in pixels (must be &gt; 2) or proportions.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
+<div class="sourceCode" id="cb7"><pre class="downlit">
 <span class="va">temlist</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/crop.html">crop</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">.6</span>, height <span class="op">=</span> <span class="fl">.8</span>, 
        x_off <span class="op">=</span> <span class="fl">.2</span>, y_off <span class="op">=</span> <span class="fl">.1</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>images <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>pt.plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
 <div class="figure">
-<img src="img-manip_files/figure-html/unnamed-chunk-6-1.png" alt="Cropped Images and Templates" width="100%"><p class="caption">
+<img src="img-manip_files/figure-html/crop-1.png" alt="Cropped Images and Templates" width="100%"><p class="caption">
 Cropped Images and Templates
 </p>
 </div>
-<div class="sourceCode" id="cb7"><pre class="downlit">
+<p>Negative offsets or widths larger than the image dimensions add a margin. You can set the colour with <code>fill</code>.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit">
+<span class="va">temlist</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/crop.html">crop</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">1.2</span>, height <span class="op">=</span> <span class="fl">1.2</span>, 
+       fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"dodgerblue"</span>, <span class="st">"hotpink"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+<div class="figure">
+<img src="img-manip_files/figure-html/crop-neg-1.png" alt="Cropped Images and Templates" width="100%"><p class="caption">
+Cropped Images and Templates
+</p>
+</div>
+<p>Or you can use the <code>patch</code> function to get the median colour from a patch of the image. If you set <code>patch</code> to <code>TRUE</code>, this will default to the top left 10 pixel square, or you can set the boundaries of the patch manually.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit">
 <span class="va">temlist</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/crop.html">crop</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">1.2</span>, height <span class="op">=</span> <span class="fl">1.2</span>, 
        x_off <span class="op">=</span> <span class="op">-</span><span class="fl">0.1</span>, y_off <span class="op">=</span> <span class="op">-</span><span class="fl">0.1</span>,
-       fill <span class="op">=</span> <span class="st">"hotpink"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>images <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+       patch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>x1<span class="op">=</span><span class="fl">1</span>, x2<span class="op">=</span><span class="fl">338</span>, y1<span class="op">=</span><span class="fl">1</span>, y2<span class="op">=</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></pre></div>
 <div class="figure">
-<img src="img-manip_files/figure-html/unnamed-chunk-7-1.png" alt="Cropped Images and Templates" width="100%"><p class="caption">
-Cropped Images and Templates
+<img src="img-manip_files/figure-html/crop-match-1.png" alt="Cropped Images with Matched Background" width="100%"><p class="caption">
+Cropped Images with Matched Background
 </p>
 </div>
 </div>
@@ -173,22 +208,43 @@ Cropped Images and Templates
 <h2 class="hasAnchor">
 <a href="#chaining" class="anchor"></a>Chaining</h2>
 <p>You can also chain image manipulation commands.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
+<div class="sourceCode" id="cb10"><pre class="downlit">
 <span class="va">temlist</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/rotate.html">rotate</a></span><span class="op">(</span><span class="fl">45</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/crop.html">crop</a></span><span class="op">(</span><span class="fl">.5</span>, <span class="fl">.5</span>, <span class="fl">.25</span>, <span class="fl">.25</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>images <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+  <span class="fu"><a href="../reference/rotate.html">rotate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">45</span>, <span class="op">-</span><span class="fl">45</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/crop.html">crop</a></span><span class="op">(</span><span class="fl">.5</span>, <span class="fl">.5</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/crop.html">crop</a></span><span class="op">(</span><span class="fl">1.1</span>, <span class="fl">1.1</span>, fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></pre></div>
 <div class="figure">
-<img src="img-manip_files/figure-html/unnamed-chunk-8-1.png" alt="Manipulated Images and Templates" width="100%"><p class="caption">
+<img src="img-manip_files/figure-html/chain-1.png" alt="Manipulated Images and Templates" width="100%"><p class="caption">
 Manipulated Images and Templates
 </p>
 </div>
+</div>
+<div id="repeating-images" class="section level2">
+<h2 class="hasAnchor">
+<a href="#repeating-images" class="anchor"></a>Repeating images</h2>
+<p>You can use <code><a href="https://rdrr.io/r/base/rep.html">rep()</a></code> to repeat images in a temlist. Here, we repeat the faces 3 times each, apply 6 different rotations with different background colours, crop them to the same size, and plot them with 6 different template point colours.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit">
+
+<span class="va">rainbow</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>pink <span class="op">=</span> <span class="st">"#983E82"</span>,
+             orange <span class="op">=</span> <span class="st">"#E2A458"</span>,
+             yellow <span class="op">=</span> <span class="st">"#F5DC70"</span>,
+             green <span class="op">=</span> <span class="st">"#59935B"</span>,
+             blue <span class="op">=</span> <span class="st">"#467AAC"</span>,
+             purple <span class="op">=</span> <span class="st">"#61589C"</span><span class="op">)</span>
+
+<span class="va">temlist</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span>each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/rotate.html">rotate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">60</span>, <span class="fl">10</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">rainbow</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/crop.html">crop</a></span><span class="op">(</span><span class="fl">500</span>, <span class="fl">500</span>, fill <span class="op">=</span> <span class="va">rainbow</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>pt.plot <span class="op">=</span> <span class="cn">TRUE</span>, pt.color <span class="op">=</span> <span class="va">rainbow</span>, pt.size <span class="op">=</span> <span class="fl">0.25</span>, labels <span class="op">=</span> <span class="st">""</span><span class="op">)</span></pre></div>
+<p><img src="img-manip_files/figure-html/rep-1.png" width="100%"></p>
 </div>
 <div id="fun-things" class="section level2">
 <h2 class="hasAnchor">
 <a href="#fun-things" class="anchor"></a>Fun things</h2>
 <p>You can do some more fun things to the images (but not templates) with the {magick} package that is installed with {webmorph}.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
+<div class="sourceCode" id="cb12"><pre class="downlit">
 <span class="va">image</span> <span class="op">&lt;-</span> <span class="va">temlist</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">img</span>
 
 <span class="va">imglist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
@@ -206,7 +262,7 @@ Manipulated Images and Templates
 <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">imglist</span>, <span class="fu">magick</span><span class="fu">::</span><span class="va"><a href="https://docs.ropensci.org/magick/reference/image_ggplot.html">image_ggplot</a></span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">.</span>, nrow <span class="op">=</span> <span class="fl">2</span>,
                      labels <span class="op">=</span> <span class="va">labs</span><span class="op">)</span></pre></div>
-<p><img src="img-manip_files/figure-html/unnamed-chunk-9-1.png" width="100%"></p>
+<p><img src="img-manip_files/figure-html/fun-1.png" width="100%"></p>
 </div>
   </div>
 

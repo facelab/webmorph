@@ -15,3 +15,8 @@ tems_to_array(temlist)
 \description{
 Convert temlist to array for geomorph
 }
+\examples{
+data <- faces() \%>\% tems_to_array()
+dim(data)
+
+}

@@ -11,10 +11,9 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.width = 4,
+  fig.width = 8,
   fig.height = 4,
-  out.width = "100%",
-  dev = "quartz_png" # otherwise faces inverted!
+  out.width = "100%"
 )
 ```
 
@@ -26,39 +25,50 @@ library(webmorph)
 ## Load your images
 
 ```{r}
-path <- system.file("extdata/composite/", 
-                    package = "webmorph")
-
-temlist <- read_tem(path, pattern = "multi\\.tem")
+path <- system.file("extdata/test/", package = "webmorph")
+temlist <- read_tem(path)
 ```
 
 The lines are currently plotted as straight lines, but Lisa will add in the proper bezier curves soon.
 
-```{r, out.width = "100%", fig.width = 8, fig.height = 4, fig.cap="Original Images and Templates"}
-plot(temlist, images = TRUE, line.plot = TRUE)
+```{r, fig.cap="Original Images and Templates"}
+plot(temlist, pt.plot = TRUE, line.plot = TRUE)
 ```
+
 
 ## Delete some points
 
-```{r, out.width = "100%", fig.width = 8, fig.height = 4, fig.cap="Point removal"}
+```{r, fig.cap="Point removal"}
 
 remove_points <- frl_features("imprecise")
 temlist %>%
   pt_delete(remove_points) %>%
-  plot(pt.shape = "index", 
+  plot(img.plot = FALSE,
+       pt.plot = TRUE,
+       pt.shape = "index", 
        pt.colour = "black", 
        line.plot = TRUE, 
-       line.colour = c("red", "orange", "yellow", 
-                       "green", "blue", "purple"))
+       line.colour = list("black",
+                          rainbow(6)))
+```
+
+## Resize
+
+Resizing your images at the start of a chain can make everything go faster if you're working with very large images, but can make them blurry if you make them too small.
+
+```{r resize, fig.cap="Resized Images and Templates"}
+temlist %>%
+  resize(.1) %>%
+  plot()
 ```
 
 
 ## Rotate
 
-```{r, out.width = "100%", fig.width = 8, fig.height = 4, fig.cap="Rotated Images and Templates"}
+```{r rotate, fig.cap="Rotated Images and Templates"}
 temlist %>%
-  rotate(45) %>%
-  plot(images = TRUE)
+  rotate(45, patch = TRUE) %>%
+  plot(pt.plot = TRUE)
 ```
 
 
@@ -66,31 +76,62 @@ temlist %>%
 
 You can set the new width, height, x-offset and y-offset in pixels (must be > 2) or proportions.
 
-```{r, out.width = "100%", fig.width = 6, fig.height = 4, fig.cap="Cropped Images and Templates"}
+```{r crop, fig.width = 6, fig.height = 4, fig.cap="Cropped Images and Templates"}
 temlist %>%
   crop(width = .6, height = .8, 
        x_off = .2, y_off = .1) %>%
-  plot(images = TRUE)
+  plot(pt.plot = TRUE)
 ```
 
+Negative offsets or widths larger than the image dimensions add a margin. You can set the colour with `fill`.
 
-```{r, out.width = "100%", fig.width = 8, fig.height = 4, fig.cap="Cropped Images and Templates"}
+```{r crop-neg, fig.cap="Cropped Images and Templates"}
+temlist %>%
+  crop(width = 1.2, height = 1.2, 
+       fill = c("dodgerblue", "hotpink")) %>%
+  plot()
+```
+
+Or you can use the `patch` function to get the median colour from a patch of the image. If you set `patch` to `TRUE`, this will default to the top left 10 pixel square, or you can set the boundaries of the patch manually.
+
+```{r crop-match, fig.cap="Cropped Images with Matched Background"}
 temlist %>%
   crop(width = 1.2, height = 1.2, 
        x_off = -0.1, y_off = -0.1,
-       fill = "hotpink") %>%
-  plot(images = TRUE)
+       patch = c(x1=1, x2=338, y1=1, y2=10)) %>%
+  plot()
 ```
 
 ## Chaining
 
-You can also chain image manipulation commands.
+You can also chain image manipulation commands. 
 
-```{r, out.width = "100%", fig.width = 8, fig.height = 4, fig.cap="Manipulated Images and Templates"}
+```{r chain, fig.cap="Manipulated Images and Templates"}
 temlist %>%
-  rotate(45) %>%
-  crop(.5, .5, .25, .25) %>%
-  plot(images = TRUE)
+  rotate(c(45, -45)) %>%
+  crop(.5, .5) %>%
+  crop(1.1, 1.1, fill = "dodgerblue") %>%
+  plot()
+```
+
+## Repeating images
+
+You can use `rep()` to repeat images in a temlist. Here, we repeat the faces 3 times each, apply 6 different rotations with different background colours, crop them to the same size, and plot them with 6 different template point colours.
+
+```{r rep, fig.width = 6, fig.height = 4}
+
+rainbow <- c(pink = "#983E82",
+             orange = "#E2A458",
+             yellow = "#F5DC70",
+             green = "#59935B",
+             blue = "#467AAC",
+             purple = "#61589C")
+
+temlist %>%
+  rep(each = 3) %>%
+  rotate(seq(10, 60, 10), fill = rainbow) %>%
+  crop(500, 500, fill = rainbow) %>%
+  plot(pt.plot = TRUE, pt.color = rainbow, pt.size = 0.25, labels = "")
 ```
 
 
@@ -98,7 +139,7 @@ temlist %>%
 
 You can do some more fun things to the images (but not templates) with the {magick} package that is installed with {webmorph}.
 
-```{r, out.width = "100%", fig.width = 6, fig.height = 4}
+```{r fun, fig.width = 6, fig.height = 4}
 image <- temlist[[1]]$img
 
 imglist <- list(

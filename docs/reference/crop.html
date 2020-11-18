@@ -8,6 +8,13 @@
 
 <title>Crop images and templates — crop • webmorph</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -40,7 +47,7 @@
 
 
 <meta property="og:title" content="Crop images and templates — crop" />
-<meta property="og:description" content="Arguments width, height, x_off and y_off can bet set in pixels or proportions (between 0.0 and 2.0)" />
+<meta property="og:description" content="Remove or add margins to images and templates. Width, height, x_off and y_off can be set in pixels (&amp;gt; 2.0) or proportions (between 0.0 and 2.0). Cropping is anchored at the image center (or calculated template centroid if there is no image) unless x_off or y_off are set." />
 
 
 
@@ -72,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">webmorph</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
       </span>
     </div>
 
@@ -102,6 +109,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -129,16 +139,18 @@
     </div>
 
     <div class="ref-description">
-    <p>Arguments width, height, x_off and y_off can bet set in pixels or proportions (between 0.0 and 2.0)</p>
+    <p>Remove or add margins to images and templates. Width, height, x_off and y_off can be set in pixels (&gt; 2.0) or proportions (between 0.0 and 2.0). Cropping is anchored at the image center (or calculated template centroid if there is no image) unless x_off or y_off are set.</p>
     </div>
 
     <pre class="usage"><span class='fu'>crop</span><span class='op'>(</span>
   <span class='va'>temlist</span>,
-  width <span class='op'>=</span> <span class='cn'>NULL</span>,
-  height <span class='op'>=</span> <span class='cn'>NULL</span>,
-  x_off <span class='op'>=</span> <span class='fl'>0</span>,
-  y_off <span class='op'>=</span> <span class='fl'>0</span>,
-  fill <span class='op'>=</span> <span class='st'>"white"</span>
+  width <span class='op'>=</span> <span class='fl'>1</span>,
+  height <span class='op'>=</span> <span class='fl'>1</span>,
+  x_off <span class='op'>=</span> <span class='cn'>NULL</span>,
+  y_off <span class='op'>=</span> <span class='cn'>NULL</span>,
+  fill <span class='op'>=</span> <span class='st'>"white"</span>,
+  patch <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  squash <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -158,28 +170,59 @@
     </tr>
     <tr>
       <th>x_off</th>
-      <td><p>x-offset</p></td>
+      <td><p>x-offset (NULL horizontally centers cropped image)</p></td>
     </tr>
     <tr>
       <th>y_off</th>
-      <td><p>y-offset</p></td>
+      <td><p>y-offset (NULL vertically centers cropped image)</p></td>
     </tr>
     <tr>
       <th>fill</th>
-      <td><p>background colour if cropping goes outside the original image</p></td>
+      <td><p>background color if cropping goes outside the original image</p></td>
+    </tr>
+    <tr>
+      <th>patch</th>
+      <td><p>whether to use the patch function to set the background color</p></td>
+    </tr>
+    <tr>
+      <th>squash</th>
+      <td><p>whether to move template points outside the image boundaries inside the image</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>temlist with cropped tems and/or images</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Fill can be set to R color names (see <code><a href='https://rdrr.io/r/grDevices/colors.html'>colors()</a></code>) or valid hex or rgb values. Patch can be set to TRUE (defaults to median color of top left 10-pixel square) or a list of arguments to the function <code><a href='patch.html'>patch()</a></code> to set background from a patch of the image.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata/composite/f_multi.tem"</span>, package <span class='op'>=</span> <span class='st'>"webmorph"</span><span class='op'>)</span>
-<span class='fu'><a href='read_tem.html'>read_tem</a></span><span class='op'>(</span><span class='va'>path</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>crop</span><span class='op'>(</span><span class='fl'>.5</span>, <span class='fl'>.5</span>, <span class='fl'>.25</span>, <span class='fl'>.25</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span>image <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='img'><img src='crop-1.png' alt='' width='700' height='433' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fu'><a href='faces.html'>faces</a></span><span class='op'>(</span><span class='st'>"test"</span><span class='op'>)</span>
+
+<span class='co'># crop to 60% width and 80% height (centered)</span>
+<span class='fu'>crop</span><span class='op'>(</span><span class='va'>a</span>, width <span class='op'>=</span> <span class='fl'>.60</span>, height <span class='op'>=</span> <span class='fl'>.80</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span>pt.plot <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='crop-1.png' alt='' width='700' height='350' /></div><div class='input'>
+<span class='co'># crop to 40% width and 40% height (centered) and add border</span>
+<span class='fu'>crop</span><span class='op'>(</span><span class='va'>a</span>, width <span class='op'>=</span> <span class='fl'>.4</span>, height <span class='op'>=</span> <span class='fl'>.4</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>crop</span><span class='op'>(</span><span class='fl'>1.5</span>, <span class='fl'>1.5</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span>pt.plot <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='crop-2.png' alt='' width='700' height='350' /></div><div class='input'>
+<span class='co'># crop to 40% width and 40% height (centered) and add border</span>
+<span class='co'># points are squashed to image edges</span>
+<span class='fu'>crop</span><span class='op'>(</span><span class='va'>a</span>, width <span class='op'>=</span> <span class='fl'>.4</span>, height <span class='op'>=</span> <span class='fl'>.4</span>, squash <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>crop</span><span class='op'>(</span><span class='fl'>1.5</span>, <span class='fl'>1.5</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span>pt.plot <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='crop-3.png' alt='' width='700' height='350' /></div><div class='input'>
+<span class='co'># crop to upper right quadrant</span>
+<span class='fu'>crop</span><span class='op'>(</span><span class='va'>a</span>, <span class='fl'>.5</span>, <span class='fl'>.5</span>, x_off <span class='op'>=</span> <span class='fl'>.5</span>, y_off <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span>pt.plot <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='crop-4.png' alt='' width='700' height='350' /></div><div class='input'>
+<span class='co'># crop to larger size with custom fill</span>
+<span class='fu'>crop</span><span class='op'>(</span><span class='va'>a</span>, <span class='fl'>500</span>, <span class='fl'>500</span>, fill <span class='op'>=</span> <span class='st'>"hotpink"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='img'><img src='crop-5.png' alt='' width='700' height='350' /></div><div class='input'>
+<span class='co'># take median color from a patch</span>
+<span class='fu'>crop</span><span class='op'>(</span><span class='va'>a</span>, <span class='fl'>1.2</span>, <span class='fl'>1.2</span>, patch <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>1</span>, <span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='img'><img src='crop-6.png' alt='' width='700' height='350' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

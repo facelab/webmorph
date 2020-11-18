@@ -2,7 +2,7 @@
 % Please edit documentation in R/resize.R
 \name{resize}
 \alias{resize}
-\title{Title}
+\title{Resize templates and images}
 \usage{
 resize(temlist, width = NULL, height = NULL)
 }
@@ -17,5 +17,13 @@ resize(temlist, width = NULL, height = NULL)
 temlist with resized tems and/or images
 }
 \description{
-Title
+Resize templates and images
+}
+\examples{
+faces("test") \%>\%
+  resize(.5, .75) \%>\%
+  plot(pt.plot = TRUE,
+       pt.color = "black",
+       pt.shape = 1)
+
 }

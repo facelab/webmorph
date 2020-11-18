@@ -18,9 +18,8 @@ webmorph_tem list
 Average templates
 }
 \examples{
-path <- system.file("extdata/composite/", package = "webmorph")
-read_tem(path) \%>\%
+faces("london") \%>\%
   average() \%>\%
-  plot()
+  plot(img.plot = FALSE, pt.plot = TRUE, line.plot = TRUE)
 
 }

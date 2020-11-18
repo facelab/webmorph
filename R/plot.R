@@ -7,6 +7,37 @@
 #' @return plot
 #' @export
 #'
+#' @examples
+#' # default values
+#' plot(faces("test")[[1]],
+#'      width = NULL,  # get from image or tem
+#'      height = NULL, # get from image or tem
+#'      img.plot = TRUE,
+#'      pt.plot = FALSE,
+#'      pt.color = "#00AA00",
+#'      pt.size = 1,
+#'      pt.shape = 3,
+#'      pt.alpha = 1,
+#'      line.plot = FALSE, # T, F, or "bezier"
+#'      line.color = "#FFFF66",
+#'      line.alpha = 0.5,
+#'      font.size = 3,
+#'      bf.fill = "transparent",
+#'      bg.color = "transparent"
+#' )
+#'
+#' #custom settings
+#' plot(faces("test")[[1]],
+#'      img.plot = FALSE,
+#'      pt.plot = TRUE,
+#'      pt.color = "dodgerblue",
+#'      pt.shape = 1,
+#'      pt.alpha = 0.5,
+#'      line.plot = TRUE,
+#'      bg.fill = "grey70",
+#'      bg.color = "black"
+#' )
+#'
 plot.webmorph_tem <- function(x, y, ...) {
 
   points <- x$points %>%
@@ -18,8 +49,15 @@ plot.webmorph_tem <- function(x, y, ...) {
   # check args ----
   arg <- list(...)
 
+  # visibility
+  img.plot <- arg$img.plot %||% TRUE
+  if (is.null(x$img)) img.plot <- FALSE
+  pt.plot <- arg$pt.plot %||% FALSE
+  line.plot <- arg$line.plot %||% FALSE
+
+  # dimensions
   width <- arg$width %||% NULL
-  if (isTRUE(arg$image)) width <-  x$width %||% NULL
+  if (isTRUE(img.plot)) width <-  x$width %||% NULL
   if (length(width)==1) {
     xlim <- c(0, width)
   } else if (length(width)==2){
@@ -29,7 +67,7 @@ plot.webmorph_tem <- function(x, y, ...) {
   }
 
   height <- arg$height %||% NULL
-  if (isTRUE(arg$image)) height <-  x$height %||% NULL
+  if (isTRUE(img.plot)) height <-  x$height %||% NULL
   if (length(height)==1) {
     ylim <- c(0, height)
   } else if (length(height)==2){
@@ -42,8 +80,6 @@ plot.webmorph_tem <- function(x, y, ...) {
   pt.shape <- arg$pt.shape %||% arg$shape %||% 3
   pt.alpha <- arg$pt.alpha  %||% arg$alpha %||% 1
   font.size <- arg$font.size %||% 3
-  pt.plot <- arg$pt.plot %||% TRUE
-  line.plot <- arg$line.plot %||% FALSE
   line.alpha <- arg$line.alpha  %||% arg$alpha %||% 0.5
 
   # point colour
@@ -82,7 +118,7 @@ plot.webmorph_tem <- function(x, y, ...) {
                    plot.margin = ggplot2::margin(0,0,0,0, "cm"))
 
   # add image ----
-  if (isTRUE(arg$image)) {
+  if (isTRUE(img.plot)) {
     i <- grid::rasterGrob(x$img, interpolate = FALSE)
     g <- g + ggplot2::annotation_custom(
       i, 0, width, -height, 0)
@@ -167,9 +203,20 @@ plot.webmorph_tem <- function(x, y, ...) {
 #' @return plot
 #' @export
 #'
+#' @examples
+#' faces("test") %>% plot(pt.plot = TRUE)
+#'
 plot.webmorph_temlist <- function(x, y, ...) {
-  plots <- lapply(x, function(xx) {
-    do.call(plot, c(list(x = xx), list(...)))
+  # get all dots to x length
+  dots <- list(...)
+
+  if (length(x) > 1) {
+    dots <- lapply(dots ,rep, length.out = length(x))
+  }
+
+  plots <- lapply(seq_along(x), function(i) {
+    subdots <- lapply(dots, `[[`, i)
+    do.call(plot, c(list(x = x[[i]]), subdots))
   })
 
   # check args ----
@@ -211,3 +258,4 @@ getControlPoints <- function(lpath, i = 1) {
     y = c(y0, p1y, p2y, y2)
   )
 }
+

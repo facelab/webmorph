@@ -6,6 +6,11 @@
 #' @return temlist with altered tems
 #' @export
 #'
+#' @examples
+#' faces("test") %>%
+#'   pt_delete(frl_features("mouth")) %>%
+#'   plot(pt.plot = TRUE, line.plot = TRUE)
+#'
 pt_delete <- function(temlist, ...) {
   temlist <- check_temlist(temlist)
   points_to_del <- list(...) %>% unlist() %>% unique() %>% sort()
@@ -55,7 +60,14 @@ pt_delete <- function(temlist, ...) {
 #' @return vector of corresponding FRL template indices
 #' @export
 #'
+#' @examples
+#' frl_features("mouth")
+#' frl_features("left_eye", "right_eye")
+#'
 frl_features <- function(...) {
+  # 0-based for compatibility with webmorph
+  # keep consistent with frl_sym()
+
   named_features <- list(...) %>% unlist()
 
   features <- list(

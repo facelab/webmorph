@@ -6,11 +6,13 @@
 \usage{
 crop(
   temlist,
-  width = NULL,
-  height = NULL,
-  x_off = 0,
-  y_off = 0,
-  fill = "white"
+  width = 1,
+  height = 1,
+  x_off = NULL,
+  y_off = NULL,
+  fill = "white",
+  patch = FALSE,
+  squash = FALSE
 )
 }
 \arguments{
@@ -20,22 +22,49 @@ crop(
 
 \item{height}{height of cropped image}
 
-\item{x_off}{x-offset}
+\item{x_off}{x-offset (NULL horizontally centers cropped image)}
 
-\item{y_off}{y-offset}
+\item{y_off}{y-offset (NULL vertically centers cropped image)}
 
-\item{fill}{background colour if cropping goes outside the original image}
+\item{fill}{background color if cropping goes outside the original image}
+
+\item{patch}{whether to use the patch function to set the background color}
+
+\item{squash}{whether to move template points outside the image boundaries inside the image}
 }
 \value{
 temlist with cropped tems and/or images
 }
 \description{
-Arguments width, height, x_off and y_off can bet set in pixels or proportions (between 0.0 and 2.0)
+Remove or add margins to images and templates. Width, height, x_off and y_off can be set in pixels (> 2.0) or proportions (between 0.0 and 2.0). Cropping is anchored at the image center (or calculated template centroid if there is no image) unless x_off or y_off are set.
+}
+\details{
+Fill can be set to R color names (see \code{colors()}) or valid hex or rgb values. Patch can be set to TRUE (defaults to median color of top left 10-pixel square) or a list of arguments to the function \code{patch()} to set background from a patch of the image.
 }
 \examples{
-path <- system.file("extdata/composite/f_multi.tem", package = "webmorph")
-read_tem(path) \%>\%
-  crop(.5, .5, .25, .25) \%>\%
-  plot(image = TRUE)
+a <- faces("test")
+
+# crop to 60\% width and 80\% height (centered)
+crop(a, width = .60, height = .80) \%>\% plot(pt.plot = TRUE)
+
+# crop to 40\% width and 40\% height (centered) and add border
+crop(a, width = .4, height = .4) \%>\%
+  crop(1.5, 1.5) \%>\%
+  plot(pt.plot = TRUE)
+
+# crop to 40\% width and 40\% height (centered) and add border
+# points are squashed to image edges
+crop(a, width = .4, height = .4, squash = TRUE) \%>\%
+  crop(1.5, 1.5) \%>\%
+  plot(pt.plot = TRUE)
+
+# crop to upper right quadrant
+crop(a, .5, .5, x_off = .5, y_off = 0) \%>\% plot(pt.plot = TRUE)
+
+# crop to larger size with custom fill
+crop(a, 500, 500, fill = "hotpink") \%>\% plot()
+
+# take median color from a patch
+crop(a, 1.2, 1.2, patch = c(100, 200, 1, 10)) \%>\% plot()
 
 }

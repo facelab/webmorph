@@ -23,6 +23,6 @@ Read Webmorph template file
 }
 \examples{
 path <- system.file("extdata/composite", package = "webmorph")
-tems <- read_tem(path, images = FALSE)
+temlist <- read_tem(path)
 
 }

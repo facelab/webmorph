@@ -6,3 +6,4 @@
 ^docs$
 ^pkgdown$
 ^todo.md$
+^data-raw$

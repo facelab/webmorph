@@ -6,6 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Morph Faces • webmorph</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -31,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">webmorph</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
       </span>
     </div>
 
@@ -60,6 +66,9 @@
       <a href="articles/iris.html">For Iris</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -98,48 +107,41 @@
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
-<p>Load in all the tems from a directory. The code below loads images built into {webmorph} from the CC-BY licensed <a href="https://doi.org/10.6084/m9.figshare.4055130.v1">Young Adult Composite Faces</a>.</p>
+<p>Load in all the tems from a directory. The code below loads images built into webmorph from the CC-BY licensed <a href="https://doi.org/10.6084/m9.figshare.4055130.v1">Young Adult Composite Faces</a>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/facelab/webmorph">webmorph</a></span><span class="op">)</span>
-<span class="co">## basic example code</span>
 
-<span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata/composite"</span>, package <span class="op">=</span> <span class="st">"webmorph"</span><span class="op">)</span>
-
+<span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata/test"</span>, package <span class="op">=</span> <span class="st">"webmorph"</span><span class="op">)</span>
 <span class="va">temlist</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_tem.html">read_tem</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span></pre></div>
 <p>You can plot an image with the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">temlist</span><span class="op">$</span><span class="va">f_multi</span>, image <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
-<p><img src="reference/figures/README-basic-plot-1.png" width="50%"></p>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">temlist</span>, line.plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+<p><img src="reference/figures/README-basic-plot-1.png" width="100%"></p>
+</div>
+<div id="reproducible-stimulus-construction" class="section level2">
+<h2 class="hasAnchor">
+<a href="#reproducible-stimulus-construction" class="anchor"></a>Reproducible stimulus construction</h2>
+<p>Load faces from the CC-BY licensed <a href="https://doi.org/10.6084/m9.figshare.5047666.v3">Face Research Lab London Set</a>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">temlist</span>,
-     color <span class="op">=</span> <span class="st">"blue"</span>,
-     image <span class="op">=</span> <span class="cn">TRUE</span>,
-     nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></pre></div>
-<p><img src="reference/figures/README-group-plot-1.png" width="100%"></p>
-<p>You can also visualise just the templates. If you omit the image and don’t manually set a width and height, the x- and y-axis limit will be set automatically.</p>
+<span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata/london"</span>, package <span class="op">=</span> <span class="st">"webmorph"</span><span class="op">)</span>
+
+<span class="va">face_set</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_tem.html">read_tem</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/rename.html">rename</a></span><span class="op">(</span>prefix <span class="op">=</span> <span class="st">"orig_"</span>, pattern <span class="op">=</span> <span class="st">"_03"</span>, replacement <span class="op">=</span> <span class="st">""</span><span class="op">)</span>
+
+<span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="va">face_set</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/mirror.html">mirror</a></span><span class="op">(</span><span class="fu"><a href="reference/frl_sym.html">frl_sym</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/rename.html">rename</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"orig"</span>, replacement <span class="op">=</span> <span class="st">"mirror"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">face_set</span>, <span class="va">.</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/resize.html">resize</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/crop.html">crop</a></span><span class="op">(</span><span class="fl">0.6</span>, <span class="fl">0.8</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/crop.html">crop</a></span><span class="op">(</span><span class="fl">1.05</span>, <span class="fl">1.05</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html">rainbow</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span> </pre></div>
+<p>Save your stimuli</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">temlist</span>, 
-    color <span class="op">=</span> <span class="st">"#FF0000"</span>,
-    pt.size <span class="op">=</span> <span class="fl">2</span>,
-    pt.shape <span class="op">=</span> <span class="fl">1</span>,
-    bg.fill <span class="op">=</span> <span class="st">"black"</span>,
-    image <span class="op">=</span> <span class="cn">FALSE</span>,
-    nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></pre></div>
-<p><img src="reference/figures/README-tem-plot-1.png" width="100%"></p>
-<p>You can average and visualise templates, as well. Set <code>line.plot</code> to <code>TRUE</code> to visualise the lines as straight lines. Set <code>line.plot</code> to “bezier” to see the really buggy bezier curves.</p>
+<span class="fu"><a href="reference/write_tem.html">write_tem</a></span><span class="op">(</span><span class="va">stimuli</span>, dir <span class="op">=</span> <span class="st">"mystimuli"</span><span class="op">)</span></pre></div>
+<p>Easily create figures to illustrate your research.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata/london"</span>, package <span class="op">=</span> <span class="st">"webmorph"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/read_tem.html">read_tem</a></span><span class="op">(</span>images <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/average.html">average</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>pt.colour <span class="op">=</span> <span class="st">"orchid"</span>, 
-       bg.fill <span class="op">=</span> <span class="st">"grey30"</span>,
-       line.plot <span class="op">=</span> <span class="st">"bezier"</span>,
-       line.colour <span class="op">=</span> <span class="st">"yellow"</span>,
-       line.alpha <span class="op">=</span> <span class="fl">0.25</span>,
-       width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">375</span>, <span class="fl">975</span><span class="op">)</span>, 
-       height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">250</span>, <span class="fl">1050</span><span class="op">)</span>
-  <span class="op">)</span></pre></div>
-<p><img src="reference/figures/README-avg-plot-1.png" width="50%"></p>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">stimuli</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></pre></div>
+<p><img src="reference/figures/README-repro-plot-1.png" width="100%"></p>
 </div>
 </div>
   </div>

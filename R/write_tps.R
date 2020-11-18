@@ -5,6 +5,12 @@
 #' @return text of tps file
 #' @export
 #'
+#' @examples
+#' # set path_to_tps to save to a file
+#' faces("test") %>%
+#'   write_tps() %>%
+#'   cat()
+#'
 write_tps <- function(temlist, path_to_tps = NULL) {
   temlist <- check_temlist(temlist)
 
@@ -36,6 +42,10 @@ write_tps <- function(temlist, path_to_tps = NULL) {
 #'
 #' @return 3D array
 #' @export
+#'
+#' @examples
+#' data <- faces() %>% tems_to_array()
+#' dim(data)
 #'
 tems_to_array <- function(temlist) {
   temlist <- check_temlist(temlist)

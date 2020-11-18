@@ -4,20 +4,32 @@
 #' @param degrees degrees to rotate
 #'
 #' @return temlist with rotated tems and/or images
+#' @param fill background color
+#' @param patch whether to use the patch function to set the background color
+#'
 #' @export
 #'
 #' @examples
-#' path <- system.file("extdata/composite/f_multi.tem", package = "webmorph")
-#' read_tem(path) %>%
-#'   rotate(45) %>%
-#'   plot(image = TRUE)
+#' faces("test") %>%
+#'   rotate(45, fill = "dodgerblue") %>%
+#'   plot(pt.plot = TRUE)
 #'
-rotate <- function(temlist, degrees = 0) {
+#' faces("test") %>%
+#'   rotate(45, patch = TRUE) %>%
+#'   plot()
+#'
+rotate <- function(temlist, degrees = 0,
+                   fill = "none", patch = FALSE) {
   temlist <- check_temlist(temlist)
 
   degrees <- degrees %% 360 %>%
     rep(length.out = length(temlist))
   radians <- degrees * (pi/180)
+
+  suppressWarnings({
+    fill <- rep(fill, length.out = length(temlist))
+    #patch <- rep(patch, length.out = length(temlist))
+  })
 
   for (i in seq_along(temlist)) {
     w <- temlist[[i]]$width
@@ -26,21 +38,30 @@ rotate <- function(temlist, degrees = 0) {
     # rotate image ----
     if (class(temlist[[i]]$img) == "magick-image") {
       info <- magick::image_info(temlist[[i]]$img)
-      xm1 = info$width/2
-      ym1 = info$height/2
-      temlist[[i]]$img <- magick::image_rotate(
-        temlist[[i]]$img, degrees[i]
-      ) %>%
+      xm1 <- info$width/2
+      ym1 <- info$height/2
+
+      # set fill from patch
+      if (isTRUE(patch)) {
+        fill[i] <- patch(temlist[[i]]$img)
+      } else if (!isFALSE(patch)) {
+        plist <- c(list(img = temlist[[i]]$img), patch)
+        fill[i] <- do.call("patch", plist)
+      }
+
+      temlist[[i]]$img <- temlist[[i]]$img %>%
+        magick::image_background(color = fill[i]) %>%
+        magick::image_rotate(degrees[i]) %>%
         magick::image_repage()
       info <- magick::image_info(temlist[[i]]$img)
-      xm2 = info$width/2
-      ym2 = info$height/2
+      xm2 <- info$width/2
+      ym2 <- info$height/2
     } else if (!is.null(w) && !is.null(h)) {
       rotsize <- rotated_size(w, h, degrees[i])
-      xm1 = w/2
-      ym1 = h/2
-      xm2 = rotsize$width/2
-      ym2 = rotsize$height/2
+      xm1 <- w/2
+      ym1 <- h/2
+      xm2 <- rotsize$width/2
+      ym2 <- rotsize$height/2
     } else {
       # rotate around the centre of the points
       centre <- apply(temlist[[i]]$points, 1, mean)

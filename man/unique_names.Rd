@@ -20,6 +20,13 @@ a list or vector of names with the common beginnings removed
 Get unique names
 }
 \examples{
-unique_names(c("common/A.tem", "common/B.tem"))
+# breaks at /
+unique_names(c("common/face_A.tem",
+               "common/face_B.tem"))
+
+# breaks at each character
+unique_names(c("common/face_A.tem",
+               "common/face_B.tem"),
+               breaks = "")
 
 }

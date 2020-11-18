@@ -15,3 +15,10 @@ text of tps file
 \description{
 Create a TPS file from a list of webmorph templates
 }
+\examples{
+# set path_to_tps to save to a file
+faces("test") \%>\%
+  write_tps() \%>\%
+  cat()
+
+}

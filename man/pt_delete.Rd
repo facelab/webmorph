@@ -17,3 +17,9 @@ temlist with altered tems
 \description{
 Delete template points
 }
+\examples{
+faces("test") \%>\%
+  pt_delete(frl_features("mouth")) \%>\%
+  plot(pt.plot = TRUE, line.plot = TRUE)
+
+}

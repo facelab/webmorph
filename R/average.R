@@ -7,10 +7,9 @@
 #' @export
 #'
 #' @examples
-#' path <- system.file("extdata/composite/", package = "webmorph")
-#' read_tem(path) %>%
+#' faces("london") %>%
 #'   average() %>%
-#'   plot()
+#'   plot(img.plot = FALSE, pt.plot = TRUE, line.plot = TRUE)
 #'
 average <- function(temlist, name = "average") {
   # dim is coord (x/y), pt_i, tem_n
