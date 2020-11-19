@@ -36,13 +36,13 @@ Load in all the tems from a directory. The code below loads images built into we
 library(webmorph)
 
 path <- system.file("extdata/test", package = "webmorph")
-temlist <- read_tem(path)
+stimlist <- read_stim(path)
 ```
 
 You can plot an image with the `plot()` function.
 
 ```{r basic-plot, fig.width = 8, fig.height = 4}
-plot(temlist, line.plot = TRUE)
+plot(stimlist, line.plot = TRUE)
 ```
 
 ## Reproducible stimulus construction
@@ -52,7 +52,7 @@ Load faces from the CC-BY licensed [Face Research Lab London Set](https://doi.or
 ```{r}
 path <- system.file("extdata/london", package = "webmorph")
 
-face_set <- read_tem(path)[5:7] %>%
+face_set <- read_stim(path)[5:7] %>%
   rename(prefix = "orig_", pattern = "_03", replacement = "")
 
 stimuli <- face_set %>%
@@ -67,7 +67,7 @@ stimuli <- face_set %>%
 Save your stimuli
 
 ```{r, eval = FALSE}
-write_tem(stimuli, dir = "mystimuli")
+write_stim(stimuli, dir = "mystimuli")
 ```
 
 

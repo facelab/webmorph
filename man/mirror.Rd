@@ -4,17 +4,17 @@
 \alias{mirror}
 \title{Mirror templates and images}
 \usage{
-mirror(temlist, sym_map = NULL, axis = "vertical")
+mirror(stimlist, sym_map = NULL, axis = "vertical")
 }
 \arguments{
-\item{temlist}{list of webmorph templates}
+\item{stimlist}{list of class webmorph_list}
 
 \item{sym_map}{list of corresponding template points}
 
 \item{axis}{vertical or horizontal axis of mirroring}
 }
 \value{
-temlist with mirrored images and tems
+webmorph_list with mirrored images and tems
 }
 \description{
 Use the function \code{frl_sym()} to get the sym_map for the standard webmorph template. If sym_map is omitted, images and templates will be fully reversed (e.g., if point 1 is the left eye in the original image, it will be the right eye in the mirrored image).

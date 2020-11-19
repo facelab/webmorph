@@ -2,18 +2,18 @@
 % Please edit documentation in R/write_tps.R
 \name{write_tps}
 \alias{write_tps}
-\title{Create a TPS file from a list of webmorph templates}
+\title{Create a TPS file from a webmorph_list}
 \usage{
-write_tps(temlist, path_to_tps = NULL)
+write_tps(stimlist, path_to_tps = NULL)
 }
 \arguments{
-\item{temlist}{list of webmorph templates}
+\item{stimlist}{list of class webmorph_list}
 }
 \value{
 text of tps file
 }
 \description{
-Create a TPS file from a list of webmorph templates
+Create a TPS file from a webmorph_list
 }
 \examples{
 # set path_to_tps to save to a file

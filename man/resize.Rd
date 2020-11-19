@@ -4,17 +4,17 @@
 \alias{resize}
 \title{Resize templates and images}
 \usage{
-resize(temlist, width = NULL, height = NULL)
+resize(stimlist, width = NULL, height = NULL)
 }
 \arguments{
-\item{temlist}{list of webmorph templates}
+\item{stimlist}{list of class webmorph_list}
 
 \item{width}{new width (in pixels or percent)}
 
 \item{height}{new height (in pixels or percent)}
 }
 \value{
-temlist with resized tems and/or images
+webmorph_list with resized tems and/or images
 }
 \description{
 Resize templates and images

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Rename temlist — rename • webmorph</title>
+<title>Rename stimuli in a webmorph_list — rename • webmorph</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Rename temlist — rename" />
-<meta property="og:description" content="Rename temlist" />
+<meta property="og:title" content="Rename stimuli in a webmorph_list — rename" />
+<meta property="og:description" content="Rename stimuli in a webmorph_list" />
 
 
 
@@ -133,13 +133,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Rename temlist</h1>
+    <h1>Rename stimuli in a webmorph_list</h1>
     <small class="dont-index">Source: <a href='https://github.com/facelab/webmorph/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
     <div class="hidden name"><code>rename.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Rename temlist</p>
+    <p>Rename stimuli in a webmorph_list</p>
     </div>
 
     <pre class="usage"><span class='fu'>rename</span><span class='op'>(</span>
@@ -156,10 +156,6 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>temlist</th>
-      <td><p>A webmorph temlist</p></td>
-    </tr>
-    <tr>
       <th>prefix</th>
       <td><p>String to prefix to each name</p></td>
     </tr>
@@ -169,7 +165,7 @@
     </tr>
     <tr>
       <th>new_names</th>
-      <td><p>Vector of new names - must be the same length as the temlist</p></td>
+      <td><p>Vector of new names - must be the same length as the webmorph_list</p></td>
     </tr>
     <tr>
       <th>pattern</th>
@@ -183,11 +179,15 @@
       <th>...</th>
       <td><p>Additional arguments to pass on to <code><a href='https://rdrr.io/r/base/grep.html'>base::gsub()</a></code></p></td>
     </tr>
+    <tr>
+      <th>stim_list</th>
+      <td><p>A webmorph_list</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a webmorph temlist</p>
+    <p>a webmorph_list</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='faces.html'>faces</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>

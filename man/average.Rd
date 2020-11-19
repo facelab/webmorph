@@ -4,15 +4,15 @@
 \alias{average}
 \title{Average templates}
 \usage{
-average(temlist, name = "average")
+average(stimlist, name = "average")
 }
 \arguments{
-\item{temlist}{list of webmorph templates}
+\item{stimlist}{list of class webmorph_list}
 
 \item{name}{Name for the average}
 }
 \value{
-webmorph_tem list
+webmorph_stim
 }
 \description{
 Average templates
@@ -20,6 +20,6 @@ Average templates
 \examples{
 faces("london") \%>\%
   average() \%>\%
-  plot(img.plot = FALSE, pt.plot = TRUE, line.plot = TRUE)
+  plot(pt.plot = TRUE, line.plot = TRUE)
 
 }

@@ -4,10 +4,10 @@
 \alias{rotate}
 \title{Rotate templates and images}
 \usage{
-rotate(temlist, degrees = 0, fill = "none", patch = FALSE)
+rotate(stimlist, degrees = 0, fill = "none", patch = FALSE)
 }
 \arguments{
-\item{temlist}{list of webmorph templates}
+\item{stimlist}{list of class webmorph_list}
 
 \item{degrees}{degrees to rotate}
 
@@ -16,7 +16,7 @@ rotate(temlist, degrees = 0, fill = "none", patch = FALSE)
 \item{patch}{whether to use the patch function to set the background color}
 }
 \value{
-temlist with rotated tems and/or images
+webmorph_list with rotated tems and/or images
 }
 \description{
 Rotate templates and images

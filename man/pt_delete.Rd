@@ -4,15 +4,15 @@
 \alias{pt_delete}
 \title{Delete template points}
 \usage{
-pt_delete(temlist, ...)
+pt_delete(stimlist, ...)
 }
 \arguments{
-\item{temlist}{list of webmorph templates}
+\item{stimlist}{list of class webmorph_list}
 
 \item{...}{vectors of points to delete}
 }
 \value{
-temlist with altered tems
+webmorph_list with altered templates
 }
 \description{
 Delete template points

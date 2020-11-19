@@ -1,62 +1,79 @@
-#' Print webmorph templates
+#' Print webmorph_stim
 #'
-#' @param x a list of class webmorph_tem
+#' @param x a list of class webmorph_stim
 #' @param ... arguments passed to or from other methods
 #'
-#' @return prints the template info
+#' @return prints summary info and returns x
 #' @export
 #'
-print.webmorph_tem <- function(x, ...) {
-  sprintf("%s [%i points, %i lines]",
-          x$name,
-          ncol(x$points),
-          length(x$lines)
-  ) %>% cat()
+print.webmorph_stim <- function(x, ...) {
+  attr <- list()
+  if ("points" %in% names(x)) {
+    attr$points <- sprintf("%i points", ncol(x$points))
+  }
+  if ("lines" %in% names(x)) {
+    attr$lines <- sprintf("%i lines", length(x$lines))
+  }
+
+  if ("img" %in% names(x)) {
+    info <- tryCatch({
+      magick::image_info(x$img)
+    }, error = function(e) {
+      x$img <- magick::image_read(x$imgpath)
+      magick::image_info(x$img)
+    })
+    attr$img <- sprintf("%i x %i %s",
+                        info$width,
+                        info$height,
+                        info$format)
+  }
+
+  paste(attr, collapse = ", ") %>% cat()
 
   invisible(x)
 }
 
-#' Print webmorph template list
+#' Print webmorph_list
 #'
-#' @param x a list of class webmorph_temlist
+#' @param x a list of class webmorph_list
 #' @param ... arguments passed to or from other methods
 #'
-#' @return prints the template info
+#' @return prints summary info and returns x
 #' @export
 #'
-print.webmorph_temlist <- function(x, ...) {
-  lapply(x, function(xi) {
-    cat("* ")
+print.webmorph_list <- function(x, ...) {
+  mapply(function(xi, nm) {
+    sprintf("* %s: ", nm) %>% cat()
     print(xi, ...)
     cat("\n")
-  })
+  }, x, names(x) %||% seq_along(x)) # in case names are null
 
   invisible(x)
 }
 
-#' Repeat tems in a temlist
+#' Repeat webmorph_stim in a list
 #'
-#' @param x A single webmorph template
+#' @param x A list of class webmorph_stim
 #' @param ... Additional arguments to pass on to `base::rep()`
 #'
-#' @return A webmorph temlist
+#' @return A webmorph_list
 #' @export
 #'
 #' @examples
 #' a <- faces()
 #' rep(a[[1]], 3)
-rep.webmorph_tem <- function (x, ...) {
-  # turn into a temlist and handle below
-  x <- check_temlist(x)
-  rep.webmorph_temlist(x, ...)
+rep.webmorph_stim <- function (x, ...) {
+  # turn into a list and handle below
+  x <- assert_webmorph(x)
+  rep.webmorph_list(x, ...)
 }
 
-#' Repeat items in a temlist
+#' Repeat stim in a list
 #'
-#' @param x A webmorph temlist
+#' @param x A webmorph_list
 #' @param ... Additional arguments to pass on to `base::rep()`
 #'
-#' @return A webmorph temlist
+#' @return A webmorph_list
 #' @export
 #'
 #' @examples
@@ -64,55 +81,55 @@ rep.webmorph_tem <- function (x, ...) {
 #'   rep(3) %>%
 #'   rotate(seq(10, 60, 10), fill = rainbow(6)) %>%
 #'   plot()
-rep.webmorph_temlist <- function(x, ...) {
+rep.webmorph_list <- function(x, ...) {
   nm <- names(x)
   newnm <- rep(nm, ...)
   newx <- x[newnm]
-  class(newx) <- "webmorph_temlist"
+  class(newx) <- "webmorph_list"
   newx
 }
 
-#' Combine templates
+#' Combine webmorph_stim
 #'
-#' @param ... webmorph templates to be concatenated
+#' @param ... webmorph_stim to be concatenated
 #'
-#' @return webmorph template list
+#' @return webmorph_list
 #' @export
 #'
-c.webmorph_tem <- function(...) {
+c.webmorph_stim <- function(...) {
   # turn into a temlist and handle below
-  dots <- lapply(list(...), check_temlist)
+  dots <- lapply(list(...), assert_webmorph)
   do.call("c", dots)
 }
 
 
-#' Combine template lists
+#' Combine webmorph_lists
 #'
-#' @param ... webmorph template lists to be concatenated
+#' @param ... webmorph_lists to be concatenated
 #'
-#' @return webmoprh template list
+#' @return webmorph_list
 #' @export
 #'
-c.webmorph_temlist <- function(...) {
-  dots <- lapply(list(...), check_temlist) %>%
+c.webmorph_list <- function(...) {
+  dots <- lapply(list(...), assert_webmorph) %>%
     lapply(unclass) # prevent infinite recursion
   x <- do.call("c", dots)
-  class(x) <- "webmorph_temlist"
+  class(x) <- "webmorph_list"
   x
 }
 
 
-#' Rename temlist
+#' Rename stimuli in a webmorph_list
 #'
-#' @param temlist A webmorph temlist
+#' @param stim_list A webmorph_list
 #' @param prefix String to prefix to each name
 #' @param suffix String to append to each name
-#' @param new_names Vector of new names - must be the same length as the temlist
+#' @param new_names Vector of new names - must be the same length as the webmorph_list
 #' @param pattern Pattern for gsub
 #' @param replacement Replacement for gsub
 #' @param ... Additional arguments to pass on to `base::gsub()`
 #'
-#' @return a webmorph temlist
+#' @return a webmorph_list
 #' @export
 #'
 #' @examples
@@ -121,7 +138,7 @@ c.webmorph_temlist <- function(...) {
 #'   names()
 rename <- function(temlist, prefix = "", suffix = "", new_names = NULL,
                    pattern = NULL, replacement = NULL, ...) {
-  temlist <- check_temlist(temlist)
+  temlist <- assert_webmorph(temlist)
 
   if (is.null(new_names)) {
     new_names <- names(temlist)

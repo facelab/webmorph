@@ -143,7 +143,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>crop</span><span class='op'>(</span>
-  <span class='va'>temlist</span>,
+  <span class='va'>stimlist</span>,
   width <span class='op'>=</span> <span class='fl'>1</span>,
   height <span class='op'>=</span> <span class='fl'>1</span>,
   x_off <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -157,8 +157,8 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>temlist</th>
-      <td><p>list of webmorph templates</p></td>
+      <th>stimlist</th>
+      <td><p>list of class webmorph_list</p></td>
     </tr>
     <tr>
       <th>width</th>
@@ -192,7 +192,7 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>temlist with cropped tems and/or images</p>
+    <p>webmorph_list with cropped tems and/or images</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Fill can be set to R color names (see <code><a href='https://rdrr.io/r/grDevices/colors.html'>colors()</a></code>) or valid hex or rgb values. Patch can be set to TRUE (defaults to median color of top left 10-pixel square) or a list of arguments to the function <code><a href='patch.html'>patch()</a></code> to set background from a patch of the image.</p>

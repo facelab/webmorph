@@ -2,18 +2,18 @@
 % Please edit documentation in R/write_tps.R
 \name{tems_to_array}
 \alias{tems_to_array}
-\title{Convert temlist to array for geomorph}
+\title{Convert stimlist to array for geomorph}
 \usage{
-tems_to_array(temlist)
+tems_to_array(stimlist)
 }
 \arguments{
-\item{temlist}{list of webmorph templates}
+\item{stimlist}{list of class webmorph_list}
 }
 \value{
 3D array
 }
 \description{
-Convert temlist to array for geomorph
+Convert stimlist to array for geomorph
 }
 \examples{
 data <- faces() \%>\% tems_to_array()

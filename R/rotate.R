@@ -1,11 +1,11 @@
 #' Rotate templates and images
 #'
-#' @param temlist list of webmorph templates
+#' @param stimlist list of class webmorph_list
 #' @param degrees degrees to rotate
-#'
-#' @return temlist with rotated tems and/or images
 #' @param fill background color
 #' @param patch whether to use the patch function to set the background color
+#'
+#' @return webmorph_list with rotated tems and/or images
 #'
 #' @export
 #'
@@ -18,42 +18,42 @@
 #'   rotate(45, patch = TRUE) %>%
 #'   plot()
 #'
-rotate <- function(temlist, degrees = 0,
+rotate <- function(stimlist, degrees = 0,
                    fill = "none", patch = FALSE) {
-  temlist <- check_temlist(temlist)
+  stimlist <- assert_webmorph(stimlist)
 
   degrees <- degrees %% 360 %>%
-    rep(length.out = length(temlist))
+    rep(length.out = length(stimlist))
   radians <- degrees * (pi/180)
 
   suppressWarnings({
-    fill <- rep(fill, length.out = length(temlist))
-    #patch <- rep(patch, length.out = length(temlist))
+    fill <- rep(fill, length.out = length(stimlist))
+    #patch <- rep(patch, length.out = length(stimlist))
   })
 
-  for (i in seq_along(temlist)) {
-    w <- temlist[[i]]$width
-    h <- temlist[[i]]$height
+  for (i in seq_along(stimlist)) {
+    w <- stimlist[[i]]$width
+    h <- stimlist[[i]]$height
 
     # rotate image ----
-    if (class(temlist[[i]]$img) == "magick-image") {
-      info <- magick::image_info(temlist[[i]]$img)
+    if (class(stimlist[[i]]$img) == "magick-image") {
+      info <- magick::image_info(stimlist[[i]]$img)
       xm1 <- info$width/2
       ym1 <- info$height/2
 
       # set fill from patch
       if (isTRUE(patch)) {
-        fill[i] <- patch(temlist[[i]]$img)
+        fill[i] <- patch(stimlist[[i]]$img)
       } else if (!isFALSE(patch)) {
-        plist <- c(list(img = temlist[[i]]$img), patch)
+        plist <- c(list(img = stimlist[[i]]$img), patch)
         fill[i] <- do.call("patch", plist)
       }
 
-      temlist[[i]]$img <- temlist[[i]]$img %>%
+      stimlist[[i]]$img <- stimlist[[i]]$img %>%
         magick::image_background(color = fill[i]) %>%
         magick::image_rotate(degrees[i]) %>%
         magick::image_repage()
-      info <- magick::image_info(temlist[[i]]$img)
+      info <- magick::image_info(stimlist[[i]]$img)
       xm2 <- info$width/2
       ym2 <- info$height/2
     } else if (!is.null(w) && !is.null(h)) {
@@ -64,7 +64,7 @@ rotate <- function(temlist, degrees = 0,
       ym2 <- rotsize$height/2
     } else {
       # rotate around the centre of the points
-      centre <- apply(temlist[[i]]$points, 1, mean)
+      centre <- apply(stimlist[[i]]$points, 1, mean)
       xm1 <- centre[[1]]
       ym1 <- centre[[2]]
       rotsize <- rotated_size(xm1*2, ym1*2, degrees[i])
@@ -72,13 +72,13 @@ rotate <- function(temlist, degrees = 0,
       ym2 = rotsize$height/2
     }
 
-    temlist[[i]]$width = round(xm2*2)
-    temlist[[i]]$height = round(ym2*2)
+    stimlist[[i]]$width = round(xm2*2)
+    stimlist[[i]]$height = round(ym2*2)
 
     # rotate points ----
     # Subtract original midpoints, rotate,
     # and add the new midpoints in the end again
-    temlist[[i]]$points <- apply(temlist[[i]]$points, 2, function(pt) {
+    stimlist[[i]]$points <- apply(stimlist[[i]]$points, 2, function(pt) {
       crad <- cos(radians[i])
       srad <- sin(radians[i])
       x_offset <- pt[[1]] - xm1
@@ -90,7 +90,7 @@ rotate <- function(temlist, degrees = 0,
     })
   }
 
-  invisible(temlist)
+  invisible(stimlist)
 }
 
 #' Image size after rotation

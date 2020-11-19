@@ -1,29 +1,32 @@
 #' Average templates
 #'
-#' @param temlist list of webmorph templates
+#' @param stimlist list of class webmorph_list
 #' @param name Name for the average
 #'
-#' @return webmorph_tem list
+#' @return webmorph_stim
 #' @export
 #'
 #' @examples
 #' faces("london") %>%
 #'   average() %>%
-#'   plot(img.plot = FALSE, pt.plot = TRUE, line.plot = TRUE)
+#'   plot(pt.plot = TRUE, line.plot = TRUE)
 #'
-average <- function(temlist, name = "average") {
+average <- function(stimlist, name = "average") {
+  stimlist <- assert_webmorph(stimlist)
+
   # dim is coord (x/y), pt_i, tem_n
-  pt <- sapply(temlist, `[[`, "points", simplify = "array")
+  pt <- sapply(stimlist, `[[`, "points", simplify = "array")
 
   avg <- apply(pt, c(1, 2), mean)
 
-  tem <- list(
+  stim <- list(
     name = name,
     points = avg,
-    lines = temlist[[1]]$lines,
-    closed = temlist[[1]]$closed
+    lines = stimlist[[1]]$lines,
+    closed = stimlist[[1]]$closed
   )
 
-  class(tem) <- c("webmorph_tem", "list")
-  tem
+  class(stim) <- c("webmorph_stim", "list")
+
+  stim
 }

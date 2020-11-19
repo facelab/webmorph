@@ -4,20 +4,20 @@
 \alias{faces}
 \title{Webmorph Faces}
 \usage{
-faces(dir = c("composite", "test", "london"), pattern = "\\\\.tem$", ...)
+faces(dir = c("composite", "test", "london"), pattern = NULL, ...)
 }
 \arguments{
-\item{dir}{the image directory in extdata to get images from}
+\item{dir}{the directory in extdata to get files from}
 
-\item{pattern}{defaults to all tem files}
+\item{pattern}{defaults to all files}
 
 \item{...}{Other arguments to pass on to \code{read_tem()}}
 }
 \value{
-webmorph_temlist
+webmorph_list
 }
 \description{
-A convenience function to get a demo temlist
+A convenience function to get a demo stimlist
 }
 \examples{
 faces("test") \%>\% plot()

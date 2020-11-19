@@ -108,10 +108,10 @@
 <a href="#load-your-images" class="anchor"></a>Load your images</h2>
 <div class="sourceCode" id="cb2"><pre class="downlit">
 <span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata/test/"</span>, package <span class="op">=</span> <span class="st">"webmorph"</span><span class="op">)</span>
-<span class="va">temlist</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_tem.html">read_tem</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span></pre></div>
+<span class="va">stimlist</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_stim.html">read_stim</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span></pre></div>
 <p>The lines are currently plotted as straight lines, but Lisa will add in the proper bezier curves soon.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">temlist</span>, pt.plot <span class="op">=</span> <span class="cn">TRUE</span>, line.plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">stimlist</span>, pt.plot <span class="op">=</span> <span class="cn">TRUE</span>, line.plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
 <div class="figure">
 <img src="img-manip_files/figure-html/unnamed-chunk-3-1.png" alt="Original Images and Templates" width="100%"><p class="caption">
 Original Images and Templates
@@ -124,7 +124,7 @@ Original Images and Templates
 <div class="sourceCode" id="cb4"><pre class="downlit">
 
 <span class="va">remove_points</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/frl_features.html">frl_features</a></span><span class="op">(</span><span class="st">"imprecise"</span><span class="op">)</span>
-<span class="va">temlist</span> <span class="op">%&gt;%</span>
+<span class="va">stimlist</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/pt_delete.html">pt_delete</a></span><span class="op">(</span><span class="va">remove_points</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>img.plot <span class="op">=</span> <span class="cn">FALSE</span>,
        pt.plot <span class="op">=</span> <span class="cn">TRUE</span>,
@@ -144,12 +144,12 @@ Point removal
 <a href="#resize" class="anchor"></a>Resize</h2>
 <p>Resizing your images at the start of a chain can make everything go faster if you’re working with very large images, but can make them blurry if you make them too small.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="va">temlist</span> <span class="op">%&gt;%</span>
+<span class="va">stimlist</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span><span class="fl">.1</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></pre></div>
 <div class="figure">
-<img src="img-manip_files/figure-html/resize-1.png" alt="Resized Images and Templates" width="100%"><p class="caption">
-Resized Images and Templates
+<img src="img-manip_files/figure-html/resize-1.png" alt="Resized Images" width="100%"><p class="caption">
+Resized Images
 </p>
 </div>
 </div>
@@ -157,7 +157,7 @@ Resized Images and Templates
 <h2 class="hasAnchor">
 <a href="#rotate" class="anchor"></a>Rotate</h2>
 <div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="va">temlist</span> <span class="op">%&gt;%</span>
+<span class="va">stimlist</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/rotate.html">rotate</a></span><span class="op">(</span><span class="fl">45</span>, patch <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>pt.plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
 <div class="figure">
@@ -171,7 +171,7 @@ Rotated Images and Templates
 <a href="#crop" class="anchor"></a>Crop</h2>
 <p>You can set the new width, height, x-offset and y-offset in pixels (must be &gt; 2) or proportions.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="va">temlist</span> <span class="op">%&gt;%</span>
+<span class="va">stimlist</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/crop.html">crop</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">.6</span>, height <span class="op">=</span> <span class="fl">.8</span>, 
        x_off <span class="op">=</span> <span class="fl">.2</span>, y_off <span class="op">=</span> <span class="fl">.1</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>pt.plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
@@ -182,7 +182,7 @@ Cropped Images and Templates
 </div>
 <p>Negative offsets or widths larger than the image dimensions add a margin. You can set the colour with <code>fill</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="va">temlist</span> <span class="op">%&gt;%</span>
+<span class="va">stimlist</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/crop.html">crop</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">1.2</span>, height <span class="op">=</span> <span class="fl">1.2</span>, 
        fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"dodgerblue"</span>, <span class="st">"hotpink"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></pre></div>
@@ -193,7 +193,7 @@ Cropped Images and Templates
 </div>
 <p>Or you can use the <code>patch</code> function to get the median colour from a patch of the image. If you set <code>patch</code> to <code>TRUE</code>, this will default to the top left 10 pixel square, or you can set the boundaries of the patch manually.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="va">temlist</span> <span class="op">%&gt;%</span>
+<span class="va">stimlist</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/crop.html">crop</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">1.2</span>, height <span class="op">=</span> <span class="fl">1.2</span>, 
        x_off <span class="op">=</span> <span class="op">-</span><span class="fl">0.1</span>, y_off <span class="op">=</span> <span class="op">-</span><span class="fl">0.1</span>,
        patch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>x1<span class="op">=</span><span class="fl">1</span>, x2<span class="op">=</span><span class="fl">338</span>, y1<span class="op">=</span><span class="fl">1</span>, y2<span class="op">=</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -209,7 +209,7 @@ Cropped Images with Matched Background
 <a href="#chaining" class="anchor"></a>Chaining</h2>
 <p>You can also chain image manipulation commands.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="va">temlist</span> <span class="op">%&gt;%</span>
+<span class="va">stimlist</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/rotate.html">rotate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">45</span>, <span class="op">-</span><span class="fl">45</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/crop.html">crop</a></span><span class="op">(</span><span class="fl">.5</span>, <span class="fl">.5</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/crop.html">crop</a></span><span class="op">(</span><span class="fl">1.1</span>, <span class="fl">1.1</span>, fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -223,7 +223,7 @@ Manipulated Images and Templates
 <div id="repeating-images" class="section level2">
 <h2 class="hasAnchor">
 <a href="#repeating-images" class="anchor"></a>Repeating images</h2>
-<p>You can use <code><a href="https://rdrr.io/r/base/rep.html">rep()</a></code> to repeat images in a temlist. Here, we repeat the faces 3 times each, apply 6 different rotations with different background colours, crop them to the same size, and plot them with 6 different template point colours.</p>
+<p>You can use <code><a href="https://rdrr.io/r/base/rep.html">rep()</a></code> to repeat images in a stimlist. Here, we repeat the faces 3 times each, apply 6 different rotations with different background colours, crop them to the same size, and plot them with 6 different template point colours.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit">
 
 <span class="va">rainbow</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>pink <span class="op">=</span> <span class="st">"#983E82"</span>,
@@ -233,7 +233,7 @@ Manipulated Images and Templates
              blue <span class="op">=</span> <span class="st">"#467AAC"</span>,
              purple <span class="op">=</span> <span class="st">"#61589C"</span><span class="op">)</span>
 
-<span class="va">temlist</span> <span class="op">%&gt;%</span>
+<span class="va">stimlist</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span>each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/rotate.html">rotate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">60</span>, <span class="fl">10</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">rainbow</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/crop.html">crop</a></span><span class="op">(</span><span class="fl">500</span>, <span class="fl">500</span>, fill <span class="op">=</span> <span class="va">rainbow</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -245,7 +245,7 @@ Manipulated Images and Templates
 <a href="#fun-things" class="anchor"></a>Fun things</h2>
 <p>You can do some more fun things to the images (but not templates) with the {magick} package that is installed with {webmorph}.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="va">image</span> <span class="op">&lt;-</span> <span class="va">temlist</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">img</span>
+<span class="va">image</span> <span class="op">&lt;-</span> <span class="va">stimlist</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">img</span>
 
 <span class="va">imglist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
   <span class="fu">magick</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/magick/reference/effects.html">image_blur</a></span><span class="op">(</span><span class="va">image</span>, radius <span class="op">=</span> <span class="fl">10</span>, sigma <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,

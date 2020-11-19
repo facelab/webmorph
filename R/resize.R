@@ -1,10 +1,10 @@
 #' Resize templates and images
 #'
-#' @param temlist list of webmorph templates
+#' @param stimlist list of class webmorph_list
 #' @param width new width (in pixels or percent)
 #' @param height new height (in pixels or percent)
 #'
-#' @return temlist with resized tems and/or images
+#' @return webmorph_list with resized tems and/or images
 #' @export
 #'
 #' @examples
@@ -14,11 +14,11 @@
 #'        pt.color = "black",
 #'        pt.shape = 1)
 #'
-resize <- function(temlist, width = NULL, height = NULL) {
-  temlist <- check_temlist(temlist)
+resize <- function(stimlist, width = NULL, height = NULL) {
+  stimlist <- assert_webmorph(stimlist)
 
   if (is.null(width) && is.null(height)) {
-    return(temlist)
+    return(stimlist)
   }
   if (!is.null(width) && width < 0) {
     stop("width must be a positive number")
@@ -26,7 +26,7 @@ resize <- function(temlist, width = NULL, height = NULL) {
     stop("height must be a positive number")
   }
 
-  newtl <- lapply(temlist, function(tem) {
+  newtl <- lapply(stimlist, function(tem) {
     # express height and/or width as % and fill empty value
 
     if (is.null(width)) {
@@ -69,6 +69,6 @@ resize <- function(temlist, width = NULL, height = NULL) {
     tem
   })
 
-  class(newtl) <- "webmorph_temlist"
+  class(newtl) <- "webmorph_list"
   newtl
 }

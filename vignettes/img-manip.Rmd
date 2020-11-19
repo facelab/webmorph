@@ -26,13 +26,13 @@ library(webmorph)
 
 ```{r}
 path <- system.file("extdata/test/", package = "webmorph")
-temlist <- read_tem(path)
+stimlist <- read_stim(path)
 ```
 
 The lines are currently plotted as straight lines, but Lisa will add in the proper bezier curves soon.
 
 ```{r, fig.cap="Original Images and Templates"}
-plot(temlist, pt.plot = TRUE, line.plot = TRUE)
+plot(stimlist, pt.plot = TRUE, line.plot = TRUE)
 ```
 
 
@@ -41,7 +41,7 @@ plot(temlist, pt.plot = TRUE, line.plot = TRUE)
 ```{r, fig.cap="Point removal"}
 
 remove_points <- frl_features("imprecise")
-temlist %>%
+stimlist %>%
   pt_delete(remove_points) %>%
   plot(img.plot = FALSE,
        pt.plot = TRUE,
@@ -56,8 +56,8 @@ temlist %>%
 
 Resizing your images at the start of a chain can make everything go faster if you're working with very large images, but can make them blurry if you make them too small.
 
-```{r resize, fig.cap="Resized Images and Templates"}
-temlist %>%
+```{r resize, fig.cap="Resized Images"}
+stimlist %>%
   resize(.1) %>%
   plot()
 ```
@@ -66,7 +66,7 @@ temlist %>%
 ## Rotate
 
 ```{r rotate, fig.cap="Rotated Images and Templates"}
-temlist %>%
+stimlist %>%
   rotate(45, patch = TRUE) %>%
   plot(pt.plot = TRUE)
 ```
@@ -77,7 +77,7 @@ temlist %>%
 You can set the new width, height, x-offset and y-offset in pixels (must be > 2) or proportions.
 
 ```{r crop, fig.width = 6, fig.height = 4, fig.cap="Cropped Images and Templates"}
-temlist %>%
+stimlist %>%
   crop(width = .6, height = .8, 
        x_off = .2, y_off = .1) %>%
   plot(pt.plot = TRUE)
@@ -86,7 +86,7 @@ temlist %>%
 Negative offsets or widths larger than the image dimensions add a margin. You can set the colour with `fill`.
 
 ```{r crop-neg, fig.cap="Cropped Images and Templates"}
-temlist %>%
+stimlist %>%
   crop(width = 1.2, height = 1.2, 
        fill = c("dodgerblue", "hotpink")) %>%
   plot()
@@ -95,7 +95,7 @@ temlist %>%
 Or you can use the `patch` function to get the median colour from a patch of the image. If you set `patch` to `TRUE`, this will default to the top left 10 pixel square, or you can set the boundaries of the patch manually.
 
 ```{r crop-match, fig.cap="Cropped Images with Matched Background"}
-temlist %>%
+stimlist %>%
   crop(width = 1.2, height = 1.2, 
        x_off = -0.1, y_off = -0.1,
        patch = c(x1=1, x2=338, y1=1, y2=10)) %>%
@@ -107,7 +107,7 @@ temlist %>%
 You can also chain image manipulation commands. 
 
 ```{r chain, fig.cap="Manipulated Images and Templates"}
-temlist %>%
+stimlist %>%
   rotate(c(45, -45)) %>%
   crop(.5, .5) %>%
   crop(1.1, 1.1, fill = "dodgerblue") %>%
@@ -116,7 +116,7 @@ temlist %>%
 
 ## Repeating images
 
-You can use `rep()` to repeat images in a temlist. Here, we repeat the faces 3 times each, apply 6 different rotations with different background colours, crop them to the same size, and plot them with 6 different template point colours.
+You can use `rep()` to repeat images in a stimlist. Here, we repeat the faces 3 times each, apply 6 different rotations with different background colours, crop them to the same size, and plot them with 6 different template point colours.
 
 ```{r rep, fig.width = 6, fig.height = 4}
 
@@ -127,7 +127,7 @@ rainbow <- c(pink = "#983E82",
              blue = "#467AAC",
              purple = "#61589C")
 
-temlist %>%
+stimlist %>%
   rep(each = 3) %>%
   rotate(seq(10, 60, 10), fill = rainbow) %>%
   crop(500, 500, fill = rainbow) %>%
@@ -140,7 +140,7 @@ temlist %>%
 You can do some more fun things to the images (but not templates) with the {magick} package that is installed with {webmorph}.
 
 ```{r fun, fig.width = 6, fig.height = 4}
-image <- temlist[[1]]$img
+image <- stimlist[[1]]$img
 
 imglist <- list(
   magick::image_blur(image, radius = 10, sigma = 5),

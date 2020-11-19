@@ -1,6 +1,6 @@
-#' Create a TPS file from a list of webmorph templates
+#' Create a TPS file from a webmorph_list
 #'
-#' @param temlist list of webmorph templates
+#' @param stimlist list of class webmorph_list
 #'
 #' @return text of tps file
 #' @export
@@ -11,34 +11,34 @@
 #'   write_tps() %>%
 #'   cat()
 #'
-write_tps <- function(temlist, path_to_tps = NULL) {
-  temlist <- check_temlist(temlist)
+write_tps <- function(stimlist, path_to_tps = NULL) {
+  stimlist <- assert_webmorph(stimlist)
 
-  tps <- lapply(temlist, function(tem) {
-    pt <- {tem$points * c(1, -1)} %>%
+  tps <- mapply(function(stim, name) {
+    pt <- {stim$points * c(1, -1)} %>%
       t() %>% as.data.frame()
 
     pt_list <- paste(pt[[1]], pt[[2]], sep = "\t") %>%
       paste(collapse = "\n")
 
     sprintf("LM=%i\n%s\nID=%s",
-            ncol(tem$points),
+            ncol(stim$points),
             pt_list,
-            tem$name)
-  }) %>%
+            name)
+  }, stimlist, names(stimlist) %||% seq_along(stimlist)) %>%
     paste(collapse = "\n")
 
   if (is.null(path_to_tps)) {
     return(tps)
   } else {
     write(tps, path_to_tps)
-    invisible(temlist)
+    invisible(stimlist)
   }
 }
 
-#' Convert temlist to array for geomorph
+#' Convert stimlist to array for geomorph
 #'
-#' @param temlist list of webmorph templates
+#' @param stimlist list of class webmorph_list
 #'
 #' @return 3D array
 #' @export
@@ -47,11 +47,11 @@ write_tps <- function(temlist, path_to_tps = NULL) {
 #' data <- faces() %>% tems_to_array()
 #' dim(data)
 #'
-tems_to_array <- function(temlist) {
-  temlist <- check_temlist(temlist)
+tems_to_array <- function(stimlist) {
+  stimlist <- assert_webmorph(stimlist)
 
   # check number of points
-  n_pts <- lapply(temlist, `[[`, "points") %>%
+  n_pts <- lapply(stimlist, `[[`, "points") %>%
     sapply(ncol) %>%
     unique()
 
@@ -59,11 +59,9 @@ tems_to_array <- function(temlist) {
     stop("Each tem must have the same length")
   }
 
-  nm <- sapply(temlist, `[[`, "name")
-
-  sapply(temlist, function(tem) {
+  sapply(stimlist, function(tem) {
     t(tem$points * c(1, -1))
   }) %>%
-    array(dim = c(n_pts, 2, length(temlist)),
-          dimnames = list(NULL, NULL, nm))
+    array(dim = c(n_pts, 2, length(stimlist)),
+          dimnames = list(NULL, NULL, names(stimlist)))
 }

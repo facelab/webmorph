@@ -30,13 +30,13 @@ Faces](https://doi.org/10.6084/m9.figshare.4055130.v1).
 library(webmorph)
 
 path <- system.file("extdata/test", package = "webmorph")
-temlist <- read_tem(path)
+stimlist <- read_stim(path)
 ```
 
 You can plot an image with the `plot()` function.
 
 ``` r
-plot(temlist, line.plot = TRUE)
+plot(stimlist, line.plot = TRUE)
 ```
 
 <img src="man/figures/README-basic-plot-1.png" width="100%" />
@@ -49,7 +49,7 @@ Set](https://doi.org/10.6084/m9.figshare.5047666.v3).
 ``` r
 path <- system.file("extdata/london", package = "webmorph")
 
-face_set <- read_tem(path)[5:7] %>%
+face_set <- read_stim(path)[5:7] %>%
   rename(prefix = "orig_", pattern = "_03", replacement = "")
 
 stimuli <- face_set %>%
@@ -64,7 +64,7 @@ stimuli <- face_set %>%
 Save your stimuli
 
 ``` r
-write_tem(stimuli, dir = "mystimuli")
+write_stim(stimuli, dir = "mystimuli")
 ```
 
 Easily create figures to illustrate your research.

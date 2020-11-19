@@ -5,7 +5,7 @@
 \title{Crop images and templates}
 \usage{
 crop(
-  temlist,
+  stimlist,
   width = 1,
   height = 1,
   x_off = NULL,
@@ -16,7 +16,7 @@ crop(
 )
 }
 \arguments{
-\item{temlist}{list of webmorph templates}
+\item{stimlist}{list of class webmorph_list}
 
 \item{width}{width of cropped image}
 
@@ -33,7 +33,7 @@ crop(
 \item{squash}{whether to move template points outside the image boundaries inside the image}
 }
 \value{
-temlist with cropped tems and/or images
+webmorph_list with cropped tems and/or images
 }
 \description{
 Remove or add margins to images and templates. Width, height, x_off and y_off can be set in pixels (> 2.0) or proportions (between 0.0 and 2.0). Cropping is anchored at the image center (or calculated template centroid if there is no image) unless x_off or y_off are set.

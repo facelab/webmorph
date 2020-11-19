@@ -28,8 +28,8 @@ reference:
 - title: Loading
   desc: ~
   contents:
-  - '`read_tem`'
-  - '`write_tem`'
+  - '`read_stim`'
+  - '`write_stim`'
 - title: Manipulation
   desc: ~
   contents:
@@ -47,7 +47,7 @@ reference:
   - '`frl_features`'
   - '`frl_sym`'
   - '`patch`'
-  - '`plot.webmorph_tem`'
+  - '`plot.webmorph_stim`'
   - '`unique_names`'
 - title: Geomorph functions
   desc: ~

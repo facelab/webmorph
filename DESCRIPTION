@@ -23,7 +23,8 @@ Imports:
     grid,
     dplyr,
     cowplot,
-    magick
+    magick,
+    tools
 Suggests: 
     testthat,
     knitr,

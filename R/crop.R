@@ -4,7 +4,7 @@
 #'
 #' Fill can be set to R color names (see `colors()`) or valid hex or rgb values. Patch can be set to TRUE (defaults to median color of top left 10-pixel square) or a list of arguments to the function `patch()` to set background from a patch of the image.
 #'
-#' @param temlist list of webmorph templates
+#' @param stimlist list of class webmorph_list
 #' @param width width of cropped image
 #' @param height height of cropped image
 #' @param x_off x-offset (NULL horizontally centers cropped image)
@@ -13,7 +13,7 @@
 #' @param patch whether to use the patch function to set the background color
 #' @param squash whether to move template points outside the image boundaries inside the image
 #'
-#' @return temlist with cropped tems and/or images
+#' @return webmorph_list with cropped tems and/or images
 #' @export
 #'
 #' @examples
@@ -42,25 +42,25 @@
 #' # take median color from a patch
 #' crop(a, 1.2, 1.2, patch = c(100, 200, 1, 10)) %>% plot()
 #'
-crop <- function(temlist,
+crop <- function(stimlist,
                  width = 1.0, height = 1.0,
                  x_off = NULL, y_off = NULL,
                  fill = "white", patch = FALSE,
                  squash = FALSE) {
-  temlist <- check_temlist(temlist)
+  stimlist <- assert_webmorph(stimlist)
 
   suppressWarnings({
-    width <- rep(width, length.out = length(temlist))
-    height <- rep(height, length.out = length(temlist))
-    x_off <- rep(x_off, length.out = length(temlist))
-    y_off <- rep(y_off, length.out = length(temlist))
-    fill <- rep(fill, length.out = length(temlist))
-    #patch <- rep(patch, length.out = length(temlist))
+    width <- rep(width, length.out = length(stimlist))
+    height <- rep(height, length.out = length(stimlist))
+    x_off <- rep(x_off, length.out = length(stimlist))
+    y_off <- rep(y_off, length.out = length(stimlist))
+    fill <- rep(fill, length.out = length(stimlist))
+    #patch <- rep(patch, length.out = length(stimlist))
   })
 
-  for (i in seq_along(temlist)) {
-    origw <- temlist[[i]]$width
-    origh <- temlist[[i]]$height
+  for (i in seq_along(stimlist)) {
+    origw <- stimlist[[i]]$width
+    origh <- stimlist[[i]]$height
     w <- width[i] %||% origw
     h <- height[i] %||% origh
 
@@ -76,10 +76,10 @@ crop <- function(temlist,
     if (abs(x_off[i]) <= 2) x_off[i] <- x_off[i] * origw
     if (abs(y_off[i]) <= 2) y_off[i] <- y_off[i] * origh
 
-    temlist[[i]]$width <- w
-    temlist[[i]]$height <- h
+    stimlist[[i]]$width <- w
+    stimlist[[i]]$height <- h
 
-    if (class(temlist[[i]]$img) == "magick-image") {
+    if (class(stimlist[[i]]$img) == "magick-image") {
       # crop doesn't handle negative offsets well
       ga <- magick::geometry_area(
         width = min(w, origw),
@@ -89,16 +89,16 @@ crop <- function(temlist,
       )
 
       newimg <- magick::image_crop(
-        image = temlist[[i]]$img,
+        image = stimlist[[i]]$img,
         geometry = ga,
         gravity = "NorthWest"
       )
 
       # set fill from patch
       if (isTRUE(patch)) {
-        fill[i] <- patch(temlist[[i]]$img)
+        fill[i] <- patch(stimlist[[i]]$img)
       } else if (!isFALSE(patch)) {
-        plist <- c(list(img = temlist[[i]]$img), patch)
+        plist <- c(list(img = stimlist[[i]]$img), patch)
         fill[i] <- do.call("patch", plist)
       }
 
@@ -109,14 +109,14 @@ crop <- function(temlist,
         y = max(0, -y_off[i])
       )
 
-      temlist[[i]]$img <- magick::image_composite(
+      stimlist[[i]]$img <- magick::image_composite(
         image = bg,
         composite_image = newimg,
         offset = offset
       )
     }
 
-    temlist[[i]]$points <- apply(temlist[[i]]$points, 2, function(pt) {
+    stimlist[[i]]$points <- apply(stimlist[[i]]$points, 2, function(pt) {
       newpt <- pt - c(x_off[i], y_off[i])
       if (isTRUE(squash)) {
         # move points outside image boundaries
@@ -128,5 +128,5 @@ crop <- function(temlist,
     })
   }
 
-  invisible(temlist)
+  invisible(stimlist)
 }

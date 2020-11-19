@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{rename}
 \alias{rename}
-\title{Rename temlist}
+\title{Rename stimuli in a webmorph_list}
 \usage{
 rename(
   temlist,
@@ -15,25 +15,25 @@ rename(
 )
 }
 \arguments{
-\item{temlist}{A webmorph temlist}
-
 \item{prefix}{String to prefix to each name}
 
 \item{suffix}{String to append to each name}
 
-\item{new_names}{Vector of new names - must be the same length as the temlist}
+\item{new_names}{Vector of new names - must be the same length as the webmorph_list}
 
 \item{pattern}{Pattern for gsub}
 
 \item{replacement}{Replacement for gsub}
 
 \item{...}{Additional arguments to pass on to \code{base::gsub()}}
+
+\item{stim_list}{A webmorph_list}
 }
 \value{
-a webmorph temlist
+a webmorph_list
 }
 \description{
-Rename temlist
+Rename stimuli in a webmorph_list
 }
 \examples{
 faces() \%>\%

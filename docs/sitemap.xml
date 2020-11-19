@@ -7,16 +7,16 @@
     <loc>https://facelab.github.io/webmorph//reference/OR.html</loc>
   </url>
   <url>
+    <loc>https://facelab.github.io/webmorph//reference/assert_webmorph.html</loc>
+  </url>
+  <url>
     <loc>https://facelab.github.io/webmorph//reference/average.html</loc>
   </url>
   <url>
-    <loc>https://facelab.github.io/webmorph//reference/c.webmorph_tem.html</loc>
+    <loc>https://facelab.github.io/webmorph//reference/c.webmorph_list.html</loc>
   </url>
   <url>
-    <loc>https://facelab.github.io/webmorph//reference/c.webmorph_temlist.html</loc>
-  </url>
-  <url>
-    <loc>https://facelab.github.io/webmorph//reference/check_temlist.html</loc>
+    <loc>https://facelab.github.io/webmorph//reference/c.webmorph_stim.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/crop.html</loc>
@@ -40,31 +40,31 @@
     <loc>https://facelab.github.io/webmorph//reference/pipe.html</loc>
   </url>
   <url>
-    <loc>https://facelab.github.io/webmorph//reference/plot.webmorph_tem.html</loc>
+    <loc>https://facelab.github.io/webmorph//reference/plot.webmorph_list.html</loc>
   </url>
   <url>
-    <loc>https://facelab.github.io/webmorph//reference/plot.webmorph_temlist.html</loc>
+    <loc>https://facelab.github.io/webmorph//reference/plot.webmorph_stim.html</loc>
   </url>
   <url>
-    <loc>https://facelab.github.io/webmorph//reference/print.webmorph_tem.html</loc>
+    <loc>https://facelab.github.io/webmorph//reference/print.webmorph_list.html</loc>
   </url>
   <url>
-    <loc>https://facelab.github.io/webmorph//reference/print.webmorph_temlist.html</loc>
+    <loc>https://facelab.github.io/webmorph//reference/print.webmorph_stim.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/pt_delete.html</loc>
   </url>
   <url>
-    <loc>https://facelab.github.io/webmorph//reference/read_tem.html</loc>
+    <loc>https://facelab.github.io/webmorph//reference/read_stim.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/rename.html</loc>
   </url>
   <url>
-    <loc>https://facelab.github.io/webmorph//reference/rep.webmorph_tem.html</loc>
+    <loc>https://facelab.github.io/webmorph//reference/rep.webmorph_list.html</loc>
   </url>
   <url>
-    <loc>https://facelab.github.io/webmorph//reference/rep.webmorph_temlist.html</loc>
+    <loc>https://facelab.github.io/webmorph//reference/rep.webmorph_stim.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/resize.html</loc>
@@ -82,7 +82,7 @@
     <loc>https://facelab.github.io/webmorph//reference/unique_names.html</loc>
   </url>
   <url>
-    <loc>https://facelab.github.io/webmorph//reference/write_tem.html</loc>
+    <loc>https://facelab.github.io/webmorph//reference/write_stim.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/write_tps.html</loc>

@@ -1,9 +1,9 @@
 #' Delete template points
 #'
-#' @param temlist list of webmorph templates
+#' @param stimlist list of class webmorph_list
 #' @param ... vectors of points to delete
 #'
-#' @return temlist with altered tems
+#' @return webmorph_list with altered templates
 #' @export
 #'
 #' @examples
@@ -11,14 +11,14 @@
 #'   pt_delete(frl_features("mouth")) %>%
 #'   plot(pt.plot = TRUE, line.plot = TRUE)
 #'
-pt_delete <- function(temlist, ...) {
-  temlist <- check_temlist(temlist)
+pt_delete <- function(stimlist, ...) {
+  stimlist <- assert_webmorph(stimlist)
   points_to_del <- list(...) %>% unlist() %>% unique() %>% sort()
 
-  for (i in seq_along(temlist)) {
-    oldpts <- temlist[[i]]$points
-    oldlines <- temlist[[i]]$lines
-    oldclosed <- temlist[[i]]$closed
+  for (i in seq_along(stimlist)) {
+    oldpts <- stimlist[[i]]$points
+    oldlines <- stimlist[[i]]$lines
+    oldclosed <- stimlist[[i]]$closed
 
     full_idx <- 1:dim(oldpts)[[2]]
 
@@ -45,12 +45,12 @@ pt_delete <- function(temlist, ...) {
     newlines <- newlines[!removed_lines]
     newclosed <- oldclosed[!removed_lines]
 
-    temlist[[i]]$points <- newpoints
-    temlist[[i]]$lines <- newlines
-    temlist[[i]]$closed <- newclosed
+    stimlist[[i]]$points <- newpoints
+    stimlist[[i]]$lines <- newlines
+    stimlist[[i]]$closed <- newclosed
   }
 
-  invisible(temlist)
+  invisible(stimlist)
 }
 
 #' Get point indices for FRL features

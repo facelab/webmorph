@@ -1,7 +1,7 @@
 test_that("c", {
   path <- system.file("extdata/composite/", package = "webmorph")
-  a <- read_tem(path, "multi\\.tem")
-  b <- read_tem(path, "african\\.tem")
+  a <- read_stim(path, "multi")
+  b <- read_stim(path, "african")
 
   # temlists
   x <- c(a, b)
@@ -22,12 +22,12 @@ test_that("c", {
 test_that("print", {
   a <- faces("test")
   x <- capture.output(print(a))
-  op <- c("* f_multi [189 points, 44 lines]",
-          "* m_multi [189 points, 44 lines]")
+  op <- c("* f_multi: 189 points, 44 lines, 338 x 338 JPEG",
+          "* m_multi: 189 points, 44 lines, 338 x 338 JPEG")
   expect_equal(x, op)
 
   x <- capture.output(print(a[[1]]))
-  expect_equal(x, "f_multi [189 points, 44 lines]")
+  expect_equal(x, "189 points, 44 lines, 338 x 338 JPEG")
 })
 
 test_that("rep", {

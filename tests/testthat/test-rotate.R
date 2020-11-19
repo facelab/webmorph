@@ -1,9 +1,9 @@
-path <- system.file("extdata/test/f_multi.tem", package = "webmorph")
+path <- system.file("extdata/test", package = "webmorph")
 
 test_that("works", {
   # 45 degrees with image
-  temlist <- read_tem(path)
-  rtems <- rotate(temlist, 45)
+  stimlist <- read_stim(path)
+  rtems <- rotate(stimlist, 45)
 
   expect_equal(rtems[[1]]$width, 480)
   expect_equal(rtems[[1]]$height, 480)
@@ -13,8 +13,8 @@ test_that("works", {
 
 
   # no images, so estimates centre of image
-  temlist <- read_tem(path, images = FALSE)
-  rtems <- rotate(temlist, 45)
+  stimlist <- read_stim(path, "tem$")
+  rtems <- rotate(stimlist, 45)
 
   expect_equal(rtems[[1]]$width, 479)
   expect_equal(rtems[[1]]$height, 479)
@@ -23,7 +23,7 @@ test_that("works", {
                tolerance = 0.001)
 
   # negative rotation, no images
-  rtems <- rotate(temlist, -45)
+  rtems <- rotate(stimlist, -45)
 
   expect_equal(rtems[[1]]$width, 479)
   expect_equal(rtems[[1]]$height, 479)
@@ -32,8 +32,8 @@ test_that("works", {
                tolerance = 0.001)
 
   # > 360 rotation, images
-  temlist <- read_tem(path)
-  rtems <- rotate(temlist, 360+90)
+  stimlist <- read_stim(path)
+  rtems <- rotate(stimlist, 360+90)
 
   expect_equal(rtems[[1]]$width, 338)
   expect_equal(rtems[[1]]$height, 338)

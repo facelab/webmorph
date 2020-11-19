@@ -26,23 +26,23 @@ library(geomorph)
 ## Load a directory of templates
 ```{r}
 path <- system.file("extdata/composite/", package = "webmorph")
-temlist <- read_tem(path, images = FALSE)
+stimlist <- read_stim(path, "tem$")
 ```
 
 ## Save as TPS and read from TPS
 
 ```{r}
 path_to_tps <- tempfile(fileext = ".tps")
-write_tps(temlist, path_to_tps)
+write_tps(stimlist, path_to_tps)
 gm_data <- readland.tps(path_to_tps, specID = "ID")
 
 plotAllSpecimens(gm_data)
 ```
 
-## Or, just get from temlist
+## Or, just get from stimlist
 
 ```{r}
-wm_data <- tems_to_array(temlist)
+wm_data <- tems_to_array(stimlist)
 
 plotAllSpecimens(wm_data)
 ```

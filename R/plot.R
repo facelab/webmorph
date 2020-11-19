@@ -38,7 +38,7 @@
 #'      bg.color = "black"
 #' )
 #'
-plot.webmorph_tem <- function(x, y, ...) {
+plot.webmorph_stim <- function(x, y, ...) {
 
   points <- x$points %>%
     t() %>%
@@ -194,9 +194,9 @@ plot.webmorph_tem <- function(x, y, ...) {
 }
 
 
-#' Plot webmorph template list
+#' Plot webmorph_list
 #'
-#' @param x webmorph_temlist list
+#' @param x webmorph_list
 #' @param y omitted
 #' @param ... Arguments to be passed to ggplot2 (width, height, pt.color, pt.size, pt.shape, bg.color, bg.fill)
 #'
@@ -206,7 +206,7 @@ plot.webmorph_tem <- function(x, y, ...) {
 #' @examples
 #' faces("test") %>% plot(pt.plot = TRUE)
 #'
-plot.webmorph_temlist <- function(x, y, ...) {
+plot.webmorph_list <- function(x, y, ...) {
   # get all dots to x length
   dots <- list(...)
 
@@ -224,8 +224,7 @@ plot.webmorph_temlist <- function(x, y, ...) {
 
   nrow <- arg$nrow %||% NULL
   ncol <- arg$ncol %||% NULL
-  labels <- arg$labels %||%
-    sapply(x, `[[`, "name")
+  labels <- arg$labels %||% names(x) %||% NULL
 
   cowplot::plot_grid(plotlist = plots,
                      nrow = nrow,

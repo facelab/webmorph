@@ -112,10 +112,10 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/facelab/webmorph">webmorph</a></span><span class="op">)</span>
 
 <span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata/test"</span>, package <span class="op">=</span> <span class="st">"webmorph"</span><span class="op">)</span>
-<span class="va">temlist</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_tem.html">read_tem</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span></pre></div>
+<span class="va">stimlist</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_stim.html">read_stim</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span></pre></div>
 <p>You can plot an image with the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">temlist</span>, line.plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">stimlist</span>, line.plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
 <p><img src="reference/figures/README-basic-plot-1.png" width="100%"></p>
 </div>
 <div id="reproducible-stimulus-construction" class="section level2">
@@ -125,7 +125,7 @@
 <div class="sourceCode" id="cb4"><pre class="downlit">
 <span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata/london"</span>, package <span class="op">=</span> <span class="st">"webmorph"</span><span class="op">)</span>
 
-<span class="va">face_set</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_tem.html">read_tem</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span> <span class="op">%&gt;%</span>
+<span class="va">face_set</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_stim.html">read_stim</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/rename.html">rename</a></span><span class="op">(</span>prefix <span class="op">=</span> <span class="st">"orig_"</span>, pattern <span class="op">=</span> <span class="st">"_03"</span>, replacement <span class="op">=</span> <span class="st">""</span><span class="op">)</span>
 
 <span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="va">face_set</span> <span class="op">%&gt;%</span>
@@ -137,7 +137,7 @@
   <span class="fu"><a href="reference/crop.html">crop</a></span><span class="op">(</span><span class="fl">1.05</span>, <span class="fl">1.05</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html">rainbow</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span> </pre></div>
 <p>Save your stimuli</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="reference/write_tem.html">write_tem</a></span><span class="op">(</span><span class="va">stimuli</span>, dir <span class="op">=</span> <span class="st">"mystimuli"</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="reference/write_stim.html">write_stim</a></span><span class="op">(</span><span class="va">stimuli</span>, dir <span class="op">=</span> <span class="st">"mystimuli"</span><span class="op">)</span></pre></div>
 <p>Easily create figures to illustrate your research.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">stimuli</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></pre></div>

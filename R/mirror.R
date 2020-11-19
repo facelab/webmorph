@@ -2,11 +2,11 @@
 #'
 #' Use the function `frl_sym()` to get the sym_map for the standard webmorph template. If sym_map is omitted, images and templates will be fully reversed (e.g., if point 1 is the left eye in the original image, it will be the right eye in the mirrored image).
 #'
-#' @param temlist list of webmorph templates
+#' @param stimlist list of class webmorph_list
 #' @param sym_map list of corresponding template points
 #' @param axis vertical or horizontal axis of mirroring
 #'
-#' @return temlist with mirrored images and tems
+#' @return webmorph_list with mirrored images and tems
 #' @export
 #'
 #' @examples
@@ -16,33 +16,33 @@
 #' c(o, m) %>%
 #'   plot(pt.plot = TRUE, labels = c("original", "mirrored"))
 #'
-mirror <- function(temlist, sym_map = NULL, axis = "vertical") {
-  temlist <- check_temlist(temlist)
+mirror <- function(stimlist, sym_map = NULL, axis = "vertical") {
+  stimlist <- assert_webmorph(stimlist)
 
-  for (i in seq_along(temlist)) {
-    cx <- (temlist[[i]]$width-1)/2
-    cy <- (temlist[[i]]$height-1)/2
-    p <- temlist[[i]]$points
+  for (i in seq_along(stimlist)) {
+    cx <- (stimlist[[i]]$width-1)/2
+    cy <- (stimlist[[i]]$height-1)/2
+    p <- stimlist[[i]]$points
 
     if (axis == "horizontal") {
-      temlist[[i]]$img <- magick::image_flip(temlist[[i]]$img)
+      stimlist[[i]]$img <- magick::image_flip(stimlist[[i]]$img)
       # flip y points
-      temlist[[i]]$points <- (p - c(0, cy)) * c(1, -1) +c(0, cy)
+      stimlist[[i]]$points <- (p - c(0, cy)) * c(1, -1) +c(0, cy)
     } else {
-      temlist[[i]]$img <- magick::image_flop(temlist[[i]]$img)
+      stimlist[[i]]$img <- magick::image_flop(stimlist[[i]]$img)
       # flop x points
-      temlist[[i]]$points <- (p - c(cx, 0)) * c(-1, 1) +c(cx, 0)
+      stimlist[[i]]$points <- (p - c(cx, 0)) * c(-1, 1) +c(cx, 0)
     }
 
     # remember sym_map is 0-based
-    n_pt <- ncol(temlist[[i]]$points) - 1
+    n_pt <- ncol(stimlist[[i]]$points) - 1
     if (!is.null(sym_map) &&
         all(sym_map %in% 0:n_pt)) {
-      temlist[[i]]$points <- temlist[[i]]$points[, sym_map+1]
+      stimlist[[i]]$points <- stimlist[[i]]$points[, sym_map+1]
     }
   }
 
-  invisible(temlist)
+  invisible(stimlist)
 }
 
 #' FRL Symmetry Map

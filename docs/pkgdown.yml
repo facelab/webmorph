@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   img-manip: img-manip.html
   iris: iris.html
-last_built: 2020-11-18T00:33Z
+last_built: 2020-11-19T00:29Z
 urls:
   reference: https://facelab.github.io/webmorph//reference
   article: https://facelab.github.io/webmorph//articles

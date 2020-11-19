@@ -47,7 +47,7 @@
 
 
 <meta property="og:title" content="Webmorph Faces — faces" />
-<meta property="og:description" content="A convenience function to get a demo temlist" />
+<meta property="og:description" content="A convenience function to get a demo stimlist" />
 
 
 
@@ -139,31 +139,31 @@
     </div>
 
     <div class="ref-description">
-    <p>A convenience function to get a demo temlist</p>
+    <p>A convenience function to get a demo stimlist</p>
     </div>
 
-    <pre class="usage"><span class='fu'>faces</span><span class='op'>(</span>dir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"composite"</span>, <span class='st'>"test"</span>, <span class='st'>"london"</span><span class='op'>)</span>, pattern <span class='op'>=</span> <span class='st'>"\\.tem$"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>faces</span><span class='op'>(</span>dir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"composite"</span>, <span class='st'>"test"</span>, <span class='st'>"london"</span><span class='op'>)</span>, pattern <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>dir</th>
-      <td><p>the image directory in extdata to get images from</p></td>
+      <td><p>the directory in extdata to get files from</p></td>
     </tr>
     <tr>
       <th>pattern</th>
-      <td><p>defaults to all tem files</p></td>
+      <td><p>defaults to all files</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Other arguments to pass on to <code><a href='read_tem.html'>read_tem()</a></code></p></td>
+      <td><p>Other arguments to pass on to <code>read_tem()</code></p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>webmorph_temlist</p>
+    <p>webmorph_list</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>faces</span><span class='op'>(</span><span class='st'>"test"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='op'>)</span>

@@ -111,14 +111,14 @@
 <a href="#load-a-directory-of-templates" class="anchor"></a>Load a directory of templates</h2>
 <div class="sourceCode" id="cb2"><pre class="downlit">
 <span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata/composite/"</span>, package <span class="op">=</span> <span class="st">"webmorph"</span><span class="op">)</span>
-<span class="va">temlist</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_tem.html">read_tem</a></span><span class="op">(</span><span class="va">path</span>, images <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></pre></div>
+<span class="va">stimlist</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_stim.html">read_stim</a></span><span class="op">(</span><span class="va">path</span>, <span class="st">"tem$"</span><span class="op">)</span></pre></div>
 </div>
 <div id="save-as-tps-and-read-from-tps" class="section level2">
 <h2 class="hasAnchor">
 <a href="#save-as-tps-and-read-from-tps" class="anchor"></a>Save as TPS and read from TPS</h2>
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="va">path_to_tps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".tps"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/write_tps.html">write_tps</a></span><span class="op">(</span><span class="va">temlist</span>, <span class="va">path_to_tps</span><span class="op">)</span>
+<span class="fu"><a href="../reference/write_tps.html">write_tps</a></span><span class="op">(</span><span class="va">stimlist</span>, <span class="va">path_to_tps</span><span class="op">)</span>
 <span class="va">gm_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/geomorph/man/readland.tps.html">readland.tps</a></span><span class="op">(</span><span class="va">path_to_tps</span>, specID <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; No curves detected; all points appear to be fixed landmarks.</span>
@@ -132,11 +132,11 @@
 <span class="fu"><a href="https://rdrr.io/pkg/geomorph/man/plotAllSpecimens.html">plotAllSpecimens</a></span><span class="op">(</span><span class="va">gm_data</span><span class="op">)</span></pre></div>
 <p><img src="iris_files/figure-html/unnamed-chunk-3-1.png" width="100%"></p>
 </div>
-<div id="or-just-get-from-temlist" class="section level2">
+<div id="or-just-get-from-stimlist" class="section level2">
 <h2 class="hasAnchor">
-<a href="#or-just-get-from-temlist" class="anchor"></a>Or, just get from temlist</h2>
+<a href="#or-just-get-from-stimlist" class="anchor"></a>Or, just get from stimlist</h2>
 <div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="va">wm_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tems_to_array.html">tems_to_array</a></span><span class="op">(</span><span class="va">temlist</span><span class="op">)</span>
+<span class="va">wm_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tems_to_array.html">tems_to_array</a></span><span class="op">(</span><span class="va">stimlist</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/pkg/geomorph/man/plotAllSpecimens.html">plotAllSpecimens</a></span><span class="op">(</span><span class="va">wm_data</span><span class="op">)</span></pre></div>
 <p><img src="iris_files/figure-html/unnamed-chunk-4-1.png" width="100%"></p>
