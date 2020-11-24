@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Resize templates and images — resize • webmorph</title>
+<title>Align templates and images — align • webmorph</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Resize templates and images — resize" />
-<meta property="og:description" content="Resize templates and images" />
+<meta property="og:title" content="Align templates and images — align" />
+<meta property="og:description" content="Align templates and images" />
 
 
 
@@ -133,16 +133,30 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Resize templates and images</h1>
-    <small class="dont-index">Source: <a href='https://github.com/facelab/webmorph/blob/master/R/resize.R'><code>R/resize.R</code></a></small>
-    <div class="hidden name"><code>resize.Rd</code></div>
+    <h1>Align templates and images</h1>
+    <small class="dont-index">Source: <a href='https://github.com/facelab/webmorph/blob/master/R/align.R'><code>R/align.R</code></a></small>
+    <div class="hidden name"><code>align.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Resize templates and images</p>
+    <p>Align templates and images</p>
     </div>
 
-    <pre class="usage"><span class='fu'>resize</span><span class='op'>(</span><span class='va'>stimlist</span>, width <span class='op'>=</span> <span class='cn'>NULL</span>, height <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>align</span><span class='op'>(</span>
+  <span class='va'>stimlist</span>,
+  pt1 <span class='op'>=</span> <span class='fl'>0</span>,
+  pt2 <span class='op'>=</span> <span class='fl'>1</span>,
+  x1 <span class='op'>=</span> <span class='cn'>NULL</span>,
+  y1 <span class='op'>=</span> <span class='cn'>NULL</span>,
+  x2 <span class='op'>=</span> <span class='cn'>NULL</span>,
+  y2 <span class='op'>=</span> <span class='cn'>NULL</span>,
+  width <span class='op'>=</span> <span class='cn'>NULL</span>,
+  height <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ref_img <span class='op'>=</span> <span class='fl'>1</span>,
+  fill <span class='op'>=</span> <span class='st'>"white"</span>,
+  patch <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  squash <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -152,27 +166,65 @@
       <td><p>list of class webmorph_list</p></td>
     </tr>
     <tr>
+      <th>pt1</th>
+      <td><p>The first point to align (defaults to 0)</p></td>
+    </tr>
+    <tr>
+      <th>pt2</th>
+      <td><p>The second point to align (defaults to 1)</p></td>
+    </tr>
+    <tr>
+      <th>x1</th>
+      <td><p>The x-coordinate to align the first point to</p></td>
+    </tr>
+    <tr>
+      <th>y1</th>
+      <td><p>The y-coordinate to align the first point to</p></td>
+    </tr>
+    <tr>
+      <th>x2</th>
+      <td><p>The x-coordinate to align the second point to</p></td>
+    </tr>
+    <tr>
+      <th>y2</th>
+      <td><p>The y-coordinate to align the second point to</p></td>
+    </tr>
+    <tr>
       <th>width</th>
-      <td><p>new width (in pixels or percent)</p></td>
+      <td><p>The width of the aligned image</p></td>
     </tr>
     <tr>
       <th>height</th>
-      <td><p>new height (in pixels or percent)</p></td>
+      <td><p>The height of the aligned image</p></td>
+    </tr>
+    <tr>
+      <th>ref_img</th>
+      <td><p>The reference image (by index or name) to get coordinates and dimensions from if NULL (defaults to first image)</p></td>
+    </tr>
+    <tr>
+      <th>fill</th>
+      <td><p>background color if cropping goes outside the original image</p></td>
+    </tr>
+    <tr>
+      <th>patch</th>
+      <td><p>whether to use the patch function to set the background color</p></td>
+    </tr>
+    <tr>
+      <th>squash</th>
+      <td><p>whether to move template points outside the image boundaries inside the image</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>webmorph_list with resized tems and/or images</p>
+    <p>webmorph_list with aligned tems and/or images</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='faces.html'>faces</a></span><span class='op'>(</span><span class='st'>"test"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>resize</span><span class='op'>(</span><span class='fl'>.5</span>, <span class='fl'>.75</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span>pt.plot <span class='op'>=</span> <span class='cn'>TRUE</span>,
-       pt.color <span class='op'>=</span> <span class='st'>"black"</span>,
-       pt.shape <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='img'><img src='resize-1.png' alt='' width='700' height='350' /></div><div class='input'>
-</div></pre>
+  <span class='fu'>align</span><span class='op'>(</span>x1 <span class='op'>=</span> <span class='fl'>100</span>, y1 <span class='op'>=</span> <span class='fl'>100</span>, x2 <span class='op'>=</span> <span class='fl'>200</span>, y2 <span class='op'>=</span> <span class='fl'>200</span>,
+        width <span class='op'>=</span> <span class='fl'>300</span>, height <span class='op'>=</span> <span class='fl'>400</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='img'><img src='align-1.png' alt='' width='700' height='350' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

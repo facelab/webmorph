@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">webmorph</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9001</span>
       </span>
     </div>
 
@@ -134,7 +134,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Rename stimuli in a webmorph_list</h1>
-    <small class="dont-index">Source: <a href='https://github.com/facelab/webmorph/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/facelab/webmorph/blob/master/R/rename.R'><code>R/rename.R</code></a></small>
     <div class="hidden name"><code>rename.Rd</code></div>
     </div>
 
@@ -143,7 +143,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>rename</span><span class='op'>(</span>
-  <span class='va'>temlist</span>,
+  <span class='va'>stimlist</span>,
   prefix <span class='op'>=</span> <span class='st'>""</span>,
   suffix <span class='op'>=</span> <span class='st'>""</span>,
   new_names <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -155,6 +155,10 @@
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>stimlist</th>
+      <td><p>A webmorph_list</p></td>
+    </tr>
     <tr>
       <th>prefix</th>
       <td><p>String to prefix to each name</p></td>
@@ -178,10 +182,6 @@
     <tr>
       <th>...</th>
       <td><p>Additional arguments to pass on to <code><a href='https://rdrr.io/r/base/grep.html'>base::gsub()</a></code></p></td>
-    </tr>
-    <tr>
-      <th>stim_list</th>
-      <td><p>A webmorph_list</p></td>
     </tr>
     </table>
 

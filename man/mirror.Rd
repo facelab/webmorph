@@ -20,7 +20,7 @@ webmorph_list with mirrored images and tems
 Use the function \code{frl_sym()} to get the sym_map for the standard webmorph template. If sym_map is omitted, images and templates will be fully reversed (e.g., if point 1 is the left eye in the original image, it will be the right eye in the mirrored image).
 }
 \examples{
-o <- faces("london", "001_03.tem")
+o <- faces("london", "001_03")
 m <- mirror(o, frl_sym())
 
 c(o, m) \%>\%

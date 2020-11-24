@@ -26,49 +26,52 @@ resize <- function(stimlist, width = NULL, height = NULL) {
     stop("height must be a positive number")
   }
 
-  newtl <- lapply(stimlist, function(tem) {
+  suppressWarnings({
+    width <- rep(width, length.out = length(stimlist))
+    height <- rep(height, length.out = length(stimlist))
+  })
+
+  for (i in seq_along(stimlist)) {
     # express height and/or width as % and fill empty value
 
-    if (is.null(width)) {
+    if (is.null(width[i])) {
       # check height first
-    } else if (width <= 10) { # percentage
-      w <-   width
-    } else if (!is.null(width)) { # pixels
-      w <- width/tem$width
+    } else if (width[i] <= 10) { # percentage
+      w <-   width[i]
+    } else if (!is.null(width[i])) { # pixels
+      w <- width[i]/stimlist[[i]]$width
     }
 
-    if (is.null(height)) {
+    if (is.null(height[i])) {
       h <- w
-    } else if (height <= 10) { # percentage
-      h <-  height
+    } else if (height[i] <= 10) { # percentage
+      h <-  height[i]
     } else { # pixels
-      h <- height/tem$height
+      h <- height[i]/stimlist[[i]]$height
     }
 
-    if (is.null(width)) w <- h
+    if (is.null(width[i])) w <- h
 
     # resize template
-    tem$points <- tem$points * c(w, h)
+    stimlist[[i]]$points <- stimlist[[i]]$points * c(w, h)
 
     # calculate new dimensions
-    tem$width <- round(tem$width*w)
-    tem$height <- round(tem$height*h)
+    stimlist[[i]]$width <- round(stimlist[[i]]$width*w)
+    stimlist[[i]]$height <- round(stimlist[[i]]$height*h)
 
-    if (class(tem$img) == "magick-image") {
+    if (class(stimlist[[i]]$img) == "magick-image") {
       # resize image
-      tem$img <- magick::image_resize(
-        tem$img,
+      stimlist[[i]]$img <- magick::image_resize(
+        stimlist[[i]]$img,
         magick::geometry_size_percent(w*100, h*100)
       )
 
       # make sure dimensions are consistent with image
-      info <- magick::image_info(tem$img)
-      tem$width <- info$width
-      tem$height <- info$height
+      info <- magick::image_info(stimlist[[i]]$img)
+      stimlist[[i]]$width <- info$width
+      stimlist[[i]]$height <- info$height
     }
-    tem
-  })
+  }
 
-  class(newtl) <- "webmorph_list"
-  newtl
+  invisible(stimlist)
 }

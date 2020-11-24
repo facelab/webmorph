@@ -19,6 +19,8 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(webmorph)
+library(magick)
+library(cowplot)
 ```
 
 
@@ -101,6 +103,42 @@ stimlist %>%
        patch = c(x1=1, x2=338, y1=1, y2=10)) %>%
   plot()
 ```
+
+## Align
+
+You can align a set of images on two points. By default, these are the first two points in the template, which correspond to the left and right eye in the standard FRL template.
+
+```{r align}
+stimlist %>%
+  align(x1 = 350, y1 = 350, x2 = 450, y2 = 450,
+        width = 800, height = 800, fill = "grey80") %>%
+  plot(pt.plot = TRUE)
+```
+
+If you have a set of misaligned images and don't fill in coordinates or dimensions, `align()` will align to the coordinates and dimensions for the first image.
+
+```{r misalign}
+
+misaligned <- stimlist %>%
+  crop(x_off = c(100, 50), 
+       y_off = c(50, 100), 
+       width = 300, height = 300,
+       fill = "grey80")
+
+plot(misaligned)
+```
+
+
+```{r realign1}
+align(misaligned, fill = "grey80") %>% plot()
+```
+
+Or you can specify the reference image by index or name.
+
+```{r realign2}
+align(misaligned, ref_img = "m_multi", fill = "grey80") %>% plot()
+```
+
 
 ## Chaining
 

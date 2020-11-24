@@ -1,7 +1,7 @@
 Package: webmorph
 Title: Morph Faces
-Date: 2020-11-17
-Version: 0.0.0.9000
+Date: 2020-11-24
+Version: 0.0.0.9001
 Authors@R: 
     person(
         given = "Lisa", 
@@ -24,7 +24,11 @@ Imports:
     dplyr,
     cowplot,
     magick,
-    tools
+    tools,
+    grDevices,
+    stats,
+    jsonlite,
+    geomorph
 Suggests: 
     testthat,
     knitr,

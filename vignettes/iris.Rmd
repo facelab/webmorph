@@ -47,6 +47,8 @@ wm_data <- tems_to_array(stimlist)
 plotAllSpecimens(wm_data)
 ```
 
+
+
 ## Buggy Bezier Curves
 
 ```{r avg-plot, fig.height = 4}

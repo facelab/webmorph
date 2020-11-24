@@ -8,12 +8,11 @@ assert_webmorph(x)
 }
 \arguments{
 \item{x}{The object}
-
-\item{arg}{The name of the argument}
 }
 \value{
 A webmorph_list
 }
 \description{
-Check if an object is a list of class webmorph_list. If class webmorph_stim, wrap in webmorph_list. If a properly structured list without the right class, add the right class.
+Check if an object is a list of class webmorph_list. If class webmorph_stim, wrap in webmorph_list. If a properly structured list without the right class, add the right class. If the img is not a magick_image or the pointer is dead, reloads from the imgpath.
 }
+\keyword{internal}

@@ -33,6 +33,7 @@ reference:
 - title: Manipulation
   desc: ~
   contents:
+  - '`align`'
   - '`average`'
   - '`crop`'
   - '`mirror`'

@@ -1,6 +1,7 @@
 #' Create a TPS file from a webmorph_list
 #'
 #' @param stimlist list of class webmorph_list
+#' @param path_to_tps optional filename to save TPS file
 #'
 #' @return text of tps file
 #' @export

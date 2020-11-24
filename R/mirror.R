@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples
-#' o <- faces("london", "001_03.tem")
+#' o <- faces("london", "001_03")
 #' m <- mirror(o, frl_sym())
 #'
 #' c(o, m) %>%

@@ -2,7 +2,7 @@
 % Please edit documentation in R/patch.R
 \name{patch}
 \alias{patch}
-\title{Median patch colour}
+\title{Patch colour}
 \usage{
 patch(
   img,
@@ -11,7 +11,7 @@ patch(
   y1 = 1,
   y2 = 10,
   color = c("hex", "rgb"),
-  func = median
+  func = stats::median
 )
 }
 \arguments{
@@ -33,7 +33,7 @@ patch(
 hex or rgba color value
 }
 \description{
-Get the median colour value of a specified patch of pixels on an image. This is useful for matching background colours.
+Get the median (or mean or user-defined function) colour value of a specified patch of pixels on an image. This is useful for matching background colours.
 }
 \examples{
 patch(faces()[[1]]$img)

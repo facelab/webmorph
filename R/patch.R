@@ -1,6 +1,6 @@
-#' Median patch colour
+#' Patch colour
 #'
-#' Get the median colour value of a specified patch of pixels on an image. This is useful for matching background colours.
+#' Get the median (or mean or user-defined function) colour value of a specified patch of pixels on an image. This is useful for matching background colours.
 #'
 #' @param img The image
 #' @param x1 starting x pixel of patch
@@ -17,7 +17,7 @@
 #' patch(faces()[[1]]$img)
 #'
 patch <- function(img, x1 = 1, x2 = 10, y1 = 1, y2 = 10,
-                  color = c("hex", "rgb"), func = median) {
+                  color = c("hex", "rgb"), func = stats::median) {
   if (!"magick-image" %in% class(img)) {
     stop("img must be 'magick-image'")
   }
@@ -25,9 +25,9 @@ patch <- function(img, x1 = 1, x2 = 10, y1 = 1, y2 = 10,
   color <- match.arg(color)
 
   pixels <- magick::image_raster(img) %>%
-    dplyr::filter(x >= x1, x <= x2, y >= y1, y <= y2)
+    dplyr::filter(`x` >= x1, `x` <= x2, `y` >= y1, `y` <= y2)
 
-  central_col <- col2rgb(pixels$col, alpha = TRUE) %>%
+  central_col <- grDevices::col2rgb(pixels$col, alpha = TRUE) %>%
     apply(1, func)
 
   if (color == "rgb") {
@@ -35,9 +35,11 @@ patch <- function(img, x1 = 1, x2 = 10, y1 = 1, y2 = 10,
   }
 
   # return hex value
-  rgb(central_col[['red']],
-      central_col[['green']],
-      central_col[['blue']],
-      central_col[['alpha']],
-      maxColorValue = 255)
+  grDevices::rgb(
+    central_col[['red']],
+    central_col[['green']],
+    central_col[['blue']],
+    central_col[['alpha']],
+    maxColorValue = 255
+  )
 }

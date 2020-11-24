@@ -34,7 +34,9 @@ pt_delete <- function(stimlist, ...) {
     # remove points from lines and renumber
     newlines <- lapply(oldlines, function(x) {
       # translate tem idx to r idx
-      l <- trans[(x + 1)] %>% na.omit() %>% as.vector()
+      l <- trans[(x + 1)] %>%
+        stats::na.omit() %>%
+        as.vector()
       if (length(l) > 0) {
         # only return if any points remain
         return(l - 1) # translate r idx to tem idx

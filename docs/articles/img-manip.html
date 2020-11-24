@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">webmorph</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9001</span>
       </span>
     </div>
 
@@ -102,7 +102,13 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/facelab/webmorph">webmorph</a></span><span class="op">)</span></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/facelab/webmorph">webmorph</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/magick/">magick</a></span><span class="op">)</span>
+<span class="co">#&gt; Linking to ImageMagick 7.0.10.0</span>
+<span class="co">#&gt; Enabled features: freetype, lcms, webp</span>
+<span class="co">#&gt; Disabled features: cairo, fontconfig, fftw, ghostscript, pango, rsvg, x11</span>
+<span class="co">#&gt; Using 8 threads</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/cowplot/">cowplot</a></span><span class="op">)</span></pre></div>
 <div id="load-your-images" class="section level2">
 <h2 class="hasAnchor">
 <a href="#load-your-images" class="anchor"></a>Load your images</h2>
@@ -204,11 +210,40 @@ Cropped Images with Matched Background
 </p>
 </div>
 </div>
+<div id="align" class="section level2">
+<h2 class="hasAnchor">
+<a href="#align" class="anchor"></a>Align</h2>
+<p>You can align a set of images on two points. By default, these are the first two points in the template, which correspond to the left and right eye in the standard FRL template.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit">
+<span class="va">stimlist</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/align.html">align</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">350</span>, y1 <span class="op">=</span> <span class="fl">350</span>, x2 <span class="op">=</span> <span class="fl">450</span>, y2 <span class="op">=</span> <span class="fl">450</span>,
+        width <span class="op">=</span> <span class="fl">800</span>, height <span class="op">=</span> <span class="fl">800</span>, fill <span class="op">=</span> <span class="st">"grey80"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>pt.plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+<p><img src="img-manip_files/figure-html/align-1.png" width="100%"></p>
+<p>If you have a set of misaligned images and don’t fill in coordinates or dimensions, <code><a href="../reference/align.html">align()</a></code> will align to the coordinates and dimensions for the first image.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit">
+
+<span class="va">misaligned</span> <span class="op">&lt;-</span> <span class="va">stimlist</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/crop.html">crop</a></span><span class="op">(</span>x_off <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">50</span><span class="op">)</span>, 
+       y_off <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">100</span><span class="op">)</span>, 
+       width <span class="op">=</span> <span class="fl">300</span>, height <span class="op">=</span> <span class="fl">300</span>,
+       fill <span class="op">=</span> <span class="st">"grey80"</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">misaligned</span><span class="op">)</span></pre></div>
+<p><img src="img-manip_files/figure-html/misalign-1.png" width="100%"></p>
+<div class="sourceCode" id="cb12"><pre class="downlit">
+<span class="fu"><a href="../reference/align.html">align</a></span><span class="op">(</span><span class="va">misaligned</span>, fill <span class="op">=</span> <span class="st">"grey80"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+<p><img src="img-manip_files/figure-html/realign1-1.png" width="100%"></p>
+<p>Or you can specify the reference image by index or name.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit">
+<span class="fu"><a href="../reference/align.html">align</a></span><span class="op">(</span><span class="va">misaligned</span>, ref_img <span class="op">=</span> <span class="st">"m_multi"</span>, fill <span class="op">=</span> <span class="st">"grey80"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+<p><img src="img-manip_files/figure-html/realign2-1.png" width="100%"></p>
+</div>
 <div id="chaining" class="section level2">
 <h2 class="hasAnchor">
 <a href="#chaining" class="anchor"></a>Chaining</h2>
 <p>You can also chain image manipulation commands.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
+<div class="sourceCode" id="cb14"><pre class="downlit">
 <span class="va">stimlist</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/rotate.html">rotate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">45</span>, <span class="op">-</span><span class="fl">45</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/crop.html">crop</a></span><span class="op">(</span><span class="fl">.5</span>, <span class="fl">.5</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -224,7 +259,7 @@ Manipulated Images and Templates
 <h2 class="hasAnchor">
 <a href="#repeating-images" class="anchor"></a>Repeating images</h2>
 <p>You can use <code><a href="https://rdrr.io/r/base/rep.html">rep()</a></code> to repeat images in a stimlist. Here, we repeat the faces 3 times each, apply 6 different rotations with different background colours, crop them to the same size, and plot them with 6 different template point colours.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
+<div class="sourceCode" id="cb15"><pre class="downlit">
 
 <span class="va">rainbow</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>pink <span class="op">=</span> <span class="st">"#983E82"</span>,
              orange <span class="op">=</span> <span class="st">"#E2A458"</span>,
@@ -244,7 +279,7 @@ Manipulated Images and Templates
 <h2 class="hasAnchor">
 <a href="#fun-things" class="anchor"></a>Fun things</h2>
 <p>You can do some more fun things to the images (but not templates) with the {magick} package that is installed with {webmorph}.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
+<div class="sourceCode" id="cb16"><pre class="downlit">
 <span class="va">image</span> <span class="op">&lt;-</span> <span class="va">stimlist</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">img</span>
 
 <span class="va">imglist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>

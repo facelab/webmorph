@@ -8,6 +8,8 @@ write_tps(stimlist, path_to_tps = NULL)
 }
 \arguments{
 \item{stimlist}{list of class webmorph_list}
+
+\item{path_to_tps}{optional filename to save TPS file}
 }
 \value{
 text of tps file

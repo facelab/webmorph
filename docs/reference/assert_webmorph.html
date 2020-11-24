@@ -47,7 +47,7 @@
 
 
 <meta property="og:title" content="Check for webmorph_list — assert_webmorph" />
-<meta property="og:description" content="Check if an object is a list of class webmorph_list. If class webmorph_stim, wrap in webmorph_list. If a properly structured list without the right class, add the right class." />
+<meta property="og:description" content="Check if an object is a list of class webmorph_list. If class webmorph_stim, wrap in webmorph_list. If a properly structured list without the right class, add the right class. If the img is not a magick_image or the pointer is dead, reloads from the imgpath." />
 
 
 
@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">webmorph</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9001</span>
       </span>
     </div>
 
@@ -139,7 +139,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Check if an object is a list of class webmorph_list. If class webmorph_stim, wrap in webmorph_list. If a properly structured list without the right class, add the right class.</p>
+    <p>Check if an object is a list of class webmorph_list. If class webmorph_stim, wrap in webmorph_list. If a properly structured list without the right class, add the right class. If the img is not a magick_image or the pointer is dead, reloads from the imgpath.</p>
     </div>
 
     <pre class="usage"><span class='fu'>assert_webmorph</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
@@ -150,10 +150,6 @@
     <tr>
       <th>x</th>
       <td><p>The object</p></td>
-    </tr>
-    <tr>
-      <th>arg</th>
-      <td><p>The name of the argument</p></td>
     </tr>
     </table>
 
