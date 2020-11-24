@@ -119,3 +119,40 @@ c.webmorph_list <- function(...) {
 }
 
 
+
+
+#' Get template bounds
+#'
+#' @param stimlist A webmorph_list
+#' @param each Whether to calculate max and min for the full set (default) or each image separately
+#'
+#' @return A list of min and max x and y values
+#' @export
+#'
+#' @examples
+#' faces("london") %>% bounds()
+#'
+#' faces("test") %>% bounds(each = TRUE)
+bounds <- function(stimlist, each = FALSE) {
+  stimlist <- assert_webmorph(stimlist)
+
+  if (isTRUE(each)) {
+    # get separate bounds for each stimulus
+    b <- sapply(stimlist, bounds) %>%
+      t() %>%
+      as.data.frame() %>%
+      tidyr::unnest(cols = c("min_x", "max_x", "min_y", "max_y")) %>%
+      as.data.frame()
+    rownames(b) <- names(stimlist)
+    return(b)
+  }
+
+  A <- tems_to_array(stimlist)
+  x <- (A[, "X", ])
+  y <- (A[, "Y", ]) * -1
+
+  list(min_x = min(x),
+       max_x = max(x),
+       min_y = min(y),
+       max_y = max(y))
+}

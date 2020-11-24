@@ -1,7 +1,7 @@
 # webmorph 0.0.0.9001
 
 * Cleaned up functions and examples
-* Added `align()` function
+* Added `align()` function, includes procrustes align
 
 # webmorph 0.0.0.9000
 

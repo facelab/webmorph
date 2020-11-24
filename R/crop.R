@@ -5,10 +5,10 @@
 #' Fill can be set to R color names (see `colors()`) or valid hex or rgb values. Patch can be set to TRUE (defaults to median color of top left 10-pixel square) or a list of arguments to the function `patch()` to set background from a patch of the image.
 #'
 #' @param stimlist list of class webmorph_list
-#' @param width width of cropped image
-#' @param height height of cropped image
-#' @param x_off x-offset (NULL horizontally centers cropped image)
-#' @param y_off y-offset (NULL vertically centers cropped image)
+#' @param width width of cropped image in pixels or % (<5)
+#' @param height height of cropped image in pixels or % (<5)
+#' @param x_off x-offset in pixels (NULL horizontally centers cropped image)
+#' @param y_off y-offset in pixels (NULL vertically centers cropped image)
 #' @param fill background color if cropping goes outside the original image
 #' @param patch whether to use the patch function to set the background color
 #' @param squash whether to move template points outside the image boundaries inside the image
@@ -65,16 +65,16 @@ crop <- function(stimlist,
     h <- height[i] %||% origh
 
     # handle percentages
-    if (w <= 2) w <- w * origw
-    if (h <= 2) h <- h * origh
+    if (w <= 5) w <- w * origw
+    if (h <= 5) h <- h * origh
 
     # null offsets split the remainder between orig and new dimensions
     if (is.null(x_off[i]) || is.na(x_off[i])) x_off[i] <- (origw - w)/2
     if (is.null(y_off[i]) || is.na(y_off[i])) y_off[i] <- (origh - h)/2
 
     # handle percentage offsets
-    if (abs(x_off[i]) <= 2) x_off[i] <- x_off[i] * origw
-    if (abs(y_off[i]) <= 2) y_off[i] <- y_off[i] * origh
+    #if (abs(x_off[i]) <= 2) x_off[i] <- x_off[i] * origw
+    #if (abs(y_off[i]) <= 2) y_off[i] <- y_off[i] * origh
 
     stimlist[[i]]$width <- w
     stimlist[[i]]$height <- h

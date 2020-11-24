@@ -64,5 +64,5 @@ tems_to_array <- function(stimlist) {
     t(tem$points * c(1, -1))
   }) %>%
     array(dim = c(n_pts, 2, length(stimlist)),
-          dimnames = list(NULL, NULL, names(stimlist)))
+          dimnames = list(NULL, c("X", "Y"), names(stimlist)))
 }

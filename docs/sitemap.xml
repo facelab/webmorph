@@ -10,10 +10,16 @@
     <loc>https://facelab.github.io/webmorph//reference/align.html</loc>
   </url>
   <url>
+    <loc>https://facelab.github.io/webmorph//reference/angle_from_2pts.html</loc>
+  </url>
+  <url>
     <loc>https://facelab.github.io/webmorph//reference/assert_webmorph.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/average.html</loc>
+  </url>
+  <url>
+    <loc>https://facelab.github.io/webmorph//reference/bounds.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/c.webmorph_list.html</loc>
@@ -53,6 +59,9 @@
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/print.webmorph_stim.html</loc>
+  </url>
+  <url>
+    <loc>https://facelab.github.io/webmorph//reference/procrustes_align.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/pt_delete.html</loc>

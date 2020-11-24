@@ -17,7 +17,8 @@ align(
   ref_img = 1,
   fill = "white",
   patch = FALSE,
-  squash = FALSE
+  squash = FALSE,
+  procrustes = FALSE
 )
 }
 \arguments{
@@ -46,6 +47,8 @@ align(
 \item{patch}{whether to use the patch function to set the background color}
 
 \item{squash}{whether to move template points outside the image boundaries inside the image}
+
+\item{procrustes}{Whether to do a procrustes alignment}
 }
 \value{
 webmorph_list with aligned tems and/or images
@@ -58,4 +61,8 @@ faces("test") \%>\%
   align(x1 = 100, y1 = 100, x2 = 200, y2 = 200,
         width = 300, height = 400) \%>\%
   plot()
+
+ faces("lisa")[1:2] \%>\%
+   align(procrustes = TRUE) \%>\%
+   plot()
 }

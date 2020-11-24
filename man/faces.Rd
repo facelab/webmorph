@@ -4,7 +4,7 @@
 \alias{faces}
 \title{Webmorph Faces}
 \usage{
-faces(dir = c("composite", "test", "london"), pattern = NULL, ...)
+faces(dir = c("composite", "test", "london", "lisa"), pattern = NULL, ...)
 }
 \arguments{
 \item{dir}{the directory in extdata to get files from}

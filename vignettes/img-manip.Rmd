@@ -104,6 +104,36 @@ stimlist %>%
   plot()
 ```
 
+You can use the `bounds()` function to get the minimum and maximum x- and y-values from a list of templates, then use that to set the cropping. In the example below, the images are cropped so there is 100 pixels of padding around the boundaries, calculated across all images. 
+
+```{r bounds, fig.width = 8, fig.height = 2.2}
+lisa <- faces("lisa")
+b <- bounds(lisa)
+padding <- 100
+
+lisa %>%
+  crop(width = b$max_x - b$min_x + padding*2,
+       height = b$max_y - b$min_y + padding*2,
+       x_off = b$min_x - padding,
+       y_off = b$min_y - padding) %>%
+  plot(pt.plot = TRUE, labels = "", nrow = 1)
+```
+
+Set `each` to TRUE to calculate the boundaries separately for each template in the list instead of the full set.
+
+```{r bounds-each, fig.width = 8, fig.height = 2.2}
+
+b <- bounds(lisa, each = TRUE)
+padding <- 20
+
+lisa %>%
+  crop(width = b$max_x - b$min_x + padding*2,
+       height = b$max_y - b$min_y + padding*2,
+       x_off = b$min_x - padding,
+       y_off = b$min_y - padding) %>%
+  plot(pt.plot = TRUE, labels = "", nrow = 1)
+```
+
 ## Align
 
 You can align a set of images on two points. By default, these are the first two points in the template, which correspond to the left and right eye in the standard FRL template.
@@ -115,30 +145,44 @@ stimlist %>%
   plot(pt.plot = TRUE)
 ```
 
-If you have a set of misaligned images and don't fill in coordinates or dimensions, `align()` will align to the coordinates and dimensions for the first image.
-
-```{r misalign}
-
-misaligned <- stimlist %>%
-  crop(x_off = c(100, 50), 
-       y_off = c(50, 100), 
-       width = 300, height = 300,
-       fill = "grey80")
-
-plot(misaligned)
-```
+If you have a set of misaligned images and don't fill in coordinates or dimensions, `align()` will align to the coordinates and dimensions for the first image. The images below use the Face++ template (they were auto-delineated on webmorph), so points 63 and 81 are the eye points.
 
 
-```{r realign1}
-align(misaligned, fill = "grey80") %>% plot()
+```{r realign1, fig.width = 8, fig.height = 2}
+align(lisa, pt1 = 63, pt2 = 81, fill = "grey80") %>% 
+  plot(nrow = 1)
 ```
 
 Or you can specify the reference image by index or name.
 
-```{r realign2}
-align(misaligned, ref_img = "m_multi", fill = "grey80") %>% plot()
+```{r realign2, fig.width = 8, fig.height = 2}
+align(lisa, pt1 = 63, pt2 = 81, 
+      ref_img = "lisa3", patch = TRUE) %>% 
+  plot(nrow = 1)
 ```
 
+## Procrustes Align 
+
+You can set the `procrustes` argument to TRUE to procrustes-align the images and templates.
+
+```{r procrustes, fig.width = 12, fig.height = 8}
+
+orig <- plot(lisa, pt.plot = TRUE, 
+             labels = "", nrow = 1)
+
+# any two points that are standard on the image
+# should work for procrustes alignment
+lisa_proc <- align(lisa, pt1 = 63, pt2 = 81,
+                      procrustes = TRUE, patch = TRUE)
+
+procr <- plot(lisa_proc, pt.plot = TRUE, 
+              labels = "", nrow = 1)
+
+cowplot::plot_grid(orig, procr, nrow = 2, 
+                   labels = c("original", "procrustes-aligned"))
+```
+
+Currently, [webmorph](https://webmorph.org) does not have this capability, but you can download your images and tems, procrustes align them with the R package, save the images and templates, and upload them back to webmorph.
 
 ## Chaining
 

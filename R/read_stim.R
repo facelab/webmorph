@@ -46,7 +46,7 @@ read_stim <- function (path, pattern = NULL, ...) {
 
     # process lines ----
     nlines <- as.integer(tem_txt[[npoints+2]])
-    x <- (npoints+3):length(tem_txt)
+    x <- (npoints+3):(npoints+2+(nlines*3))
     line_rows <- tem_txt[x] %>%
       matrix(nrow = 3)
 
@@ -81,9 +81,12 @@ read_stim <- function (path, pattern = NULL, ...) {
       attr <- magick::image_attributes(img$img)
       wm_desc <- attr$value[attr$property == "exif:ImageDescription"]
       if (length(wm_desc) > 0) {
-        img$desc <- jsonlite::fromJSON(wm_desc,
-                                       simplifyDataFrame = FALSE,
-                                       simplifyVector = TRUE)
+        img$desc <- tryCatch({
+          jsonlite::fromJSON(
+            wm_desc,
+            simplifyDataFrame = FALSE,
+            simplifyVector = TRUE)
+        }, error = function(e) { wm_desc })
       }
       # TODO: read embedded tem?
 

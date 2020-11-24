@@ -18,13 +18,13 @@ crop(
 \arguments{
 \item{stimlist}{list of class webmorph_list}
 
-\item{width}{width of cropped image}
+\item{width}{width of cropped image in pixels or \% (<5)}
 
-\item{height}{height of cropped image}
+\item{height}{height of cropped image in pixels or \% (<5)}
 
-\item{x_off}{x-offset (NULL horizontally centers cropped image)}
+\item{x_off}{x-offset in pixels (NULL horizontally centers cropped image)}
 
-\item{y_off}{y-offset (NULL vertically centers cropped image)}
+\item{y_off}{y-offset in pixels (NULL vertically centers cropped image)}
 
 \item{fill}{background color if cropping goes outside the original image}
 

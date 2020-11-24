@@ -12,7 +12,7 @@
 #' @examples
 #' faces("test") %>% plot()
 #'
-faces <- function(dir = c("composite", "test", "london"),
+faces <- function(dir = c("composite", "test", "london", "lisa"),
                      pattern = NULL, ...) {
   dir <- match.arg(dir)
   path <- system.file(file.path("extdata", dir),
