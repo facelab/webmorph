@@ -5,5 +5,5 @@
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
-^todo.md$
+^stuff$
 ^data-raw$
