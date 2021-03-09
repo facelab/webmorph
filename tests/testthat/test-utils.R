@@ -1,3 +1,4 @@
+# concatenate c() ----
 test_that("c", {
   path <- system.file("extdata/composite/", package = "webmorph")
   a <- read_stim(path, "multi")
@@ -44,5 +45,22 @@ test_that("rep", {
   x <- rep(a, times = 3)
   expect_equal(length(x), 6)
   expect_equal(names(x), rep(c("f_multi", "m_multi"), times = 3))
+})
+
+# extract [] ----
+test_that("[", {
+  x <- faces("test")
+  f1 <- x[1]
+  expect_equal(class(f1), "webmorph_list")
+  expect_equal(length(f1), 1)
+
+  f_rev <- x[c(2, 1)]
+  expect_equal(class(f_rev), "webmorph_list")
+  expect_equal(length(f_rev), 2)
+  expect_equal(names(f_rev), c("m_multi", "f_multi"))
+
+  m <- x["m_multi"]
+  expect_equal(class(m), "webmorph_list")
+  expect_equal(names(m), "m_multi")
 })
 

@@ -258,3 +258,8 @@ getControlPoints <- function(lpath, i = 1) {
   )
 }
 
+
+
+plot_all <- function(stimlist) {
+
+}

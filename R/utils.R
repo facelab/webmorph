@@ -119,6 +119,34 @@ c.webmorph_list <- function(...) {
 }
 
 
+#' Extract webmorph_list elements
+#'
+#' @param x webmorph_list from which to extract elements
+#' @param i indices to be selected
+#'
+#' @return webmorph_list
+#' @export
+#'
+`[.webmorph_list` <- function(x, i) {
+  x <- NextMethod()
+  class(x) <- "webmorph_list"
+  x
+}
+
+#' Replace webmorph_list element
+#'
+#' @param x webmorph_list from which to extract elements
+#' @param i index to be replaced
+#' @param value webmorph_stim element to replace with
+#'
+#' @return webmorph_list
+#' @export
+#'
+`[[<-.webmorph_list` <- function(x, i, value) {
+  stopifnot(is(value, "webmorph_stim"))
+  NextMethod()
+}
+
 
 
 #' Get template bounds

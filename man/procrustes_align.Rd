@@ -4,7 +4,7 @@
 \alias{procrustes_align}
 \title{Procrustes align templates}
 \usage{
-procrustes_align(data, rotate = "guess")
+procrustes_align(data, rotate = 0)
 }
 \arguments{
 \item{data}{Template points}

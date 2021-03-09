@@ -61,9 +61,9 @@ align <- function(stimlist, pt1 = 0, pt2 = 1,
     pro_avg <- apply(coords, c(1, 2), mean)
 
     oEyeWidth <- (orig_avg[pt1+1, ] - orig_avg[pt2+1, ])^2 %>%
-      sum() %>% sqrt()
+      sum() %>% sqrt(.)
     pEyeWidth <- (pro_avg[pt1+1, ] - pro_avg[pt2+1, ])^2 %>%
-      sum() %>% sqrt()
+      sum() %>% sqrt(.)
     mult = oEyeWidth/pEyeWidth
 
     # resize and convert to webmorph coordinates
@@ -151,8 +151,9 @@ align <- function(stimlist, pt1 = 0, pt2 = 1,
 #' @return coordinates
 #' @export
 #'
-procrustes_align <- function(data, rotate = "guess") {
-  gpa <- geomorph::gpagen(data, print.progress = FALSE)
+procrustes_align <- function(data, rotate = 0) {
+  gpa <- geomorph::gpagen(data, PrinAxes = FALSE,
+                          print.progress = FALSE)
 
   if (rotate != "guess") {
     rotate <- as.numeric(rotate)

@@ -34,7 +34,7 @@ test_that("procrustes", {
     # plot(p2[,1,1], p2[,2,1])
     # plot(p3[,1,1], p3[,2,1])
 
-    expect_equal(g, p1)
+    expect_equal(g, p0)
     expect_equivalent(p1, geomorph::rotate.coords(p0, "rotateC"))
     expect_equivalent(p2, geomorph::rotate.coords(p1, "rotateC"))
     expect_equivalent(p3, geomorph::rotate.coords(p2, "rotateC"))
