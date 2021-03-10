@@ -1,8 +1,8 @@
-#' Plot webmorph template
+#' Plot webmorph stimulus
 #'
-#' @param x webmorph_tem list
+#' @param x webmorph_stim list
 #' @param y omitted
-#' @param ... Arguments to be passed to ggplot2 (width, height, pt.color, pt.size, pt.shape, bg.color, bg.fill)
+#' @param ... Arguments controlling the plot characteristics (img.plot, pt.plot, line.plot, width, height, pt.color, pt.size, pt.shape, line.color, line.alpha, border.color, border.width)
 #'
 #' @return plot
 #' @export
@@ -20,10 +20,7 @@
 #'      pt.alpha = 1,
 #'      line.plot = FALSE, # T, F, or "bezier"
 #'      line.color = "#FFFF66",
-#'      line.alpha = 0.5,
-#'      font.size = 3,
-#'      bf.fill = "transparent",
-#'      bg.color = "transparent"
+#'      line.alpha = 0.5
 #' )
 #'
 #' #custom settings
@@ -34,17 +31,11 @@
 #'      pt.shape = 1,
 #'      pt.alpha = 0.5,
 #'      line.plot = TRUE,
-#'      bg.fill = "grey70",
-#'      bg.color = "black"
+#'      border.color = "black",
+#'      border.width = 10 # in pixels
 #' )
 #'
 plot.webmorph_stim <- function(x, y, ...) {
-
-  points <- x$points %>%
-    t() %>%
-    as.data.frame()
-  names(points) <- c("x", "y")
-  points$i <- 0:(nrow(points)-1)
 
   # check args ----
   arg <- list(...)
@@ -76,6 +67,19 @@ plot.webmorph_stim <- function(x, y, ...) {
     ylim <- NULL
   }
 
+  if (!is.null(x$points)) {
+    points <- x$points %>%
+      t() %>%
+      as.data.frame()
+    names(points) <- c("x", "y")
+    points$y <- (height %||% 0) - points$y
+    points$i <- 0:(nrow(points)-1)
+  } else {
+    # ignore any pt or line plotting
+    pt.plot <- FALSE
+    line.plot <- FALSE
+  }
+
   pt.size <-  arg$pt.size %||% arg$size %||% 1
   pt.shape <- arg$pt.shape %||% arg$shape %||% 3
   pt.alpha <- arg$pt.alpha  %||% arg$alpha %||% 1
@@ -97,35 +101,38 @@ plot.webmorph_stim <- function(x, y, ...) {
     arg$color %||%
     "#FFFF66"
 
-  bg.fill <- arg$bg.fill %||% "transparent"
-  bg.color <- arg$bg.colour %||% arg$bg.color %||% bg.fill
+  border.color <- arg$border.colour %||% arg$border.color %||% "transparent"
 
   # set up plot ----
   pt.aes <- ggplot2::aes(x, y, color = pt.color)
   text.aes <- ggplot2::aes(x, y, color = pt.color, label = i)
-  pborder <- ggplot2::element_rect(
-    color = bg.color, fill = bg.fill)
+  pborder <- ggplot2::element_rect(color = border.color, fill = border.color)
+  border <- ggplot2::expansion(add = arg$border.width %||% 0)
 
   # plot setup ----
   g <- ggplot2::ggplot() +
     ggplot2::theme_void() +
-    ggplot2::scale_y_reverse() +
+    #ggplot2::scale_y_reverse() +
     ggplot2::coord_fixed(xlim = xlim,
                          ylim = ylim) +
     ggplot2::scale_color_manual(values = levels(points$color)) +
     ggplot2::theme(legend.position = "none",
-                   plot.background = pborder,
-                   plot.margin = ggplot2::margin(0,0,0,0, "cm"))
+                   panel.background = pborder,
+                   plot.margin = ggplot2::margin(0,0,0,0, "pt")) +
+    ggplot2::scale_x_continuous(expand = border) +
+    ggplot2::scale_y_continuous(expand = border)
 
   # add image ----
   if (isTRUE(img.plot)) {
     i <- grid::rasterGrob(x$img, interpolate = FALSE)
     g <- g + ggplot2::annotation_custom(
-      i, 0, width, -height, 0)
+      i, 0, width, 0, height)
   }
 
   # add lines ----
-  if (line.plot == "bezier") {
+  if (!isTRUE(line.plot)) {
+    # don't plot lines
+  } else if (line.plot == "bezier") {
     # bezier curves; still really buggy
     for (i in seq_along(x$lines)) {
       l <- x$lines[[i]]
@@ -150,8 +157,6 @@ plot.webmorph_stim <- function(x, y, ...) {
         )
       }
     }
-  } else if (!isTRUE(line.plot)) {
-    # don't plot lines
   } else {
     # straight lines
     for (i in seq_along(x$lines)) {
@@ -198,7 +203,7 @@ plot.webmorph_stim <- function(x, y, ...) {
 #'
 #' @param x webmorph_list
 #' @param y omitted
-#' @param ... Arguments to be passed to ggplot2 (width, height, pt.color, pt.size, pt.shape, bg.color, bg.fill)
+#' @param ... Arguments to be passed to ggplot2 (width, height, pt.color, pt.size, pt.shape, bg.color, bg.fill) or cowplot::plot_grid (label_x, label_y, label_size, label_fontfamily, label_fontface, label_colour, hjust, vjust, nrow, ncol)
 #'
 #' @return plot
 #' @export
@@ -207,29 +212,47 @@ plot.webmorph_stim <- function(x, y, ...) {
 #' faces("test") %>% plot(pt.plot = TRUE)
 #'
 plot.webmorph_list <- function(x, y, ...) {
-  # get all dots to x length
-  dots <- list(...)
+  arg <- list(...)
 
-  if (length(x) > 1) {
-    dots <- lapply(dots ,rep, length.out = length(x))
-  }
+  # get all dots to x length
+  dots <- lapply(arg, rep, length.out = length(x))
 
   plots <- lapply(seq_along(x), function(i) {
     subdots <- lapply(dots, `[[`, i)
     do.call(plot, c(list(x = x[[i]]), subdots))
   })
 
-  # check args ----
-  arg <- list(...)
+  # n <- length(plots)
+  # nrow <- arg$nrow %||% NULL
+  # ncol <- arg$ncol %||% NULL
+  # if (is.null(nrow) && is.null(ncol)) {
+  #   nrow <- ceiling(sqrt(n))
+  #   ncol <- ceiling(n / nrow)
+  # } else if (is.null(ncol)) {
+  #   ncol <- ceiling(n / nrow)
+  # } else if (is.null(nrow)) {
+  #   nrow <- ceiling(n / ncol)
+  # }
 
-  nrow <- arg$nrow %||% NULL
-  ncol <- arg$ncol %||% NULL
-  labels <- arg$labels %||% names(x) %||% NULL
+  # w <- arg$fig.width %||% (x[[1]]$width * nrow)
+  # h <- arg$fig.height %||% (x[[1]]$height * ncol)
+  # bg.color <- arg$bg.color %||% "transparent"
+  # fig <- magick::image_graph(w, h, bg.color)
 
-  cowplot::plot_grid(plotlist = plots,
-                     nrow = nrow,
-                     ncol = ncol,
-                     labels = labels)
+  # pass only valid plot_grid arguments on
+  valid_args <- args(cowplot::plot_grid) %>% as.list() %>% names()
+  cpg_args <- arg[names(arg) %in% valid_args]
+  cpg_args$plotlist <- plots
+  cpg_args$labels <- arg$labels %||% names(x) %||% NULL
+  do.call(cowplot::plot_grid, cpg_args)
+
+  # dev.off()
+  #
+  # i <- grid::rasterGrob(fig, interpolate = FALSE)
+  #
+  # ggplot2::ggplot() +
+  #   ggplot2::theme_void() +
+  #   ggplot2::annotation_custom(i)
 }
 
 
@@ -258,8 +281,3 @@ getControlPoints <- function(lpath, i = 1) {
   )
 }
 
-
-
-plot_all <- function(stimlist) {
-
-}

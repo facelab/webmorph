@@ -1,6 +1,6 @@
 # concatenate c() ----
 test_that("c", {
-  path <- system.file("extdata/composite/", package = "webmorph")
+  path <- system.file("extdata/composite/", package = "webmorphR")
   a <- read_stim(path, "multi")
   b <- read_stim(path, "african")
 

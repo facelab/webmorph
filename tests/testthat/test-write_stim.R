@@ -1,5 +1,5 @@
 test_that("works", {
-  path <- system.file("extdata/composite", package = "webmorph")
+  path <- system.file("extdata/composite", package = "webmorphR")
   stimlist <- read_stim(path, "f_multi")
 
   dir <- paste(tempdir(), "ftest", sep = "/")

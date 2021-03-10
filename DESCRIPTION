@@ -1,7 +1,7 @@
-Package: webmorph
-Title: Morph Faces
-Date: 2020-11-24
-Version: 0.0.0.9001
+Package: webmorphR
+Title: Reproducible Face Stimuli
+Date: 2021-03-09
+Version: 0.0.0.9002
 Authors@R: 
     person(
         given = "Lisa", 
@@ -10,7 +10,7 @@ Authors@R:
         email = "debruine@gmail.com", 
         comment = c(ORCID = "0000-0002-7523-5539")
     )
-Description: Morph faces.
+Description: Create reproducible face stimuli using images with webmorph.org templates.
 License: CC BY 4.0
 Encoding: UTF-8
 LazyData: true
@@ -34,7 +34,7 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
-URL: https://github.com/facelab/webmorph
-BugReports: https://github.com/facelab/webmorph/issues
+URL: https://github.com/facelab/webmorphR
+BugReports: https://github.com/facelab/webmorphR/issues
 Depends: 
     R (>= 2.10)

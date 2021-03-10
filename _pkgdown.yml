@@ -19,7 +19,7 @@ articles:
   navbar: ~
   contents:
   - img-manip
-  - iris
+  - web
   twitter:
          icon: "fab fa-twitter fa-lg"
          href: https://twitter.com/webmorph_org
@@ -56,3 +56,13 @@ reference:
   contents:
   - '`tems_to_array`'
   - '`write_tps`'
+- title: Web functions
+  desc: ~
+  contents:
+  - '`login`'
+  - '`logout`'
+  - '`projListGet`'
+  - '`projSet`'
+  - '`dirLoad`'
+  - '`fileDownload`'
+  - '`average`'

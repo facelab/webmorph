@@ -1,5 +1,4 @@
-path <- system.file("extdata/london", package = "webmorph")
-stimlist <- read_stim(path, "001_03")
+stimlist <- faces("london", "001_03")
 
 test_that("no map", {
   m <- mirror(stimlist)

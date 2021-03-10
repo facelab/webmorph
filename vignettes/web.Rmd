@@ -1,0 +1,87 @@
+---
+title: "Web Integration"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Web Integration}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(webmorphR)
+login()
+```
+
+## Log in 
+
+You need to have an authorised user account at [webmorph.org](https://webmorph.org){target="_blank} to use the web integration functions. Log in before you use any of the functions.
+
+```{r, eval = FALSE}
+login(email = "test@gmail.com", password = "my big secret")
+```
+
+Ideally, you should put your login details in your `.Renviron` file and just use `login()` so you don't accidentally share your password. The easiest way to find your `.Renviron` file is by typing `usethis::edit_r_environ()` in the console. Add the following lines to the file.
+
+```
+WEBMORPH_EMAIL="test@gmail.com"
+WEBMORPH_PASSWORD="my big secret"
+```
+
+Use the function `logout()` to log out.
+
+## Projects
+
+Get your project list.
+
+```{r, eval = FALSE}
+projListGet()
+```
+
+` r knitr::kable(head(projListGet()))`
+
+Get the names of all files in a directory with the function `dirLoad()`
+
+```{r}
+files <- dirLoad(project_id = 84877, dir = "lisa")
+```
+
+Download the files. By default, they are saved in a directory named as the project ID, and have the same directory substructure, but you can also download them to a single named directory.
+
+```{r}
+fileDownload(files, "test")
+```
+
+Now you can read in the stimuli to webmorphR.
+
+```{r, fig.width = 8, fig.height = 2.7}
+stimlist <- read_stim("test", "lisa")
+
+plot(stimlist, pt.plot = TRUE, border.width = 10, 
+     nrow = 1, labels = "")
+```
+
+And create averages with the images on the server.
+
+```{r, fig.width = 8, fig.height = 2.7}
+f1 <- sprintf("84877/lisa/lisa%d.jpg", c(1, 2, 3, 4))
+avg1 <- makeAvg(f1, "test/avg1", norm = "twopoint")
+
+f2 <- sprintf("84877/lisa/lisa%d.jpg", c(2, 1, 3, 4))
+avg2 <- makeAvg(f2, "test/avg2", norm = "twopoint")
+
+f3 <- sprintf("84877/lisa/lisa%d.jpg", c(3, 1, 2, 4))
+avg3 <- makeAvg(f3, "test/avg3", norm = "twopoint")
+
+f4 <- sprintf("84877/lisa/lisa%d.jpg", c(4, 1, 2, 3))
+avg4 <- makeAvg(f4, "test/avg4", norm = "twopoint")
+
+plot(c(avg1, avg2, avg3, avg4), labels = 1:4, nrow = 1, border.width = 10)
+```
+

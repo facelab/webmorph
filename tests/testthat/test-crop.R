@@ -1,4 +1,4 @@
-path <- system.file("extdata/composite", package = "webmorph")
+path <- system.file("extdata/composite", package = "webmorphR")
 stimlist <- read_stim(path, "f_multi")
 
 test_that("works", {
@@ -45,8 +45,7 @@ test_that("works", {
 })
 
 test_that("different crops", {
-  path <- system.file("extdata/composite/", package = "webmorph")
-  stimlist <- read_stim(path)
+  stimlist <- faces("composite")
 
   w <- seq(.1, 1, .1)
   ctems <- crop(stimlist, w, w)

@@ -1,10 +1,11 @@
-pandoc: 2.7.3
+pandoc: 2.11.2
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   img-manip: img-manip.html
   iris: iris.html
-last_built: 2020-11-24T23:45Z
+  web: web.html
+last_built: 2021-03-10T00:31Z
 urls:
   reference: https://facelab.github.io/webmorph//reference
   article: https://facelab.github.io/webmorph//articles

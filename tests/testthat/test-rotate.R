@@ -1,4 +1,4 @@
-path <- system.file("extdata/test", package = "webmorph")
+path <- system.file("extdata/test", package = "webmorphR")
 
 test_that("works", {
   # 45 degrees with image

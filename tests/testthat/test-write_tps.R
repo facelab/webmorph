@@ -1,5 +1,4 @@
-path <- system.file("extdata/composite/", package = "webmorph")
-stimlist <- read_stim(path)
+stimlist <- faces("composite")
 
 test_that("works", {
   tpath <- tempfile(fileext = ".tps")

@@ -1,5 +1,4 @@
-path <- system.file("extdata/test", package = "webmorph")
-stimlist <- read_stim(path)
+stimlist <- faces("test")
 stim <- stimlist[[1]]
 
 test_that("works", {

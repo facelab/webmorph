@@ -1,4 +1,4 @@
 library(testthat)
-library(webmorph)
+library(webmorphR)
 
-test_check("webmorph")
+test_check("webmorphR")

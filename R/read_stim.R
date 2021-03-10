@@ -7,7 +7,7 @@
 #' @return a list of lists with class webmorph_tem
 #'
 #' @examples
-#' path <- system.file("extdata/composite", package = "webmorph")
+#' path <- system.file("extdata/composite", package = "webmorphR")
 #' stimlist <- read_stim(path)
 #' stimlist
 #'
@@ -15,9 +15,9 @@
 #'
 read_stim <- function (path, pattern = NULL, ...) {
   # get paths to temfiles ----
-  if (dir.exists(path)) {
+  if (dir.exists(path) %>% all()) {
     files <- list.files(path, pattern, full.names = TRUE)
-  } else if (file.exists(path)) {
+  } else if (sapply(path, file.exists) %>% all()) {
     files <- path
   } else {
     stop(path, " is neither a directory nor a file")

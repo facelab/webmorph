@@ -1,4 +1,4 @@
-path <- system.file("extdata/composite", package = "webmorph")
+path <- system.file("extdata/composite", package = "webmorphR")
 stimlist <- read_stim(path, "f_multi")
 
 test_that("error", {

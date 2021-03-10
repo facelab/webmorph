@@ -24,7 +24,7 @@
 # }
 #
 #
-# # path <- system.file("extdata/composite", package = "webmorph")
+# # path <- system.file("extdata/composite", package = "webmorphR")
 # # temlist <- read_tem(path)
 # # points <- temlist[[1]]$points
 # # p <- data.frame(t(points))

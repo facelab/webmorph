@@ -18,14 +18,14 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(webmorph)
+library(webmorphR)
 library(geomorph)
 ```
 
 
 ## Load a directory of templates
 ```{r}
-path <- system.file("extdata/composite/", package = "webmorph")
+path <- system.file("extdata/composite/", package = "webmorphR")
 stimlist <- read_stim(path, "tem$")
 ```
 

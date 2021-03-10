@@ -16,7 +16,7 @@ faces <- function(dir = c("composite", "test", "london", "lisa"),
                      pattern = NULL, ...) {
   dir <- match.arg(dir)
   path <- system.file(file.path("extdata", dir),
-                      package = "webmorph")
+                      package = "webmorphR")
   stimlist <- read_stim(path, pattern, ...)
 
   invisible(stimlist)

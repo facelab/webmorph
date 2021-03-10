@@ -2,22 +2,22 @@
 % Please edit documentation in R/plot.R
 \name{plot.webmorph_stim}
 \alias{plot.webmorph_stim}
-\title{Plot webmorph template}
+\title{Plot webmorph stimulus}
 \usage{
 \method{plot}{webmorph_stim}(x, y, ...)
 }
 \arguments{
-\item{x}{webmorph_tem list}
+\item{x}{webmorph_stim list}
 
 \item{y}{omitted}
 
-\item{...}{Arguments to be passed to ggplot2 (width, height, pt.color, pt.size, pt.shape, bg.color, bg.fill)}
+\item{...}{Arguments controlling the plot characteristics (img.plot, pt.plot, line.plot, width, height, pt.color, pt.size, pt.shape, line.color, line.alpha, border.color, border.width)}
 }
 \value{
 plot
 }
 \description{
-Plot webmorph template
+Plot webmorph stimulus
 }
 \examples{
 # default values
@@ -32,10 +32,7 @@ plot(faces("test")[[1]],
      pt.alpha = 1,
      line.plot = FALSE, # T, F, or "bezier"
      line.color = "#FFFF66",
-     line.alpha = 0.5,
-     font.size = 3,
-     bf.fill = "transparent",
-     bg.color = "transparent"
+     line.alpha = 0.5
 )
 
 #custom settings
@@ -46,8 +43,8 @@ plot(faces("test")[[1]],
      pt.shape = 1,
      pt.alpha = 0.5,
      line.plot = TRUE,
-     bg.fill = "grey70",
-     bg.color = "black"
+     border.color = "black",
+     border.width = 10 # in pixels
 )
 
 }

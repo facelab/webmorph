@@ -1,4 +1,4 @@
-path <- system.file("extdata/composite", package = "webmorph")
+path <- system.file("extdata/composite", package = "webmorphR")
 nm <- c("f_african", "f_easian", "f_multi", "f_wasian", "f_white",
         "m_african", "m_easian", "m_multi", "m_wasian", "m_white")
 temnames <- c("tempath", "points", "lines", "closed")
@@ -56,4 +56,12 @@ test_that("mixed img/tem", {
   expect_equal(names(stim$f_african), temnames)
   expect_equal(names(stim$f_white), imgnames)
   expect_equal(names(stim$f_easian), c(imgnames, temnames))
+})
+
+test_that("multiple files", {
+  paths <- paste0(path, "/", c("f_easian", "f_white", "f_african"), ".jpg")
+  stim <- read_stim(paths)
+
+  expect_equal(names(stim), c("f_easian", "f_white", "f_african"))
+  expect_equal(names(stim$f_white), imgnames)
 })

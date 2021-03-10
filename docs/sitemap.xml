@@ -31,13 +31,28 @@
     <loc>https://facelab.github.io/webmorph//reference/crop.html</loc>
   </url>
   <url>
+    <loc>https://facelab.github.io/webmorph//reference/dirLoad.html</loc>
+  </url>
+  <url>
     <loc>https://facelab.github.io/webmorph//reference/faces.html</loc>
+  </url>
+  <url>
+    <loc>https://facelab.github.io/webmorph//reference/fileDownload.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/frl_features.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/frl_sym.html</loc>
+  </url>
+  <url>
+    <loc>https://facelab.github.io/webmorph//reference/login.html</loc>
+  </url>
+  <url>
+    <loc>https://facelab.github.io/webmorph//reference/logout.html</loc>
+  </url>
+  <url>
+    <loc>https://facelab.github.io/webmorph//reference/makeAvg.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/mirror.html</loc>
@@ -64,6 +79,12 @@
     <loc>https://facelab.github.io/webmorph//reference/procrustes_align.html</loc>
   </url>
   <url>
+    <loc>https://facelab.github.io/webmorph//reference/projListGet.html</loc>
+  </url>
+  <url>
+    <loc>https://facelab.github.io/webmorph//reference/projSet.html</loc>
+  </url>
+  <url>
     <loc>https://facelab.github.io/webmorph//reference/pt_delete.html</loc>
   </url>
   <url>
@@ -88,10 +109,22 @@
     <loc>https://facelab.github.io/webmorph//reference/rotated_size.html</loc>
   </url>
   <url>
+    <loc>https://facelab.github.io/webmorph//reference/sub-.webmorph_list.html</loc>
+  </url>
+  <url>
+    <loc>https://facelab.github.io/webmorph//reference/sub-subset-.webmorph_list.html</loc>
+  </url>
+  <url>
+    <loc>https://facelab.github.io/webmorph//reference/tem_def.html</loc>
+  </url>
+  <url>
     <loc>https://facelab.github.io/webmorph//reference/tems_to_array.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/unique_names.html</loc>
+  </url>
+  <url>
+    <loc>https://facelab.github.io/webmorph//reference/web.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/write_stim.html</loc>
@@ -104,5 +137,8 @@
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//articles/iris.html</loc>
+  </url>
+  <url>
+    <loc>https://facelab.github.io/webmorph//articles/web.html</loc>
   </url>
 </urlset>

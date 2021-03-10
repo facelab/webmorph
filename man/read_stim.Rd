@@ -20,7 +20,7 @@ a list of lists with class webmorph_tem
 Read stimuli
 }
 \examples{
-path <- system.file("extdata/composite", package = "webmorph")
+path <- system.file("extdata/composite", package = "webmorphR")
 stimlist <- read_stim(path)
 stimlist
 
