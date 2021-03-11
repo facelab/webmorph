@@ -3,9 +3,9 @@ suppressPackageStartupMessages({
   library(shiny)
   library(shinyjs)
   library(shinydashboard)
-  library(geomorph)
-  library(demopckg)
+  library(DT)
   library(dplyr)
+  library(webmorphR)
 })
 
 ## functions ----
@@ -17,37 +17,57 @@ debug_msg <- function(txt) {
 
 ## tabs ----
 
-intro_tab <- tabItem(
-  tabName = "intro_tab",
-  h3("Intro"),
-  p("This shiny app is under development and likely to have a lot of bugs."),
-  box(width = 12, collapsible = TRUE, collapsed = FALSE,
-      title = "Load and Visualise",
-      fileInput("load_tps", "Load from TPS", width = "100%"),
-      # rotation buttons
-      actionButton("rotate_orig", "Original Orientation"),
-      actionButton("flipX", "Flip X"),
-      actionButton("flipY", "Flip Y"),
-      actionButton("rotateC", "Rotate Clockwise"),
-      actionButton("rotateCC", "Rotate CounterClockwise"),
-      # plotting buttons
-      selectInput("selected_pcs", "Choose PC", c()),
-      numericInput("vis_sd", "SDs to Visualise", 3),
-      actionButton("plot_pc", "Plot PC"),
-      plotOutput("plot2d")
-  )
+finder_tab <- tabItem(
+  tabName = "finder_tab",
+  fileInput("fileUpload", "Upload File", multiple = TRUE,  width = "100%"),
+  uiOutput("finder")
+)
+
+project_tab <- tabItem(
+  tabName = "project_tab",
+  dataTableOutput("project")
+)
+
+delin_tab <- tabItem(
+  tabName = "delin_tab",
+  uiOutput("delin")
+)
+
+average_tab <- tabItem(
+  tabName = "average_tab",
+  uiOutput("average")
+)
+
+trans_tab <- tabItem(
+  tabName = "trans_tab",
+  uiOutput("transform")
+)
+
+three_tab <- tabItem(
+  tabName = "three_tab",
+  uiOutput("threeD")
 )
 
 ## UI ----
 ui <- dashboardPage(
-  skin = "purple",
-  dashboardHeader(title = "Demopckg"),
+  skin = "blue",
+  dashboardHeader(title = "WebMorphR",
+                  dropdownMenuOutput("queue")),
   dashboardSidebar(
     sidebarMenu(
       id = "tabs",
-      menuItem("Intro", tabName = "intro_tab")
+      menuItem("Projects", tabName = "project_tab"),
+      menuItem("Finder", tabName = "finder_tab"),
+      menuItem("Delineate", tabName = "delin_tab"),
+      menuItem("Average", tabName = "average_tab"),
+      menuItem("Transform", tabName = "trans_tab"),
+      menuItem("3D", tabName = "three_tab")
     ),
-    actionButton("demo_tps", "Demo TPS")
+    textInput("email", NULL, placeholder = "email"),
+    passwordInput("password", NULL, placeholder = "password"),
+    textOutput("login_status"),
+    actionButton("login", "Login"),
+    actionButton("logout", "Logout")
   ),
   dashboardBody(
     shinyjs::useShinyjs(),
@@ -56,87 +76,77 @@ ui <- dashboardPage(
       tags$script(src = "custom.js")
     ),
     tabItems(
-      intro_tab
+      project_tab,
+      finder_tab,
+      delin_tab,
+      average_tab,
+      trans_tab,
+      three_tab
     )
   )
 )
 
 ## server ----
 server <- function(input, output, session) {
+  # hide elements
+  c("logout", "login_status") %>%
+    lapply(hide)
+
   v <- reactiveValues()
 
-  # demo_tps ----
-  observeEvent(input$demo_tps, { debug_msg("demo_tps")
-    v$tps_path <- system.file("extdata", "LondonSet.tps", package="demopckg")
-  })
+  # login ----
+  observeEvent(input$login, { debug_msg("login")
+    email <- ifelse(input$email == "",
+                    Sys.getenv("WEBMORPH_EMAIL"),
+                    input$email)
 
-  # load_tps ----
-  observeEvent(input$load_tps, { debug_msg("load_tps")
-    v$tps_path <- input$load_tps$datapath
-  }, ignoreNULL = TRUE)
+    password <- ifelse(input$password == "",
+                       Sys.getenv("WEBMORPH_PASSWORD"),
+                       input$password)
 
-  # tps_path ----
-  observeEvent(v$tps_path, { debug_msg("tps_path")
-    v$data <- geomorph::readland.tps(
-      v$tps_path,
-      specID = "ID",
-      warnmsg = FALSE
-    )
+    if (email == "" || password == "") return()
 
-    data_gpa <- geomorph::gpagen(v$data, print.progress = FALSE)
-    v$aligned <- data_gpa$coords
-  }, ignoreNULL = TRUE)
+    tryCatch({
+      login(email, password)
+      show("logout")
+      show("login_status")
+      hide("login")
+      hide("email")
+      hide("password")
 
-  # v$aligned ----
-  observeEvent(v$aligned, { debug_msg("v$aligned")
-    v$pca <- geomorph::gm.prcomp(v$aligned)
-    v$ref <- geomorph::mshape(v$aligned)
+      output$login_status <- renderText({
+        paste("Logged in as", email)
+      })
 
-    # set up pcs
-    x <- 1:length(v$pca$d)
-    names(x) <- paste0("PC", x)
-    updateSelectInput(session, "selected_pcs", choices = x)
+      plist <- projListGet(TRUE)
+      output$project <- renderDT(plist)
 
-    # plot when v$aligned changes
-    output$plot2d <- renderPlot({
-      plot(v$aligned[, , 1], asp = 1)
+    }, error = function(e) {
+      alert(e$message)
     })
   })
 
-  ## rotate ----
-  observeEvent(input$rotate_orig, { debug_msg("rotate_orig")
-    if (is.null(v$data)) return()
-    data_gpa <- geomorph::gpagen(v$data, print.progress = FALSE)
-    v$aligned <- data_gpa$coords
-  }, ignoreNULL = TRUE)
-
-  observeEvent(input$flipX, { debug_msg("flipX")
-    v$aligned <- geomorph::rotate.coords(v$aligned, type = "flipX")
-  }, ignoreNULL = TRUE)
-
-  observeEvent(input$flipY, { debug_msg("flipY")
-    v$aligned <- geomorph::rotate.coords(v$aligned, type = "flipY")
-  }, ignoreNULL = TRUE)
-
-  observeEvent(input$rotateC, { debug_msg("rotateC")
-    v$aligned <- geomorph::rotate.coords(v$aligned, type = "rotateC")
-  }, ignoreNULL = TRUE)
-
-  observeEvent(input$rotateCC, { debug_msg("rotateCC")
-    v$aligned <- geomorph::rotate.coords(v$aligned, type = "rotateCC")
-  }, ignoreNULL = TRUE)
-
-
-  ## plot_pc ----
-  observeEvent(input$plot_pc, { debug_msg("plot_pc")
-    if (is.null(v$aligned)) return(NULL)
-
-    which_pcs <- as.integer(input$selected_pcs)
-
-    output$plot2d <- renderPlot({
-      plot2DPCs(v$pca, v$ref, which_pcs, input$vis_sd)
-   })
+  # logout ----
+  observeEvent(input$logout, { debug_msg("logout")
+    tryCatch({
+      logout()
+      output$login_status <- renderText("")
+      hide("logout")
+      hide("login_status")
+      show("login")
+      show("email")
+      show("password")
+    }, error = function(e) {
+      alert(e$message)
+    })
   })
+
+  # fileUpload ----
+  observeEvent(input$fileUpload, { debug_msg("fileUpload")
+    path <- input$fileUpload$datapath
+  }, ignoreNULL = TRUE)
+
+
 
 } # end server()
 

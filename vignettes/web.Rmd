@@ -10,13 +10,16 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.retina = FALSE
 )
+
+# clean up directory from last run
+unlink("test", recursive = TRUE)
 ```
 
 ```{r setup}
 library(webmorphR)
-login()
 ```
 
 ## Log in 
@@ -34,7 +37,19 @@ WEBMORPH_EMAIL="test@gmail.com"
 WEBMORPH_PASSWORD="my big secret"
 ```
 
-Use the function `logout()` to log out.
+Then webmorphR will automatically log you in when you load the library or use `login()`.
+
+```{r}
+login()
+```
+
+WebmorphR is pretty verbose to let you know how the package is interacting with the website. You can turn off webmorphR messages globally with the options:
+
+```{r}
+webmorph_options(verbose = FALSE)
+webmorph_options(verbose = TRUE)
+```
+
 
 ## Projects
 
@@ -44,32 +59,38 @@ Get your project list.
 projListGet()
 ```
 
-` r knitr::kable(head(projListGet()))`
+`r knitr::kable(head(projListGet()))`
 
-Get the names of all files in a directory with the function `dirLoad()`
+Get the names of all files in a project (or a specified subdirectory) with the function `dirLoad()`
 
 ```{r}
-files <- dirLoad(project_id = 84877, dir = "lisa")
+files <- dirLoad(project_id = 84877)
+lisa <- dirLoad(project_id = 84877, dir = "lisa")
 ```
+
+## Download Files
 
 Download the files. By default, they are saved in a directory named as the project ID, and have the same directory substructure, but you can also download them to a single named directory.
 
 ```{r}
-fileDownload(files, "test")
+fileDownload(lisa, "test")
 ```
 
 Now you can read in the stimuli to webmorphR.
 
 ```{r, fig.width = 8, fig.height = 2.7}
-stimlist <- read_stim("test", "lisa")
+stimlist <- read_stim("test")
 
 plot(stimlist, pt.plot = TRUE, border.width = 10, 
      nrow = 1, labels = "")
 ```
 
-And create averages with the images on the server.
 
-```{r, fig.width = 8, fig.height = 2.7}
+## Create Averages
+
+You can create averages with delineated images on the server. The example below shows how changing the order of the 4 files changes the position of the average when using "twopoint" normalisation.
+
+```{r}
 f1 <- sprintf("84877/lisa/lisa%d.jpg", c(1, 2, 3, 4))
 avg1 <- makeAvg(f1, "test/avg1", norm = "twopoint")
 
@@ -81,7 +102,45 @@ avg3 <- makeAvg(f3, "test/avg3", norm = "twopoint")
 
 f4 <- sprintf("84877/lisa/lisa%d.jpg", c(4, 1, 2, 3))
 avg4 <- makeAvg(f4, "test/avg4", norm = "twopoint")
-
-plot(c(avg1, avg2, avg3, avg4), labels = 1:4, nrow = 1, border.width = 10)
 ```
+
+Concatenate the resulting stimulus lists and plot them.
+
+```{r, fig.width = 8, fig.height = 2.7}
+averages <- c(avg1, avg2, avg3, avg4)
+
+plot(averages, labels = 1:4, nrow = 1, border.width = 10)
+```
+
+WebmorphR plots are just ggplots, so you can use `ggsave()` to save them to a file.
+
+```{r}
+ggplot2::ggsave("test/average_fig.png", width = 8, height = 2.7)
+```
+
+## Manage Files
+
+You can upload these files to webmorph.org to use them in further morphs or transforms. Uploading files can take a long time, depending on server load, but you will see a progress bar in the console.
+
+`fileUpload()` can take either a stimulus list or a vector of file paths, and requires an upload directory that starts with the ID of a project that you have permission to alter.
+
+```{r}
+tp <- fileUpload(averages, "84877/twopoint_avg/")
+```
+
+You can't overwrite files on webmorph.org, so you might need to delete things sometimes.
+
+You can delete individual files...
+
+```{r}
+fileDelete(tp[1:2])
+```
+
+...but it's usually more efficient and faster to delete an entire directory than individual files.
+
+```{r}
+dirDelete("84877/twopoint_avg/")
+```
+
+
 

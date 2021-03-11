@@ -31,19 +31,31 @@
     <loc>https://facelab.github.io/webmorph//reference/crop.html</loc>
   </url>
   <url>
+    <loc>https://facelab.github.io/webmorph//reference/dirDelete.html</loc>
+  </url>
+  <url>
     <loc>https://facelab.github.io/webmorph//reference/dirLoad.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/faces.html</loc>
   </url>
   <url>
+    <loc>https://facelab.github.io/webmorph//reference/fileDelete.html</loc>
+  </url>
+  <url>
     <loc>https://facelab.github.io/webmorph//reference/fileDownload.html</loc>
+  </url>
+  <url>
+    <loc>https://facelab.github.io/webmorph//reference/fileUpload.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/frl_features.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/frl_sym.html</loc>
+  </url>
+  <url>
+    <loc>https://facelab.github.io/webmorph//reference/getProjectID.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/login.html</loc>
@@ -53,6 +65,9 @@
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/makeAvg.html</loc>
+  </url>
+  <url>
+    <loc>https://facelab.github.io/webmorph//reference/message.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/mirror.html</loc>
@@ -125,6 +140,12 @@
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/web.html</loc>
+  </url>
+  <url>
+    <loc>https://facelab.github.io/webmorph//reference/webmorphR.html</loc>
+  </url>
+  <url>
+    <loc>https://facelab.github.io/webmorph//reference/webmorph_options.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/write_stim.html</loc>

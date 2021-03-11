@@ -184,3 +184,14 @@ bounds <- function(stimlist, each = FALSE) {
        min_y = min(y),
        max_y = max(y))
 }
+
+#' WebmorphR Message
+#'
+#' @param ... arguments to pass to base::message()
+#'
+#' @return NULL
+message <- function(...) {
+  if (isTRUE(webmorph_options("verbose"))) {
+    base::message(...)
+  }
+}

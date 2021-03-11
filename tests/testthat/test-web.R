@@ -9,9 +9,9 @@ test_that("errors and warning", {
   expect_message(logout(), "Logged out", fixed = TRUE)
 
   expect_error(login(email, "bad_password"),
-               "<li>The password is incorrect.</li>", fixed = TRUE)
+               "The password is incorrect.", fixed = TRUE)
   expect_error(login("nope", "bad_password"),
-               "<li>The username is incorrect.</li>", fixed = TRUE)
+               "The username is incorrect.", fixed = TRUE)
 
   yntbli <- "You need to be logged in to do this."
   expect_warning(logout(), yntbli, fixed = TRUE)
@@ -59,6 +59,42 @@ test_that("makeAvg", {
   expect_true(file.exists("test/tex.tem"))
   expect_true(file.exists("test/notex.jpg"))
   expect_true(file.exists("test/notex.tem"))
+
+  unlink("test", recursive = TRUE)
+})
+
+# getProjectID ----
+test_that("getProjectID", {
+  expect_error(getProjectID("abc"))
+  expect_error(getProjectID(c("1/a", "2/b")))
+
+  id <- getProjectID(c("1/a", "1/b", "1/c"))
+  expect_equal(id, 1)
+})
+
+# fileUpload ----
+test_that("fileUpload", {
+  skip_on_cran()
+
+  dirLoad(84877, "lisa") %>%
+    fileDownload("test")
+
+  f <- list.files("test", "lisa", full.names = T)
+  u <- fileUpload(f, "84877/newtest/")
+
+  u_exp <- sub("test/", "84877/newtest/", f)
+  names(u_exp) <- f
+  expect_equal(u, u_exp)
+
+  u_check <- dirLoad(84877, "newtest")
+  expect_equal(u_check, unname(u))
+
+  d <- fileDelete(files = u[1:4])
+  d_check <- dirLoad(84877, "newtest")
+  expect_equal(d_check, unname(u[5:8]))
+
+  expect_true(dirDelete("84877/newtest/"))
+  expect_error(dirLoad(84877, "newtest"))
 
   unlink("test", recursive = TRUE)
 })

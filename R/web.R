@@ -16,12 +16,15 @@ web <- function(script = "webmorphR", ..., .error = c("warn", "stop", "none")) {
   resp <- httr::content(r)
   if (isTRUE(resp$error)) {
     .error <- match.arg(.error)
-    if (.error == "warn") warning(resp$errorText)
-    if (.error == "stop") stop(resp$errorText)
+    e <- resp$errorText %>%
+      charToRaw() %>%  # force read_html to treat as string
+      xml2::read_html() %>% # read as HTML
+      rvest::html_text() # strip HTML tags
+    if (.error == "warn") warning(e, call. = FALSE)
+    if (.error == "stop") stop(e, call. = FALSE)
   }
-  resp
+  invisible(resp)
 }
-
 
 #' Login to webmorph.org
 #'
@@ -34,6 +37,8 @@ login <- function(email = Sys.getenv("WEBMORPH_EMAIL"),
                   password = Sys.getenv("WEBMORPH_PASSWORD")) {
   resp <- web("userLogin", email = email, password = password, .error = "stop")
   message("Logged in as user ", resp$user)
+  projListGet() # sets $_SESSION['projects']
+
   invisible(resp$user)
 }
 
@@ -82,9 +87,30 @@ projListGet <- function(notes = FALSE) {
 projSet <- function(project) {
   resp <- web("projSet", project = project, .error = "stop")
 
-  message("You have ", resp$perm, " permissions on project ", project)
   invisible(list(project_id = project,
-                 perm = resp$perm))
+                 permissions = resp$perm))
+}
+
+#' Get Project ID from a list of filenames
+#'
+#' @param files
+#'
+#' @return project ID
+#' @export
+#'
+getProjectID <- function(files) {
+  suppressWarnings({
+    project_id <- gsub("^(\\d{1,11})/.*$", "\\1", files) %>%
+     unique() %>% as.integer()
+  })
+
+  if (length(project_id) != 1) {
+    stop("All files need to be in the same project.")
+  } else if (is.na(project_id)) {
+    stop("The project ID must be an intger and present at the start of each file name (e.g., '123/folder/file.jpg')")
+  }
+
+  project_id
 }
 
 
@@ -119,6 +145,7 @@ fileDownload <- function(files, destination = NULL) {
   if (length(files) > 1) {
     paths <- sapply(files, fileDownload, destination = destination)
     # names(paths) <- NULL
+    message("Downloaded ", length(paths), " files")
     return(invisible(paths))
   }
 
@@ -134,6 +161,114 @@ fileDownload <- function(files, destination = NULL) {
                   httr::write_disk(fname, TRUE))
 
   invisible(fname)
+}
+
+#' Upload files to webmorph.org
+#'
+#' @param files vector of paths of files to upload
+#' @param dir directory to upload them to
+#'
+#' @return list of successfully uploaded files
+#' @export
+#'
+fileUpload <- function(files, dir) {
+  url <- "https://webmorph.org/scripts/fileUpload"
+
+  # save  images to tempdir if files is a stim list
+  if ("webmorph_list" %in% class(files)) {
+    stimlist <- files
+    files <- write_stim(stimlist, tempdir()) %>%
+      unlist()
+
+    names(files) <- sapply(files, basename)
+  }
+
+  # need to set current project to avoid permissions rejection
+  dir <- paste0(dir, "/") %>% gsub("/+", "/", .)
+  project_id <- getProjectID(dir)
+  check <- projSet(project_id)
+  if (check$permissions != "all") {
+    stop("You do not have permission to upload images to project ", check$project_id)
+  }
+
+  message("Starting Upload...")
+
+  if (webmorph_options("verbose")) {
+    pb <- progress::progress_bar$new(total = length(files))
+    pb$tick(0)
+  }
+
+  uploaded <- sapply(files, function(path) {
+    body <- list(`upload[0]` = httr::upload_file(path),
+                 basedir = dir)
+    r <- httr::POST(url, body = body)
+    resp <- httr::content(r)
+    if (webmorph_options("verbose")) pb$tick()
+    if (isTRUE(resp$error)) {
+      warning(resp$errorText)
+      FALSE
+    } else {
+      resp$newFileName[[1]]
+    }
+  })
+
+  message("... ", sum(uploaded != "FALSE"), " of ",
+          length(files), " uploaded")
+
+  uploaded[uploaded != "FALSE"]
+}
+
+#' Delete directories on webmorph.org
+#'
+#' @param dir directory to delete
+#'
+#' @return logical, if directory was deleted
+#' @export
+dirDelete <- function(dir) {
+  resp <- web("dirDelete", 'dirname[]' = dir)
+
+  resp$info[dir] == "deleted"
+}
+
+#' Delete files on webmorph.org
+#'
+#' @param files files to delete
+#'
+#' @return list of deleted files
+#' @export
+fileDelete <- function(files) {
+  # need to set current project to avoid permissions rejection
+  project_id <- getProjectID(files)
+  check <- projSet(project_id)
+  if (check$permissions != "all") {
+    stop("You do not have permission to delete images from project ", check$project_id)
+  }
+
+  message("Starting Deletion...")
+
+  if (webmorph_options("verbose")) {
+    pb <- progress::progress_bar$new(total = length(files))
+    pb$tick(0)
+  }
+
+  #names(files) <- rep('files[]', length(files))
+  #do.call(web, c(list(script = "fileDelete"), files))
+
+  deleted <- sapply(files, function(path) {
+    resp <- web("fileDelete", 'files[]' = path)
+    if (webmorph_options("verbose")) pb$tick()
+    if (isTRUE(resp$error)) {
+      warning(resp$errorText)
+      FALSE
+    } else {
+      TRUE
+    }
+  })
+
+  message("... ", sum(deleted), " of ",
+          length(deleted), " deleted")
+
+  deleted
 }
 
 #' Make an Average Face
@@ -154,10 +289,7 @@ makeAvg <- function(files, filename = "avg",
                     normpoint = 0:1,
                     format = c("jpg", "png", "gif")) {
 
-  project_id <- gsub("^(\\d{1,11})/.*$", "\\1", files) %>% unique()
-  if (length(project_id) != 1) {
-    stop("All images need to be in the same project.")
-  }
+  project_id <- getProjectID(files)
 
   # select image files and remove project_id
   filenames <- gsub(paste0("^", project_id), "", files)
@@ -185,7 +317,9 @@ makeAvg <- function(files, filename = "avg",
   if (isTRUE(resp$error)) { warning(resp$errorText) }
 
   tmpdir <- tempdir()
-  avg <- fileDownload(resp$newFileName, tmpdir)
+  suppressMessages(
+    avg <- fileDownload(resp$newFileName, tmpdir)
+  )
 
   dir.create(dirname(filename), recursive = TRUE, showWarnings = FALSE)
   imgname <- paste0(filename, ".", match.arg(format))
