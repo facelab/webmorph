@@ -107,6 +107,9 @@
     <li>
       <a href="../articles/web.html">Web Integration</a>
     </li>
+    <li>
+      <a href="../articles/stimuli.html">Making Stimuli</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -142,18 +145,18 @@
     <p>Get directory contents</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dirLoad</span><span class='op'>(</span><span class='va'>project_id</span>, dir <span class='op'>=</span> <span class='st'>""</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>dirLoad</span><span class='op'>(</span>dir <span class='op'>=</span> <span class='st'>""</span>, project_id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"webmorph_project_id"</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>project_id</th>
-      <td><p>the project ID</p></td>
-    </tr>
-    <tr>
       <th>dir</th>
       <td><p>the directory to look in</p></td>
+    </tr>
+    <tr>
+      <th>project_id</th>
+      <td><p>the project ID</p></td>
     </tr>
     </table>
 

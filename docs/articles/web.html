@@ -65,6 +65,9 @@
     <li>
       <a href="../articles/web.html">Web Integration</a>
     </li>
+    <li>
+      <a href="../articles/stimuli.html">Making Stimuli</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -109,7 +112,7 @@
 <span class="co">#&gt; https://facelab.github.io/webmorphR/</span>
 <span class="co">#&gt; ************</span>
 <span class="co">#&gt; Logged in as user 1</span>
-<span class="co">#&gt; Your projects are using 25.8 Gb of 100 Gb</span>
+<span class="co">#&gt; Your projects are using 25 Gb of 100 Gb</span>
 <span class="co">#&gt; You have all permissions for project 1</span></code></pre></div>
 <div id="log-in" class="section level2">
 <h2 class="hasAnchor">
@@ -124,7 +127,7 @@ WEBMORPH_PASSWORD="my big secret"</code></pre>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/login.html">login</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Logged in as user 1</span>
-<span class="co">#&gt; Your projects are using 25.8 Gb of 100 Gb</span>
+<span class="co">#&gt; Your projects are using 25 Gb of 100 Gb</span>
 <span class="co">#&gt; You have all permissions for project 1</span></code></pre></div>
 <p>WebmorphR is pretty verbose to let you know how the package is interacting with the website. You can turn off webmorphR messages globally with the options:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -176,23 +179,26 @@ WEBMORPH_PASSWORD="my big secret"</code></pre>
 <p>Get the names of all files in a project (or a specified subdirectory) with the function <code><a href="../reference/dirLoad.html">dirLoad()</a></code></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/dirLoad.html">dirLoad</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt;  [1] "/.trash/avg1.jpg"           "/.trash/avg1.tem"          </span>
-<span class="co">#&gt;  [3] "/composites/_citation.txt"  "/composites/f_african.jpg" </span>
-<span class="co">#&gt;  [5] "/composites/f_african.tem"  "/composites/f_easian.jpg"  </span>
-<span class="co">#&gt;  [7] "/composites/f_easian.tem"   "/composites/f_multi.jpg"   </span>
-<span class="co">#&gt;  [9] "/composites/f_multi.tem"    "/composites/f_wasian.jpg"  </span>
-<span class="co">#&gt; [11] "/composites/f_wasian.tem"   "/composites/f_white.jpg"   </span>
-<span class="co">#&gt; [13] "/composites/f_white.tem"    "/composites/m_african.jpg" </span>
-<span class="co">#&gt; [15] "/composites/m_african.tem"  "/composites/m_easian.jpg"  </span>
-<span class="co">#&gt; [17] "/composites/m_easian.tem"   "/composites/m_multi.jpg"   </span>
-<span class="co">#&gt; [19] "/composites/m_multi.tem"    "/composites/m_wasian.jpg"  </span>
-<span class="co">#&gt; [21] "/composites/m_wasian.tem"   "/composites/m_white.jpg"   </span>
-<span class="co">#&gt; [23] "/composites/m_white.tem"    "/lisa/lisa1.jpg"           </span>
-<span class="co">#&gt; [25] "/lisa/lisa1.tem"            "/lisa/lisa2.jpg"           </span>
-<span class="co">#&gt; [27] "/lisa/lisa2.tem"            "/lisa/lisa3.jpg"           </span>
-<span class="co">#&gt; [29] "/lisa/lisa3.tem"            "/lisa/lisa4.jpg"           </span>
-<span class="co">#&gt; [31] "/lisa/lisa4.tem"            "/templates/_batchAvg.txt"  </span>
-<span class="co">#&gt; [33] "/templates/_batchEdit.txt"  "/templates/_batchTrans.txt"</span></code></pre></div>
+<span class="co">#&gt;  [1] "/.trash/avg1_copy.jpg"      "/.trash/avg1_copy.tem"     </span>
+<span class="co">#&gt;  [3] "/.trash/avg1.jpg"           "/.trash/avg1.tem"          </span>
+<span class="co">#&gt;  [5] "/.trash/lisa1.jpg"          "/.trash/lisa1.tem"         </span>
+<span class="co">#&gt;  [7] "/.trash/lisa2.jpg"          "/.trash/lisa2.tem"         </span>
+<span class="co">#&gt;  [9] "/composites/_citation.txt"  "/composites/f_african.jpg" </span>
+<span class="co">#&gt; [11] "/composites/f_african.tem"  "/composites/f_easian.jpg"  </span>
+<span class="co">#&gt; [13] "/composites/f_easian.tem"   "/composites/f_multi.jpg"   </span>
+<span class="co">#&gt; [15] "/composites/f_multi.tem"    "/composites/f_wasian.jpg"  </span>
+<span class="co">#&gt; [17] "/composites/f_wasian.tem"   "/composites/f_white.jpg"   </span>
+<span class="co">#&gt; [19] "/composites/f_white.tem"    "/composites/m_african.jpg" </span>
+<span class="co">#&gt; [21] "/composites/m_african.tem"  "/composites/m_easian.jpg"  </span>
+<span class="co">#&gt; [23] "/composites/m_easian.tem"   "/composites/m_multi.jpg"   </span>
+<span class="co">#&gt; [25] "/composites/m_multi.tem"    "/composites/m_wasian.jpg"  </span>
+<span class="co">#&gt; [27] "/composites/m_wasian.tem"   "/composites/m_white.jpg"   </span>
+<span class="co">#&gt; [29] "/composites/m_white.tem"    "/lisa/lisa1.jpg"           </span>
+<span class="co">#&gt; [31] "/lisa/lisa1.tem"            "/lisa/lisa2.jpg"           </span>
+<span class="co">#&gt; [33] "/lisa/lisa2.tem"            "/lisa/lisa3.jpg"           </span>
+<span class="co">#&gt; [35] "/lisa/lisa3.tem"            "/lisa/lisa4.jpg"           </span>
+<span class="co">#&gt; [37] "/lisa/lisa4.tem"            "/templates/_batchAvg.txt"  </span>
+<span class="co">#&gt; [39] "/templates/_batchEdit.txt"  "/templates/_batchTrans.txt"</span></code></pre></div>
 <p>You can set or change your working project with <code><a href="../reference/projSet.html">projSet()</a></code>. By default, this is set to your first project.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/projSet.html">projSet</a></span><span class="op">(</span><span class="fl">84877</span><span class="op">)</span>
@@ -295,7 +301,7 @@ WEBMORPH_PASSWORD="my big secret"</code></pre>
 <h2 class="hasAnchor">
 <a href="#manage-files" class="anchor"></a>Manage Files</h2>
 <p>You can upload these files to webmorph.org to use them in further morphs or transforms. Uploading files can take a long time, depending on server load, but you will see a progress bar in the console.</p>
-<p><code><a href="../reference/fileUpload.html">fileUpload()</a></code> can take either a stimulus list or a vector of file paths, and requires an upload directory that starts with the ID of a project that you have permission to alter.</p>
+<p><code><a href="../reference/fileUpload.html">fileUpload()</a></code> can take either a stimulus list or a vector of file paths, and optionally takes an upload directory (or is otherwise saved in the base directory of the active project).</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fileUpload.html">fileUpload</a></span><span class="op">(</span><span class="va">averages</span>, <span class="st">"/twopoint_avg/"</span><span class="op">)</span>
 <span class="co">#&gt; Starting Upload...</span>
