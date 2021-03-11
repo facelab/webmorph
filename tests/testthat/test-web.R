@@ -24,18 +24,20 @@ test_that("projects", {
 
   id <- login()
   expect_equal(id, 1)
+  expect_equal(Sys.getenv("webmorph_project_id"), "1")
 
   plist <- projListGet()
   expect_equal(plist$id[[1]], 1)
   expect_equal(plist$name[[1]], "Lisa DeBruine")
 
-  p <- projSet(plist$id[[1]])
-  expect_equal(p$project_id, 1)
+  p <- projSet(84877)
+  expect_equal(p$project_id, 84877)
   expect_equal(p$perm, "all")
+  expect_equal(Sys.getenv("webmorph_project_id"), "84877")
 
-  dir <- dirLoad(84877, "composites")
+  dir <- dirLoad("composites")
 
-  expect_equal(dir[[1]], "84877/composites/_citation.txt")
+  expect_equal(dir[[1]], "/composites/_citation.txt")
   temp <- tempdir()
   newpaths <- fileDownload(dir, temp)
 
@@ -48,7 +50,8 @@ test_that("makeAvg", {
   skip_on_cran()
 
   login()
-  dir <- dirLoad(84877, "lisa")
+  projSet(84877)
+  dir <- dirLoad("lisa")
 
   f <- dir[grepl("lisa.\\.jpg", dir)]
 
@@ -65,8 +68,8 @@ test_that("makeAvg", {
 
 # getProjectID ----
 test_that("getProjectID", {
-  expect_error(getProjectID("abc"))
   expect_error(getProjectID(c("1/a", "2/b")))
+  expect_equal(getProjectID("abc"), Sys.getenv("webmorph_project_id"))
 
   id <- getProjectID(c("1/a", "1/b", "1/c"))
   expect_equal(id, 1)
@@ -76,25 +79,28 @@ test_that("getProjectID", {
 test_that("fileUpload", {
   skip_on_cran()
 
-  dirLoad(84877, "lisa") %>%
+  login()
+  projSet(84877)
+
+  dirLoad("lisa") %>%
     fileDownload("test")
 
   f <- list.files("test", "lisa", full.names = T)
-  u <- fileUpload(f, "84877/newtest/")
+  u <- fileUpload(f, "/newtest/")
 
-  u_exp <- sub("test/", "84877/newtest/", f)
+  u_exp <- sub("test/", "/newtest/", f)
   names(u_exp) <- f
   expect_equal(u, u_exp)
 
-  u_check <- dirLoad(84877, "newtest")
+  u_check <- dirLoad("newtest")
   expect_equal(u_check, unname(u))
 
   d <- fileDelete(files = u[1:4])
-  d_check <- dirLoad(84877, "newtest")
+  d_check <- dirLoad("newtest")
   expect_equal(d_check, unname(u[5:8]))
 
-  expect_true(dirDelete("84877/newtest/"))
-  expect_error(dirLoad(84877, "newtest"))
+  expect_true(dirDelete("/newtest/"))
+  expect_error(dirLoad("newtest"))
 
   unlink("test", recursive = TRUE)
 })

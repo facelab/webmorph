@@ -6,7 +6,7 @@
 \usage{
 makeAvg(
   files,
-  filename = "avg",
+  outname = "avg",
   texture = TRUE,
   norm = c("none", "twopoint", "rigid"),
   normpoint = 0:1,
@@ -16,6 +16,8 @@ makeAvg(
 \arguments{
 \item{files}{the image files to average}
 
+\item{outname}{local path to save average to}
+
 \item{texture}{logical, textured average}
 
 \item{norm}{how to normalise}
@@ -23,8 +25,6 @@ makeAvg(
 \item{normpoint}{points for twopoint normalisation}
 
 \item{format}{image format}
-
-\item{savedir}{what directory to save the average in}
 }
 \value{
 webmorph_list

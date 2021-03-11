@@ -19,6 +19,9 @@
     <loc>https://facelab.github.io/webmorph//reference/average.html</loc>
   </url>
   <url>
+    <loc>https://facelab.github.io/webmorph//reference/batchTrans.html</loc>
+  </url>
+  <url>
     <loc>https://facelab.github.io/webmorph//reference/bounds.html</loc>
   </url>
   <url>
@@ -65,6 +68,9 @@
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/makeAvg.html</loc>
+  </url>
+  <url>
+    <loc>https://facelab.github.io/webmorph//reference/makeTrans.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/message.html</loc>
@@ -134,6 +140,9 @@
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/tems_to_array.html</loc>
+  </url>
+  <url>
+    <loc>https://facelab.github.io/webmorph//reference/transform.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/unique_names.html</loc>

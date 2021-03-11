@@ -129,6 +129,18 @@ plot.webmorph_stim <- function(x, y, ...) {
       i, 0, width, 0, height)
   }
 
+  # add label ----
+  if (!is.null(arg$labels)) {
+    label_x <- (arg$label_x %||% 0.5) * width
+    label_y <- (arg$label_y %||% 0.95) * height
+    label_color <- arg$label_colour %||% "black"
+    label_size <- arg$label_size %||% 5
+
+    g <- g + ggplot2::annotate("text", x = label_x, y = label_y,
+                          size = label_size, colour = label_color,
+                          label = arg$labels)
+  }
+
   # add lines ----
   if (!isTRUE(line.plot)) {
     # don't plot lines
@@ -214,11 +226,17 @@ plot.webmorph_stim <- function(x, y, ...) {
 plot.webmorph_list <- function(x, y, ...) {
   arg <- list(...)
 
+  if (!"border.width" %in% names(arg)) {
+    arg$border.width = 10
+  }
+
   # get all dots to x length
-  dots <- lapply(arg, rep, length.out = length(x))
+  dots <- lapply(arg, rep_len, length(x))
+  labels <- rep_len(arg$labels %||% names(x) %||% NULL, length(x))
 
   plots <- lapply(seq_along(x), function(i) {
     subdots <- lapply(dots, `[[`, i)
+    subdots$labels <- labels[i]
     do.call(plot, c(list(x = x[[i]]), subdots))
   })
 
@@ -243,7 +261,8 @@ plot.webmorph_list <- function(x, y, ...) {
   valid_args <- args(cowplot::plot_grid) %>% as.list() %>% names()
   cpg_args <- arg[names(arg) %in% valid_args]
   cpg_args$plotlist <- plots
-  cpg_args$labels <- arg$labels %||% names(x) %||% NULL
+  cpg_args$labels = "" # no labels
+  #cpg_args$labels <- arg$labels %||% names(x) %||% NULL
   do.call(cowplot::plot_grid, cpg_args)
 
   # dev.off()

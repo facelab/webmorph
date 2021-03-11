@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">webmorphR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9003</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9004</span>
       </span>
     </div>
 
@@ -109,7 +109,8 @@
 <span class="co">#&gt; https://facelab.github.io/webmorphR/</span>
 <span class="co">#&gt; ************</span>
 <span class="co">#&gt; Logged in as user 1</span>
-<span class="co">#&gt; Your projects are using 25.8 Gb of 100 Gb</span></code></pre></div>
+<span class="co">#&gt; Your projects are using 25.8 Gb of 100 Gb</span>
+<span class="co">#&gt; You have all permissions for project 1</span></code></pre></div>
 <div id="log-in" class="section level2">
 <h2 class="hasAnchor">
 <a href="#log-in" class="anchor"></a>Log in</h2>
@@ -123,7 +124,8 @@ WEBMORPH_PASSWORD="my big secret"</code></pre>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/login.html">login</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Logged in as user 1</span>
-<span class="co">#&gt; Your projects are using 25.8 Gb of 100 Gb</span></code></pre></div>
+<span class="co">#&gt; Your projects are using 25.8 Gb of 100 Gb</span>
+<span class="co">#&gt; You have all permissions for project 1</span></code></pre></div>
 <p>WebmorphR is pretty verbose to let you know how the package is interacting with the website. You can turn off webmorphR messages globally with the options:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/webmorph_options.html">webmorph_options</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
@@ -167,74 +169,153 @@ WEBMORPH_PASSWORD="my big secret"</code></pre>
 </tr>
 </tbody>
 </table>
-<p>Get the names of all files in a project (or a specified subdirectory) with the function <code><a href="../reference/dirLoad.html">dirLoad()</a></code></p>
+<p>Set your project by ID.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dirLoad.html">dirLoad</a></span><span class="op">(</span>project_id <span class="op">=</span> <span class="fl">84877</span><span class="op">)</span>
-<span class="va">lisa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dirLoad.html">dirLoad</a></span><span class="op">(</span>project_id <span class="op">=</span> <span class="fl">84877</span>, dir <span class="op">=</span> <span class="st">"lisa"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/projSet.html">projSet</a></span><span class="op">(</span><span class="fl">84877</span><span class="op">)</span>
+<span class="co">#&gt; You have all permissions for project 84877</span></code></pre></div>
+<p>Get the names of all files in a project (or a specified subdirectory) with the function <code><a href="../reference/dirLoad.html">dirLoad()</a></code></p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/dirLoad.html">dirLoad</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt;  [1] "/composites/_citation.txt"  "/composites/f_african.jpg" </span>
+<span class="co">#&gt;  [3] "/composites/f_african.tem"  "/composites/f_easian.jpg"  </span>
+<span class="co">#&gt;  [5] "/composites/f_easian.tem"   "/composites/f_multi.jpg"   </span>
+<span class="co">#&gt;  [7] "/composites/f_multi.tem"    "/composites/f_wasian.jpg"  </span>
+<span class="co">#&gt;  [9] "/composites/f_wasian.tem"   "/composites/f_white.jpg"   </span>
+<span class="co">#&gt; [11] "/composites/f_white.tem"    "/composites/m_african.jpg" </span>
+<span class="co">#&gt; [13] "/composites/m_african.tem"  "/composites/m_easian.jpg"  </span>
+<span class="co">#&gt; [15] "/composites/m_easian.tem"   "/composites/m_multi.jpg"   </span>
+<span class="co">#&gt; [17] "/composites/m_multi.tem"    "/composites/m_wasian.jpg"  </span>
+<span class="co">#&gt; [19] "/composites/m_wasian.tem"   "/composites/m_white.jpg"   </span>
+<span class="co">#&gt; [21] "/composites/m_white.tem"    "/lisa/lisa1.jpg"           </span>
+<span class="co">#&gt; [23] "/lisa/lisa1.tem"            "/lisa/lisa2.jpg"           </span>
+<span class="co">#&gt; [25] "/lisa/lisa2.tem"            "/lisa/lisa3.jpg"           </span>
+<span class="co">#&gt; [27] "/lisa/lisa3.tem"            "/lisa/lisa4.jpg"           </span>
+<span class="co">#&gt; [29] "/lisa/lisa4.tem"            "/templates/_batchAvg.txt"  </span>
+<span class="co">#&gt; [31] "/templates/_batchEdit.txt"  "/templates/_batchTrans.txt"</span></code></pre></div>
+<p>You can set or change your working project with <code><a href="../reference/projSet.html">projSet()</a></code>. By default, this is set to your first project.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/projSet.html">projSet</a></span><span class="op">(</span><span class="fl">84877</span><span class="op">)</span>
+<span class="co">#&gt; You have all permissions for project 84877</span></code></pre></div>
 </div>
 <div id="download-files" class="section level2">
 <h2 class="hasAnchor">
 <a href="#download-files" class="anchor"></a>Download Files</h2>
-<p>Download the files. By default, they are saved in a directory named as the project ID, and have the same directory substructure, but you can also download them to a single named directory.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/fileDownload.html">fileDownload</a></span><span class="op">(</span><span class="va">lisa</span>, <span class="st">"test"</span><span class="op">)</span>
-<span class="co">#&gt; Downloaded 8 files</span></code></pre></div>
+<p>Download the files from the “composites” directory. By default, they are saved in a directory named as the project ID, and have the same directory substructure, but you can also download them to a single named directory.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/dirLoad.html">dirLoad</a></span><span class="op">(</span><span class="st">"composites"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/fileDownload.html">fileDownload</a></span><span class="op">(</span>destination <span class="op">=</span> <span class="st">"test"</span><span class="op">)</span>
+<span class="co">#&gt; Downloaded 21 files</span></code></pre></div>
 <p>Now you can read in the stimuli to webmorphR.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">stimlist</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_stim.html">read_stim</a></span><span class="op">(</span><span class="st">"test"</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">stimlist</span>, pt.plot <span class="op">=</span> <span class="cn">TRUE</span>, border.width <span class="op">=</span> <span class="fl">10</span>, 
-     nrow <span class="op">=</span> <span class="fl">1</span>, labels <span class="op">=</span> <span class="st">""</span><span class="op">)</span></code></pre></div>
-<p><img src="web_files/figure-html/unnamed-chunk-8-1.png"><!-- --></p>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">stimlist</span>, pt.plot <span class="op">=</span> <span class="cn">TRUE</span>, line.plot <span class="op">=</span> <span class="cn">TRUE</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<p><img src="web_files/figure-html/unnamed-chunk-11-1.png" width="100%"></p>
 </div>
 <div id="create-averages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#create-averages" class="anchor"></a>Create Averages</h2>
-<p>You can create averages with delineated images on the server. The example below shows how changing the order of the 4 files changes the position of the average when using “twopoint” normalisation.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">f1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"84877/lisa/lisa%d.jpg"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>
+<p>You can create averages with delineated images on the server. The example below shows how changing the order of the 4 files in the “lisa” directory changes the position of the average when using “twopoint” normalisation.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">f1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"/lisa/lisa%d.jpg"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>
 <span class="va">avg1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/makeAvg.html">makeAvg</a></span><span class="op">(</span><span class="va">f1</span>, <span class="st">"test/avg1"</span>, norm <span class="op">=</span> <span class="st">"twopoint"</span><span class="op">)</span>
 
-<span class="va">f2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"84877/lisa/lisa%d.jpg"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>
+<span class="va">f2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"/lisa/lisa%d.jpg"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>
 <span class="va">avg2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/makeAvg.html">makeAvg</a></span><span class="op">(</span><span class="va">f2</span>, <span class="st">"test/avg2"</span>, norm <span class="op">=</span> <span class="st">"twopoint"</span><span class="op">)</span>
 
-<span class="va">f3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"84877/lisa/lisa%d.jpg"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>
+<span class="va">f3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"/lisa/lisa%d.jpg"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>
 <span class="va">avg3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/makeAvg.html">makeAvg</a></span><span class="op">(</span><span class="va">f3</span>, <span class="st">"test/avg3"</span>, norm <span class="op">=</span> <span class="st">"twopoint"</span><span class="op">)</span>
 
-<span class="va">f4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"84877/lisa/lisa%d.jpg"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>
+<span class="va">f4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"/lisa/lisa%d.jpg"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>
 <span class="va">avg4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/makeAvg.html">makeAvg</a></span><span class="op">(</span><span class="va">f4</span>, <span class="st">"test/avg4"</span>, norm <span class="op">=</span> <span class="st">"twopoint"</span><span class="op">)</span></code></pre></div>
 <p>Concatenate the resulting stimulus lists and plot them.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">averages</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">avg1</span>, <span class="va">avg2</span>, <span class="va">avg3</span>, <span class="va">avg4</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">averages</span>, labels <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, nrow <span class="op">=</span> <span class="fl">1</span>, border.width <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
-<p><img src="web_files/figure-html/unnamed-chunk-10-1.png"><!-- --></p>
-<p>WebmorphR plots are just ggplots, so you can use <code>ggsave()</code> to save them to a file.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggsave</a></span><span class="op">(</span><span class="st">"test/average_fig.png"</span>, width <span class="op">=</span> <span class="fl">8</span>, height <span class="op">=</span> <span class="fl">2.7</span><span class="op">)</span></code></pre></div>
+<span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">averages</span>, labels <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, nrow <span class="op">=</span> <span class="fl">1</span>, 
+     label_size <span class="op">=</span> <span class="fl">12</span>, label_x <span class="op">=</span> <span class="fl">.05</span>, label_colour <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span></code></pre></div>
+<p>WebmorphR plots are just ggplots, so you can use <code>ggsave()</code> to save them to a file. You might need to set scale = 2 to match what you see after the R chunk when running interactively in RStudio (this is an RStudio bug that affects all plots).</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggsave</a></span><span class="op">(</span><span class="st">"test/average_fig.png"</span>, plot <span class="op">=</span> <span class="va">p</span>, 
+                width <span class="op">=</span> <span class="fl">8</span>, height <span class="op">=</span> <span class="fl">2.7</span>, scale <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"test/average_fig.png"</span><span class="op">)</span></code></pre></div>
+<p><img src="test/average_fig.png" width="100%"></p>
+</div>
+<div id="create-transforms" class="section level2">
+<h2 class="hasAnchor">
+<a href="#create-transforms" class="anchor"></a>Create Transforms</h2>
+<p>The function <code><a href="../reference/makeTrans.html">makeTrans()</a></code> is structured like the batch transform files. The first 7 arguments are vectorised, so you can put in a vector of image names or shape/color/texture values.</p>
+<p>For example, you can make a shape sexual dimorphism continuum by setting the shape argument as a vector.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">steps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">.25</span><span class="op">)</span>
+
+<span class="va">sexdim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/makeTrans.html">makeTrans</a></span><span class="op">(</span>trans_img <span class="op">=</span> <span class="st">"/composites/f_multi.jpg"</span>,
+                    from_img  <span class="op">=</span> <span class="st">"/composites/f_multi.jpg"</span>,
+                    to_img    <span class="op">=</span> <span class="st">"/composites/m_multi.jpg"</span>, 
+                    outname   <span class="op">=</span> <span class="st">"test/dim"</span>,
+                    shape     <span class="op">=</span> <span class="va">steps</span>, 
+                    color     <span class="op">=</span> <span class="fl">0</span>, 
+                    texture   <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
+<span class="co">#&gt; Starting 5 Transforms...</span>
+<span class="co">#&gt; ... Transforms Completed</span></code></pre></div>
+<p><img src="web_files/figure-html/unnamed-chunk-16-1.png" width="100%"></p>
+<p>Or you can transform a set of images. Non-image files will be ignored, so you can get the contents of a directory on webmorph.org with <code><a href="../reference/dirLoad.html">dirLoad()</a></code>.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">comp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dirLoad.html">dirLoad</a></span><span class="op">(</span><span class="st">"composites"</span><span class="op">)</span>
+
+<span class="va">outname</span> <span class="op">&lt;-</span> <span class="va">comp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"jpg$"</span>, <span class="va">comp</span><span class="op">)</span><span class="op">]</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"^/composites"</span>, <span class="st">"test/masc"</span>, <span class="va">.</span><span class="op">)</span>
+
+<span class="va">masc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/makeTrans.html">makeTrans</a></span><span class="op">(</span>trans_img <span class="op">=</span> <span class="va">comp</span>,
+                  from_img <span class="op">=</span> <span class="st">"/composites/f_multi.jpg"</span>,
+                  to_img <span class="op">=</span> <span class="st">"/composites/m_multi.jpg"</span>, 
+                  outname <span class="op">=</span> <span class="va">outname</span>,
+                  shape <span class="op">=</span> <span class="fl">0.5</span>, 
+                  color <span class="op">=</span> <span class="fl">0</span>, 
+                  texture <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
+<span class="co">#&gt; Starting 10 Transforms...</span>
+<span class="co">#&gt; ... Transforms Completed</span></code></pre></div>
+<p><img src="web_files/figure-html/unnamed-chunk-18-1.png" width="100%"></p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/dirLoad.html">dirLoad</a></span><span class="op">(</span><span class="st">"templates"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/fileDownload.html">fileDownload</a></span><span class="op">(</span><span class="st">"test/templates"</span><span class="op">)</span>
+<span class="co">#&gt; Downloaded 3 files</span>
+
+<span class="co"># read one of the built-in batch templates</span>
+<span class="va">batch</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_tsv</a></span><span class="op">(</span><span class="st">"test/templates/_batchTrans.txt"</span>, 
+                         col_types <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/cols.html">cols</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/batchTrans.html">batchTrans</a></span><span class="op">(</span><span class="va">batch</span><span class="op">)</span>
+<span class="co">#&gt; Starting 5 Transforms...</span>
+<span class="co">#&gt; ... Transforms Completed</span></code></pre></div>
+<p><img src="web_files/figure-html/unnamed-chunk-20-1.png" width="100%"></p>
 </div>
 <div id="manage-files" class="section level2">
 <h2 class="hasAnchor">
 <a href="#manage-files" class="anchor"></a>Manage Files</h2>
 <p>You can upload these files to webmorph.org to use them in further morphs or transforms. Uploading files can take a long time, depending on server load, but you will see a progress bar in the console.</p>
 <p><code><a href="../reference/fileUpload.html">fileUpload()</a></code> can take either a stimulus list or a vector of file paths, and requires an upload directory that starts with the ID of a project that you have permission to alter.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fileUpload.html">fileUpload</a></span><span class="op">(</span><span class="va">averages</span>, <span class="st">"84877/twopoint_avg/"</span><span class="op">)</span>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fileUpload.html">fileUpload</a></span><span class="op">(</span><span class="va">averages</span>, <span class="st">"/twopoint_avg/"</span><span class="op">)</span>
 <span class="co">#&gt; Starting Upload...</span>
 <span class="co">#&gt; ... 8 of 8 uploaded</span></code></pre></div>
 <p>You can’t overwrite files on webmorph.org, so you might need to delete things sometimes.</p>
 <p>You can delete individual files…</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/fileDelete.html">fileDelete</a></span><span class="op">(</span><span class="va">tp</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span>
 <span class="co">#&gt; Starting Deletion...</span>
 <span class="co">#&gt; ... 2 of 2 deleted</span>
 <span class="co">#&gt; avg1.tem avg1.jpg </span>
 <span class="co">#&gt;     TRUE     TRUE</span></code></pre></div>
 <p>…but it’s usually more efficient and faster to delete an entire directory than individual files.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/dirDelete.html">dirDelete</a></span><span class="op">(</span><span class="st">"84877/twopoint_avg/"</span><span class="op">)</span>
-<span class="co">#&gt; 84877/twopoint_avg/ </span>
-<span class="co">#&gt;                TRUE</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># clean up uploaded directories</span>
+<span class="fu"><a href="../reference/dirDelete.html">dirDelete</a></span><span class="op">(</span><span class="st">"/twopoint_avg/"</span><span class="op">)</span>
+<span class="co">#&gt; [1] TRUE</span>
+<span class="fu"><a href="../reference/dirDelete.html">dirDelete</a></span><span class="op">(</span><span class="st">"/trans_test/"</span><span class="op">)</span>
+<span class="co">#&gt; Warning: The directory 84877/trans_test/ could not be found.</span>
+<span class="co">#&gt; [1] FALSE</span></code></pre></div>
+<p>This script took 1.5 minutes to render all the included images from scratch.</p>
 </div>
   </div>
 

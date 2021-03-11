@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">webmorphR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9003</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9004</span>
       </span>
     </div>
 
@@ -144,7 +144,7 @@
 
     <pre class="usage"><span class='fu'>makeAvg</span><span class='op'>(</span>
   <span class='va'>files</span>,
-  filename <span class='op'>=</span> <span class='st'>"avg"</span>,
+  outname <span class='op'>=</span> <span class='st'>"avg"</span>,
   texture <span class='op'>=</span> <span class='cn'>TRUE</span>,
   norm <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span>, <span class='st'>"twopoint"</span>, <span class='st'>"rigid"</span><span class='op'>)</span>,
   normpoint <span class='op'>=</span> <span class='fl'>0</span><span class='op'>:</span><span class='fl'>1</span>,
@@ -157,6 +157,10 @@
     <tr>
       <th>files</th>
       <td><p>the image files to average</p></td>
+    </tr>
+    <tr>
+      <th>outname</th>
+      <td><p>local path to save average to</p></td>
     </tr>
     <tr>
       <th>texture</th>
@@ -173,10 +177,6 @@
     <tr>
       <th>format</th>
       <td><p>image format</p></td>
-    </tr>
-    <tr>
-      <th>savedir</th>
-      <td><p>what directory to save the average in</p></td>
     </tr>
     </table>
 
