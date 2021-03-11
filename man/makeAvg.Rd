@@ -6,7 +6,7 @@
 \usage{
 makeAvg(
   files,
-  outname = "avg",
+  outname = tempfile(),
   texture = TRUE,
   norm = c("none", "twopoint", "rigid"),
   normpoint = 0:1,

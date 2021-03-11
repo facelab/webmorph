@@ -263,7 +263,7 @@ plot.webmorph_list <- function(x, y, ...) {
   cpg_args$plotlist <- plots
   cpg_args$labels = "" # no labels
   #cpg_args$labels <- arg$labels %||% names(x) %||% NULL
-  do.call(cowplot::plot_grid, cpg_args)
+  p <- do.call(cowplot::plot_grid, cpg_args)
 
   # dev.off()
   #
@@ -272,6 +272,15 @@ plot.webmorph_list <- function(x, y, ...) {
   # ggplot2::ggplot() +
   #   ggplot2::theme_void() +
   #   ggplot2::annotation_custom(i)
+
+  if (!is.null(arg$save)) {
+    ggplot2::ggsave(arg$save, p,
+                    width = arg$fig.width %||% NA,
+                    height = arg$fig.height%||% NA)
+    knitr::include_graphics(arg$save)
+  } else {
+    p
+  }
 }
 
 

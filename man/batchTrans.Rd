@@ -6,7 +6,7 @@
 \usage{
 batchTrans(
   batch,
-  project_id,
+  project_id = Sys.getenv("webmorph_project_id"),
   norm = c("none", "twopoint", "rigid"),
   normpoint = 0:1,
   sample_contours = TRUE,

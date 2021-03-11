@@ -20,6 +20,7 @@ articles:
   contents:
   - img-manip
   - web
+  - stimuli
   twitter:
          icon: "fab fa-twitter fa-lg"
          href: https://twitter.com/webmorph_org
@@ -65,4 +66,6 @@ reference:
   - '`projSet`'
   - '`dirLoad`'
   - '`fileDownload`'
-  - '`average`'
+  - '`makeAvg`'
+  - '`makeTrans`'
+  - '`batchTrans`'

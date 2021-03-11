@@ -304,11 +304,20 @@ fileDelete <- function(files) {
 #' @return webmorph_list
 #' @export
 #'
-makeAvg <- function(files, outname = "avg",
+makeAvg <- function(files, outname = tempfile(),
                     texture = TRUE,
                     norm = c("none", "twopoint", "rigid"),
                     normpoint = 0:1,
                     format = c("jpg", "png", "gif")) {
+  if ("webmorph_list" %in% class(files)) {
+    # upload to temp dir first
+    tdir <- sample(c(LETTERS, 0:9), 10) %>%
+      paste(collapse = "") %>%
+      paste0("/", ., "/")
+    files <- fileUpload(files, tdir)
+    # delete on exit
+    on.exit(fileDelete(files))
+  }
 
   project_id <- getProjectID(files)
 
@@ -359,10 +368,10 @@ makeAvg <- function(files, outname = "avg",
 #' @param trans_img image to transform
 #' @param from_img negative end of the transform dimension
 #' @param to_img positive end of the transform dimension
-#' @param outname local path to save transform to
 #' @param shape amount to transform shape
 #' @param color amount to transform color
 #' @param texture amount to transform texture
+#' @param outname local path to save transform to
 #' @param norm how to normalise
 #' @param normpoint points for twopoint normalisation
 #' @param sample_contours whether to sample contours
@@ -373,15 +382,32 @@ makeAvg <- function(files, outname = "avg",
 #' @export
 #'
 makeTrans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
-                      outname = "trans",
-                      shape = .5,
-                      color = .5,
-                      texture = .5,
+                      shape = 0,
+                      color = 0,
+                      texture = 0,
+                      outname = tempfile(),
                       norm = c("none", "twopoint", "rigid"),
                       normpoint = 0:1,
                       sample_contours = TRUE,
                       warp = c("multiscale", "linear", "multiscalerb"),
                       format = c("jpg", "png", "gif")) {
+  # deal with webmorph lists
+  if ("webmorph_list" %in% class(trans_img)) {
+    # upload to temp dir first and # delete on exit
+    tdir <- sample(c(LETTERS, 0:9), 10) %>% paste(collapse = "") %>% paste0("/", ., "/")
+    trans_img <- fileUpload(trans_img, tdir)
+    on.exit(fileDelete(trans_img))
+  }
+  if ("webmorph_list" %in% class(from_img)) {
+    tdir <- sample(c(LETTERS, 0:9), 10) %>% paste(collapse = "") %>% paste0("/", ., "/")
+    from_img <- fileUpload(from_img, tdir)
+    on.exit(fileDelete(from_img))
+  }
+  if ("webmorph_list" %in% class(to_img)) {
+    tdir <- sample(c(LETTERS, 0:9), 10) %>% paste(collapse = "") %>% paste0("/", ., "/")
+    to_img <- fileUpload(to_img, tdir)
+    on.exit(fileDelete(to_img))
+  }
 
   # set up a batch file
   files <- c(trans_img, from_img, to_img)

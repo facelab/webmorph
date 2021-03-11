@@ -4,12 +4,12 @@
 \alias{dirLoad}
 \title{Get directory contents}
 \usage{
-dirLoad(project_id, dir = "")
+dirLoad(dir = "", project_id = Sys.getenv("webmorph_project_id"))
 }
 \arguments{
-\item{project_id}{the project ID}
-
 \item{dir}{the directory to look in}
+
+\item{project_id}{the project ID}
 }
 \value{
 nested list of the directory

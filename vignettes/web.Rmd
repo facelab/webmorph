@@ -211,7 +211,7 @@ plot(b, nrow = 1)
 
 You can upload these files to webmorph.org to use them in further morphs or transforms. Uploading files can take a long time, depending on server load, but you will see a progress bar in the console.
 
-`fileUpload()` can take either a stimulus list or a vector of file paths, and requires an upload directory that starts with the ID of a project that you have permission to alter.
+`fileUpload()` can take either a stimulus list or a vector of file paths, and optionally takes an upload directory (or is otherwise saved in the base directory of the active project).
 
 ```{r}
 tp <- fileUpload(averages, "/twopoint_avg/")

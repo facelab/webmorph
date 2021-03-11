@@ -4,7 +4,7 @@
 \alias{fileUpload}
 \title{Upload files to webmorph.org}
 \usage{
-fileUpload(files, dir)
+fileUpload(files, dir = "/")
 }
 \arguments{
 \item{files}{vector of paths of files to upload}

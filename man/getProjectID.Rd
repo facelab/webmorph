@@ -4,10 +4,10 @@
 \alias{getProjectID}
 \title{Get Project ID from a list of filenames}
 \usage{
-getProjectID(files)
+getProjectID(files = NULL)
 }
 \arguments{
-\item{files}{}
+\item{files}{(leave blank to get current project ID)}
 }
 \value{
 project ID

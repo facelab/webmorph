@@ -8,10 +8,10 @@ makeTrans(
   trans_img = NULL,
   from_img = NULL,
   to_img = NULL,
-  outname = "trans",
-  shape = 0.5,
-  color = 0.5,
-  texture = 0.5,
+  shape = 0,
+  color = 0,
+  texture = 0,
+  outname = tempfile(),
   norm = c("none", "twopoint", "rigid"),
   normpoint = 0:1,
   sample_contours = TRUE,
@@ -26,13 +26,13 @@ makeTrans(
 
 \item{to_img}{positive end of the transform dimension}
 
-\item{outname}{local path to save transform to}
-
 \item{shape}{amount to transform shape}
 
 \item{color}{amount to transform color}
 
 \item{texture}{amount to transform texture}
+
+\item{outname}{local path to save transform to}
 
 \item{norm}{how to normalise}
 
