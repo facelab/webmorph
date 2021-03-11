@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 
 # clean up test directory from last run
 unlink("test", recursive = TRUE)
+unlink("trans_test", recursive = TRUE)
 
 starttime <- Sys.time()
 ```
@@ -137,9 +138,9 @@ p <- plot(averages, labels = 1:4, nrow = 1,
 WebmorphR plots are just ggplots, so you can use `ggsave()` to save them to a file. You might need to set scale = 2 to match what you see after the R chunk when running interactively in RStudio (this is an RStudio bug that affects all plots).
 
 ```{r}
-ggplot2::ggsave("test/average_fig.png", plot = p, 
+ggplot2::ggsave("fig/average_fig.jpg", plot = p, 
                 width = 8, height = 2.7, scale = 2)
-knitr::include_graphics("test/average_fig.png")
+knitr::include_graphics("fig/average_fig.jpg")
 ```
 
 ## Create Transforms

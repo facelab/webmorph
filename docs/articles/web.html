@@ -176,22 +176,23 @@ WEBMORPH_PASSWORD="my big secret"</code></pre>
 <p>Get the names of all files in a project (or a specified subdirectory) with the function <code><a href="../reference/dirLoad.html">dirLoad()</a></code></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/dirLoad.html">dirLoad</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt;  [1] "/composites/_citation.txt"  "/composites/f_african.jpg" </span>
-<span class="co">#&gt;  [3] "/composites/f_african.tem"  "/composites/f_easian.jpg"  </span>
-<span class="co">#&gt;  [5] "/composites/f_easian.tem"   "/composites/f_multi.jpg"   </span>
-<span class="co">#&gt;  [7] "/composites/f_multi.tem"    "/composites/f_wasian.jpg"  </span>
-<span class="co">#&gt;  [9] "/composites/f_wasian.tem"   "/composites/f_white.jpg"   </span>
-<span class="co">#&gt; [11] "/composites/f_white.tem"    "/composites/m_african.jpg" </span>
-<span class="co">#&gt; [13] "/composites/m_african.tem"  "/composites/m_easian.jpg"  </span>
-<span class="co">#&gt; [15] "/composites/m_easian.tem"   "/composites/m_multi.jpg"   </span>
-<span class="co">#&gt; [17] "/composites/m_multi.tem"    "/composites/m_wasian.jpg"  </span>
-<span class="co">#&gt; [19] "/composites/m_wasian.tem"   "/composites/m_white.jpg"   </span>
-<span class="co">#&gt; [21] "/composites/m_white.tem"    "/lisa/lisa1.jpg"           </span>
-<span class="co">#&gt; [23] "/lisa/lisa1.tem"            "/lisa/lisa2.jpg"           </span>
-<span class="co">#&gt; [25] "/lisa/lisa2.tem"            "/lisa/lisa3.jpg"           </span>
-<span class="co">#&gt; [27] "/lisa/lisa3.tem"            "/lisa/lisa4.jpg"           </span>
-<span class="co">#&gt; [29] "/lisa/lisa4.tem"            "/templates/_batchAvg.txt"  </span>
-<span class="co">#&gt; [31] "/templates/_batchEdit.txt"  "/templates/_batchTrans.txt"</span></code></pre></div>
+<span class="co">#&gt;  [1] "/.trash/avg1.jpg"           "/.trash/avg1.tem"          </span>
+<span class="co">#&gt;  [3] "/composites/_citation.txt"  "/composites/f_african.jpg" </span>
+<span class="co">#&gt;  [5] "/composites/f_african.tem"  "/composites/f_easian.jpg"  </span>
+<span class="co">#&gt;  [7] "/composites/f_easian.tem"   "/composites/f_multi.jpg"   </span>
+<span class="co">#&gt;  [9] "/composites/f_multi.tem"    "/composites/f_wasian.jpg"  </span>
+<span class="co">#&gt; [11] "/composites/f_wasian.tem"   "/composites/f_white.jpg"   </span>
+<span class="co">#&gt; [13] "/composites/f_white.tem"    "/composites/m_african.jpg" </span>
+<span class="co">#&gt; [15] "/composites/m_african.tem"  "/composites/m_easian.jpg"  </span>
+<span class="co">#&gt; [17] "/composites/m_easian.tem"   "/composites/m_multi.jpg"   </span>
+<span class="co">#&gt; [19] "/composites/m_multi.tem"    "/composites/m_wasian.jpg"  </span>
+<span class="co">#&gt; [21] "/composites/m_wasian.tem"   "/composites/m_white.jpg"   </span>
+<span class="co">#&gt; [23] "/composites/m_white.tem"    "/lisa/lisa1.jpg"           </span>
+<span class="co">#&gt; [25] "/lisa/lisa1.tem"            "/lisa/lisa2.jpg"           </span>
+<span class="co">#&gt; [27] "/lisa/lisa2.tem"            "/lisa/lisa3.jpg"           </span>
+<span class="co">#&gt; [29] "/lisa/lisa3.tem"            "/lisa/lisa4.jpg"           </span>
+<span class="co">#&gt; [31] "/lisa/lisa4.tem"            "/templates/_batchAvg.txt"  </span>
+<span class="co">#&gt; [33] "/templates/_batchEdit.txt"  "/templates/_batchTrans.txt"</span></code></pre></div>
 <p>You can set or change your working project with <code><a href="../reference/projSet.html">projSet()</a></code>. By default, this is set to your first project.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/projSet.html">projSet</a></span><span class="op">(</span><span class="fl">84877</span><span class="op">)</span>
@@ -236,10 +237,10 @@ WEBMORPH_PASSWORD="my big secret"</code></pre>
      label_size <span class="op">=</span> <span class="fl">12</span>, label_x <span class="op">=</span> <span class="fl">.05</span>, label_colour <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span></code></pre></div>
 <p>WebmorphR plots are just ggplots, so you can use <code>ggsave()</code> to save them to a file. You might need to set scale = 2 to match what you see after the R chunk when running interactively in RStudio (this is an RStudio bug that affects all plots).</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggsave</a></span><span class="op">(</span><span class="st">"test/average_fig.png"</span>, plot <span class="op">=</span> <span class="va">p</span>, 
+<code class="sourceCode R"><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggsave</a></span><span class="op">(</span><span class="st">"fig/average_fig.jpg"</span>, plot <span class="op">=</span> <span class="va">p</span>, 
                 width <span class="op">=</span> <span class="fl">8</span>, height <span class="op">=</span> <span class="fl">2.7</span>, scale <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"test/average_fig.png"</span><span class="op">)</span></code></pre></div>
-<p><img src="test/average_fig.png" width="100%"></p>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"fig/average_fig.jpg"</span><span class="op">)</span></code></pre></div>
+<p><img src="fig/average_fig.jpg" width="100%"></p>
 </div>
 <div id="create-transforms" class="section level2">
 <h2 class="hasAnchor">
