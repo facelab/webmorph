@@ -19,8 +19,9 @@ articles:
   navbar: ~
   contents:
   - img-manip
-  - web
+  - figures
   - stimuli
+  - web
   twitter:
          icon: "fab fa-twitter fa-lg"
          href: https://twitter.com/webmorph_org
@@ -31,12 +32,14 @@ reference:
   contents:
   - '`read_stim`'
   - '`write_stim`'
+  - '`blank`'
 - title: Manipulation
   desc: ~
   contents:
   - '`align`'
   - '`average`'
   - '`crop`'
+  - '`label`'
   - '`mirror`'
   - '`pt_delete`'
   - '`rename`'
@@ -50,7 +53,7 @@ reference:
   - '`frl_features`'
   - '`frl_sym`'
   - '`patch`'
-  - '`plot.webmorph_stim`'
+  - '`plot_fig`'
   - '`unique_names`'
 - title: Geomorph functions
   desc: ~

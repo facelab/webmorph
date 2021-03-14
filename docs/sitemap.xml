@@ -22,6 +22,9 @@
     <loc>https://facelab.github.io/webmorph//reference/batchTrans.html</loc>
   </url>
   <url>
+    <loc>https://facelab.github.io/webmorph//reference/blank.html</loc>
+  </url>
+  <url>
     <loc>https://facelab.github.io/webmorph//reference/bounds.html</loc>
   </url>
   <url>
@@ -58,7 +61,13 @@
     <loc>https://facelab.github.io/webmorph//reference/frl_sym.html</loc>
   </url>
   <url>
+    <loc>https://facelab.github.io/webmorph//reference/getControlPoints.html</loc>
+  </url>
+  <url>
     <loc>https://facelab.github.io/webmorph//reference/getProjectID.html</loc>
+  </url>
+  <url>
+    <loc>https://facelab.github.io/webmorph//reference/label.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/login.html</loc>
@@ -89,6 +98,12 @@
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/plot.webmorph_stim.html</loc>
+  </url>
+  <url>
+    <loc>https://facelab.github.io/webmorph//reference/plot_fig.html</loc>
+  </url>
+  <url>
+    <loc>https://facelab.github.io/webmorph//reference/plot_stim.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/print.webmorph_list.html</loc>
@@ -161,6 +176,9 @@
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/write_tps.html</loc>
+  </url>
+  <url>
+    <loc>https://facelab.github.io/webmorph//articles/figures.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//articles/img-manip.html</loc>

@@ -11,8 +11,6 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.width = 8,
-  fig.height = 2.7,
   out.width = "100%"
 )
 starttime <- Sys.time()
@@ -32,8 +30,7 @@ Let's start with a set of images from the built-in image sets.
 subset <- faces("london", pattern = "(025|062|099|126|129)") %>%
   resize(.5)
 
-plot(subset, nrow = 1,
-     save = "fig/subset.jpg", fig.width = 10, fig.height = 2)
+plot_fig(subset, 10, 2)
 ```
 
 Let's align the images using Procrustes normalisation to the position of the first image. They need to have templates fitted to do this. The argument `patch = TRUE` tries to match the background colour as closely as possible.
@@ -41,8 +38,7 @@ Let's align the images using Procrustes normalisation to the position of the fir
 ```{r}
 normalised <- align(subset, patch = TRUE)
 
-plot(normalised, nrow = 1,
-     save = "fig/norm.jpg", fig.width = 10, fig.height = 2)
+plot_fig(normalised, 10, 2)
 ```
 
 Now we can make an average version of these faces. This uses the morphing functions available on the web app, so you need to have a webmorph account.
@@ -58,12 +54,10 @@ wm_files <- fileUpload(normalised, "/newfolder/")
 avg <- makeAvg(wm_files)
 ```
 
-If you set the arguments save, fig.width, and fig.height to `plot()`, the plot will save and display using `knitr::include_graphics()`.
 
 ```{r, out.width = "50%"}
-plot(avg, pt.plot = TRUE, line.plot = TRUE, 
-     labels = "Average Face", label_y = 0.05, label_size = 8,
-     save = "fig/avg.jpg", fig.width = 6, fig.height = 6)
+plot_fig(avg, 6, 6, pt.plot = TRUE, line.plot = TRUE, 
+     labels = "Average Face", label_y = 0.05, label_size = 10)
 ```
 
 You can use this average face to transform the individual faces in distinctiveness and averageness. 
@@ -77,17 +71,17 @@ avgdist <- makeTrans(trans_img = normalised,
 
 ```{r}
 lab <- c("More Distinctive", "", "", "", "",
-         "Original              ", "", "", "", "",
-         "More Average   ", "", "", "", "")
+         "Original", "", "", "", "",
+         "More Average", "", "", "", "")
 
 c(avgdist[1:5], normalised, avgdist[6:10]) %>%
-  plot(labels = lab, nrow = 3, label_x = .4, label_y = .92,
-       save = "fig/avgtrans.jpg", fig.width = 10, fig.height = 6)
+  plot_fig(9, 6, labels = lab, nrow = 3, border.width = c(0.2, 0, 0, 0), 
+           label.position = "top left", label.y = 1.15)
 ```
 
 Now you can rename and save your individual stimuli in a directory to use in studies.
 
-```{r}
+```{r, eval = FALSE}
 orig_names <- names(subset)
 
 norm <- normalised %>%
@@ -105,14 +99,14 @@ write_stim(trans, "stimuli")
 
 ```{r, echo = FALSE}
 elapsed <- (Sys.time() - starttime) %>%
-  as.numeric() %>%
+  as.numeric(units="mins") %>%
   round(1)
 ```
 
 This script took `r elapsed` minutes to render all the included images from scratch.
 
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, eval = FALSE}
 # cleanup
 unlink("stimuli", recursive = TRUE)
 ```

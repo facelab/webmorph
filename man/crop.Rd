@@ -22,9 +22,9 @@ crop(
 
 \item{height}{height of cropped image in pixels or \% (<5)}
 
-\item{x_off}{x-offset in pixels (NULL horizontally centers cropped image)}
+\item{x_off}{x-offset in pixels or \% (<1) (NULL horizontally centers cropped image)}
 
-\item{y_off}{y-offset in pixels (NULL vertically centers cropped image)}
+\item{y_off}{y-offset in pixels or \% (<1) (NULL vertically centers cropped image)}
 
 \item{fill}{background color if cropping goes outside the original image}
 

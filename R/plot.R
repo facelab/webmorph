@@ -1,8 +1,171 @@
+#' Plot webmorph_list
+#'
+#' @param x webmorph_list
+#' @param y omitted
+#' @param ... Arguments to be passed to \code{\link{plot_fig}}
+#'
+#' @return plot
+#' @export
+#'
+#' @examples
+#' plot(faces("test"))
+#'
+plot.webmorph_list <- function(x, y, ...) {
+  plot_fig(x, ...)
+}
+
+#' Plot webmorph_stim
+#'
+#' @param x webmorph_stim
+#' @param y omitted
+#' @param ... Arguments to be passed to \code{\link{plot_stim}}
+#'
+#' @return ggplot
+#' @export
+#'
+#' @examples
+#' plot(faces("test")[[1]])
+
+plot.webmorph_stim <- function(x, y, ...) {
+  plot_stim(x, ...)
+}
+
+
+
+#' Plot webmorph_list
+#'
+#' @param stimlist webmorph_list
+#' @param width width of each image (in inches)
+#' @param height width of each image (in inches)
+#' @param filename path to save file to
+#' @param units units for width, height, and margin
+#' @param bc.color background colour of plot
+#' @param nrow number of rows in the figure
+#' @param ncol number of columns in the figure
+#' @param ... Arguments to be passed to plot_stim
+#'
+#' @return plot
+#' @export
+#'
+#' @examples
+#' faces("test") %>% plot(pt.plot = TRUE)
+#'
+plot_fig <- function(stimlist, width = NA, height = NA,
+                     filename = NULL,
+                     units = c("in", "cm", "mm"),
+                     bg.color = "white",
+                     nrow = NULL, ncol = NULL,
+                     ...) {
+  stimlist <- assert_webmorph(stimlist)
+  arg <- list(...)
+
+  # get all dots to stimlist length
+  arg$label.text <- arg$labels %||% names(stimlist) %||% NULL
+  arg$labels <- NULL
+  arg$units <- match.arg(units)
+  dots <- lapply(arg, rep_len, length(stimlist))
+  # rename if img.width and img.height are explicitly set
+  dots$width <- dots$img.width
+  dots$height <- dots$img.height
+
+  plots <- lapply(seq_along(stimlist), function(i) {
+    subdots <- lapply(dots, `[[`, i)
+    # replace array items
+    subdots$border.width <- arg$border.width
+    do.call(plot_stim, c(list(stim = stimlist[[i]]), subdots))
+  })
+
+  n <- length(plots)
+  if (is.null(nrow) && is.null(ncol)) {
+    if (n < 6) {
+      nrow <- 1
+      ncol <- n
+    } else {
+      nrow <- ceiling(sqrt(n))
+      ncol <- ceiling(n / nrow)
+    }
+  } else if (is.null(ncol)) {
+    ncol <- ceiling(n / nrow)
+  } else if (is.null(nrow)) {
+    nrow <- ceiling(n / ncol)
+  }
+
+  # make plot grid ----
+  margin <- (arg$margin %||% 0.1)/2
+  p <- cowplot::plot_grid(plotlist = plots, nrow = nrow, ncol = ncol) +
+    theme(plot.background = element_rect(fill = bg.color, colour = NA),
+          plot.margin = ggplot2::margin(margin, margin, margin, margin, match.arg(units)))
+
+  if (!is.na(width) || !is.na(height)) {
+    filename <- filename %||% ifelse(
+      isTRUE(getOption('knitr.in.progress')),
+      knitr::fig_path("png"),
+      tempfile(fileext = ".png")
+    )
+    ggplot2::ggsave(filename, p,
+                    width = width,
+                    height = height,
+                    units = match.arg(units))
+    knitr::include_graphics(filename)
+  } else {
+    p
+  }
+}
+
+
+#' Get Control Points for Bezier Curves
+#'
+#' @param lpath line coordinates
+#' @param i index
+#'
+#' @return data frame of 4 x and y coordinates
+#' @keywords internal
+#'
+getControlPoints <- function(lpath, i = 1) {
+  x0 <- lpath$x[i]
+  y0 <- lpath$y[i]
+  x1 <- lpath$x[i+1]
+  y1 <- lpath$y[i+1]
+  x2 <- lpath$x[i+2]
+  y2 <- lpath$y[i+2]
+
+  t = 0.3
+  d01 = sqrt(`^`(x1 - x0, 2) + `^`(y1 - y0, 2))
+  d12 = sqrt(`^`(x2 - x1, 2) + `^`(y2 - y1, 2))
+  fa = t * d01 / (d01 + d12) # scaling factor for triangle Ta
+  fb = t * d12 / (d01 + d12) # ditto for Tb, simplifies to fb=t-fa
+
+  p1x = x1 - fa * (x2 - x0) # x2-x0 is the width of triangle T
+  p1y = y1 - fa * (y2 - y0) # y2-y0 is the height of T
+  p2x = x1 + fb * (x2 - x0)
+  p2y = y1 + fb * (y2 - y0)
+
+  data.frame(
+    x = c(x0, p1x, p2x, x2),
+    y = c(y0, p1y, p2y, y2)
+  )
+}
+
+
 #' Plot webmorph stimulus
 #'
-#' @param x webmorph_stim list
-#' @param y omitted
-#' @param ... Arguments controlling the plot characteristics (img.plot, pt.plot, line.plot, width, height, pt.color, pt.size, pt.shape, line.color, line.alpha, border.color, border.width)
+#' Arguments for plot characteristics can be:
+#'
+#' Points: pt.color, pt.size, pt.shape,
+#' Lines: line.color, line.alpha,
+#' Border: border.color, border.width,
+#' Label: label.text, label.color, label.alpha,
+#'        label.size, label.family, label.fontface,
+#'        label.x, label.y, hjust, vjust, label.angle
+#'
+#' @param stim webmorph_stim
+#' @param img.plot Whether to include the image in the plot
+#' @param pt.plot Whether to include delineation points in the plot
+#' @param line.plot Whether to include lines in the plot
+#' @param width plot width
+#' @param height plot height
+#' @param label.position vertical (top, middle, bottom) and horizontal (left, center, right) position of the label
+#' @param ... Arguments controlling the plot characteristics
 #'
 #' @return plot
 #' @export
@@ -23,32 +186,16 @@
 #'      line.alpha = 0.5
 #' )
 #'
-#' #custom settings
-#' plot(faces("test")[[1]],
-#'      img.plot = FALSE,
-#'      pt.plot = TRUE,
-#'      pt.color = "dodgerblue",
-#'      pt.shape = 1,
-#'      pt.alpha = 0.5,
-#'      line.plot = TRUE,
-#'      border.color = "black",
-#'      border.width = 10 # in pixels
-#' )
-#'
-plot.webmorph_stim <- function(x, y, ...) {
-
-  # check args ----
+plot_stim <- function(stim, img.plot = TRUE, pt.plot = FALSE, line.plot = FALSE,
+                      width = NULL, height = NULL, label.position = "top center",
+                      ...) {
   arg <- list(...)
 
   # visibility
-  img.plot <- arg$img.plot %||% TRUE
-  if (is.null(x$img)) img.plot <- FALSE
-  pt.plot <- arg$pt.plot %||% FALSE
-  line.plot <- arg$line.plot %||% FALSE
+  if (is.null(stim$img)) img.plot <- FALSE
 
-  # dimensions
-  width <- arg$width %||% NULL
-  if (isTRUE(img.plot)) width <-  x$width %||% NULL
+  # dimensions ----
+  if (isTRUE(img.plot)) width <- width %||% stim$width %||% NULL
   if (length(width)==1) {
     xlim <- c(0, width)
   } else if (length(width)==2){
@@ -57,8 +204,7 @@ plot.webmorph_stim <- function(x, y, ...) {
     xlim <- NULL
   }
 
-  height <- arg$height %||% NULL
-  if (isTRUE(img.plot)) height <-  x$height %||% NULL
+  if (isTRUE(img.plot)) height <- height %||% stim$height %||% NULL
   if (length(height)==1) {
     ylim <- c(0, height)
   } else if (length(height)==2){
@@ -67,17 +213,40 @@ plot.webmorph_stim <- function(x, y, ...) {
     ylim <- NULL
   }
 
-  if (!is.null(x$points)) {
-    points <- x$points %>%
+  # border.width ----
+  bw <- (arg$border.width %||% 0) %>%
+    sapply(function(b) {
+      ifelse(b < 1, b * (stim$width %||% 200), b)
+    })
+  # deal with len != 4 (t, r, b , l)
+  if (length(bw) == 3) bw[[4]] <- bw[[2]]
+  bw <- rep_len(bw, 4)
+  # add borders to limits
+  if (!is.null(xlim)) xlim <- xlim + c(-bw[[4]], +bw[[2]])
+  if (!is.null(ylim)) ylim <- ylim + c(-bw[[3]], +bw[[1]])
+
+  if (!is.null(stim$points)) {
+    points <- stim$points %>%
       t() %>%
       as.data.frame()
     names(points) <- c("x", "y")
     points$y <- (height %||% 0) - points$y
     points$i <- 0:(nrow(points)-1)
+
+    # point colour
+    pt.color <- arg$pt.colour %||%
+      arg$pt.color %||%
+      arg$colour %||%
+      arg$color %||%
+      "#00AA00"
+    points$color <- as.factor(pt.color)
+
+    color_values <- levels(points$color)
   } else {
     # ignore any pt or line plotting
     pt.plot <- FALSE
     line.plot <- FALSE
+    color_values <- "black"
   }
 
   pt.size <-  arg$pt.size %||% arg$size %||% 1
@@ -85,14 +254,6 @@ plot.webmorph_stim <- function(x, y, ...) {
   pt.alpha <- arg$pt.alpha  %||% arg$alpha %||% 1
   font.size <- arg$font.size %||% 3
   line.alpha <- arg$line.alpha  %||% arg$alpha %||% 0.5
-
-  # point colour
-  pt.color <- arg$pt.colour %||%
-    arg$pt.color %||%
-    arg$colour %||%
-    arg$color %||%
-    "#00AA00"
-  points$color <- as.factor(pt.color)
 
   # line colour
   line.color <- arg$line.colour %||%
@@ -102,12 +263,13 @@ plot.webmorph_stim <- function(x, y, ...) {
     "#FFFF66"
 
   border.color <- arg$border.colour %||% arg$border.color %||% "transparent"
+  margin <- arg$margin %||% 0.1
+  units <- arg$units %||% "in"
 
   # set up plot ----
   pt.aes <- ggplot2::aes(x, y, color = pt.color)
   text.aes <- ggplot2::aes(x, y, color = pt.color, label = i)
   pborder <- ggplot2::element_rect(color = border.color, fill = border.color)
-  border <- ggplot2::expansion(add = arg$border.width %||% 0)
 
   # plot setup ----
   g <- ggplot2::ggplot() +
@@ -115,47 +277,91 @@ plot.webmorph_stim <- function(x, y, ...) {
     #ggplot2::scale_y_reverse() +
     ggplot2::coord_fixed(xlim = xlim,
                          ylim = ylim) +
-    ggplot2::scale_color_manual(values = levels(points$color)) +
+    ggplot2::scale_color_manual(values = color_values) +
     ggplot2::theme(legend.position = "none",
                    panel.background = pborder,
-                   plot.margin = ggplot2::margin(0,0,0,0, "pt")) +
-    ggplot2::scale_x_continuous(expand = border) +
-    ggplot2::scale_y_continuous(expand = border)
+                   plot.margin = ggplot2::margin(margin, margin, margin, margin, units)) +
+    ggplot2::scale_x_continuous(expand = c(0,0,0,0)) +
+    ggplot2::scale_y_continuous(expand = c(0,0,0,0))
 
   # add image ----
   if (isTRUE(img.plot)) {
-    i <- grid::rasterGrob(x$img, interpolate = FALSE)
+    i <- grid::rasterGrob(stim$img, interpolate = FALSE)
     g <- g + ggplot2::annotation_custom(
       i, 0, width, 0, height)
   }
 
   # add label ----
-  if (!is.null(arg$labels)) {
-    label_x <- (arg$label_x %||% 0.5) * width
-    label_y <- (arg$label_y %||% 0.95) * height
-    label_color <- arg$label_colour %||% "black"
-    label_size <- arg$label_size %||% 5
+  if (!is.null(arg$label.text)) {
+    label.color <- arg$label.colour %||% arg$label.color %||%
+                   arg$colour %||% arg$color %||%"black"
+    label.size <- arg$label.size  %||% arg$size %||% 5
+    label.alpha <- arg$label.alpha %||% arg$alpha %||% 1
+    label.angle <- arg$label.angle %||% 0
+    label.family <- arg$label.family %||% arg$family %||% "sans"
+    label.fontface <- arg$label.fontface %||% arg$fontface %||% "plain"
+    label.lineheight <- arg$label.lineheight %||% arg$lineheight %||% 1.2
 
-    g <- g + ggplot2::annotate("text", x = label_x, y = label_y,
-                          size = label_size, colour = label_color,
-                          label = arg$labels)
+    # label position
+    lp <- strsplit(label.position, " ")[[1]]
+    vjust <- switch(lp[1],
+                    bottom = 0,
+                    center = 0.5,
+                    centre = 0.5,
+                    middle = 0.5,
+                    top = 1,
+                    1)
+    hjust <- switch(lp[2],
+                    left = 0,
+                    center = 0.5,
+                    centre = 0.5,
+                    middle = 0.5,
+                    right = 1,
+                    0.5)
+    label.y <- switch(lp[1],
+                    bottom = 0.05,
+                    center = 0.5,
+                    centre = 0.5,
+                    middle = 0.5,
+                    top = 0.95,
+                    0.95)
+    label.x <- switch(lp[2],
+                    left = 0.05,
+                    center = 0.5,
+                    centre = 0.5,
+                    middle = 0.5,
+                    right = 0.95,
+                    0.5)
+
+    g <- g + ggplot2::annotate("text",
+                               label = arg$label.text,
+                               size = label.size,
+                               colour = label.color,
+                               alpha = label.alpha,
+                               angle = label.angle,
+                               family = label.family,
+                               fontface = label.fontface,
+                               lineheight = label.lineheight,
+                               # explicit values override label.position
+                               x = (arg$label.x %||% label.x) * width,
+                               y = (arg$label.y %||% label.y) * height,
+                               hjust = arg$hjust %||% hjust,
+                               vjust = arg$vjust %||% vjust)
   }
 
   # add lines ----
-  if (!isTRUE(line.plot)) {
-    # don't plot lines
-  } else if (line.plot == "bezier") {
+  if (line.plot == "bezier") {
     # bezier curves; still really buggy
-    for (i in seq_along(x$lines)) {
-      l <- x$lines[[i]]
+    for (i in seq_along(stim$lines)) {
+      l <- stim$lines[[i]]
       lpath <- points[(l+1), ]
       if (length(l) > 2) {
-        for (i in 1:(length(l)-2)) {
+        for (j in 1:(length(l)-2)) {
           g <- g + ggforce::geom_bezier(
-            data = getControlPoints(lpath, i),
+            data = getControlPoints(lpath, j),
             mapping = ggplot2::aes(x, y),
             # lets line.color be a vector of colours
-            colour = line.color[[i%%length(line.color)+1]],
+            colour = line.color[[j%%length(line.color)+1]],
             alpha = line.alpha
           )
         }
@@ -169,10 +375,10 @@ plot.webmorph_stim <- function(x, y, ...) {
         )
       }
     }
-  } else {
+  } else if (isTRUE(line.plot)) {
     # straight lines
-    for (i in seq_along(x$lines)) {
-      l <- x$lines[[i]]
+    for (i in seq_along(stim$lines)) {
+      l <- stim$lines[[i]]
       if (length(l) > 1) {
         lpath <- points[(l+1), ]
         g <- g + ggplot2::geom_path(
@@ -211,101 +417,4 @@ plot.webmorph_stim <- function(x, y, ...) {
 }
 
 
-#' Plot webmorph_list
-#'
-#' @param x webmorph_list
-#' @param y omitted
-#' @param ... Arguments to be passed to ggplot2 (width, height, pt.color, pt.size, pt.shape, bg.color, bg.fill) or cowplot::plot_grid (label_x, label_y, label_size, label_fontfamily, label_fontface, label_colour, hjust, vjust, nrow, ncol)
-#'
-#' @return plot
-#' @export
-#'
-#' @examples
-#' faces("test") %>% plot(pt.plot = TRUE)
-#'
-plot.webmorph_list <- function(x, y, ...) {
-  arg <- list(...)
-
-  if (!"border.width" %in% names(arg)) {
-    arg$border.width = 10
-  }
-
-  # get all dots to x length
-  dots <- lapply(arg, rep_len, length(x))
-  labels <- rep_len(arg$labels %||% names(x) %||% NULL, length(x))
-
-  plots <- lapply(seq_along(x), function(i) {
-    subdots <- lapply(dots, `[[`, i)
-    subdots$labels <- labels[i]
-    do.call(plot, c(list(x = x[[i]]), subdots))
-  })
-
-  # n <- length(plots)
-  # nrow <- arg$nrow %||% NULL
-  # ncol <- arg$ncol %||% NULL
-  # if (is.null(nrow) && is.null(ncol)) {
-  #   nrow <- ceiling(sqrt(n))
-  #   ncol <- ceiling(n / nrow)
-  # } else if (is.null(ncol)) {
-  #   ncol <- ceiling(n / nrow)
-  # } else if (is.null(nrow)) {
-  #   nrow <- ceiling(n / ncol)
-  # }
-
-  # w <- arg$fig.width %||% (x[[1]]$width * nrow)
-  # h <- arg$fig.height %||% (x[[1]]$height * ncol)
-  # bg.color <- arg$bg.color %||% "transparent"
-  # fig <- magick::image_graph(w, h, bg.color)
-
-  # pass only valid plot_grid arguments on
-  valid_args <- args(cowplot::plot_grid) %>% as.list() %>% names()
-  cpg_args <- arg[names(arg) %in% valid_args]
-  cpg_args$plotlist <- plots
-  cpg_args$labels = "" # no labels
-  #cpg_args$labels <- arg$labels %||% names(x) %||% NULL
-  p <- do.call(cowplot::plot_grid, cpg_args)
-
-  # dev.off()
-  #
-  # i <- grid::rasterGrob(fig, interpolate = FALSE)
-  #
-  # ggplot2::ggplot() +
-  #   ggplot2::theme_void() +
-  #   ggplot2::annotation_custom(i)
-
-  if (!is.null(arg$save)) {
-    ggplot2::ggsave(arg$save, p,
-                    width = arg$fig.width %||% NA,
-                    height = arg$fig.height%||% NA)
-    knitr::include_graphics(arg$save)
-  } else {
-    p
-  }
-}
-
-
-getControlPoints <- function(lpath, i = 1) {
-  x0 <- lpath[i, ]$x
-  y0 <- lpath[i, ]$y
-  x1 <- lpath[i+1, ]$x
-  y1 <- lpath[i+1, ]$y
-  x2 <- lpath[i+2, ]$x
-  y2 <- lpath[i+2, ]$y
-
-  t = 0.3
-  d01 = sqrt(`^`(x1 - x0, 2) + `^`(y1 - y0, 2))
-  d12 = sqrt(`^`(x2 - x1, 2) + `^`(y2 - y1, 2))
-  fa = t * d01 / (d01 + d12) # scaling factor for triangle Ta
-  fb = t * d12 / (d01 + d12) # ditto for Tb, simplifies to fb=t-fa
-
-  p1x = x1 - fa * (x2 - x0) # x2-x0 is the width of triangle T
-  p1y = y1 - fa * (y2 - y0) # y2-y0 is the height of T
-  p2x = x1 + fb * (x2 - x0)
-  p2y = y1 + fb * (y2 - y0)
-
-  data.frame(
-    x = c(x0, p1x, p2x, x2),
-    y = c(y0, p1y, p2y, y2)
-  )
-}
 

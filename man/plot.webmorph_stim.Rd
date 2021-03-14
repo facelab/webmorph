@@ -2,49 +2,23 @@
 % Please edit documentation in R/plot.R
 \name{plot.webmorph_stim}
 \alias{plot.webmorph_stim}
-\title{Plot webmorph stimulus}
+\title{Plot webmorph_stim}
 \usage{
 \method{plot}{webmorph_stim}(x, y, ...)
 }
 \arguments{
-\item{x}{webmorph_stim list}
+\item{x}{webmorph_stim}
 
 \item{y}{omitted}
 
-\item{...}{Arguments controlling the plot characteristics (img.plot, pt.plot, line.plot, width, height, pt.color, pt.size, pt.shape, line.color, line.alpha, border.color, border.width)}
+\item{...}{Arguments to be passed to \code{\link{plot_stim}}}
 }
 \value{
-plot
+ggplot
 }
 \description{
-Plot webmorph stimulus
+Plot webmorph_stim
 }
 \examples{
-# default values
-plot(faces("test")[[1]],
-     width = NULL,  # get from image or tem
-     height = NULL, # get from image or tem
-     img.plot = TRUE,
-     pt.plot = FALSE,
-     pt.color = "#00AA00",
-     pt.size = 1,
-     pt.shape = 3,
-     pt.alpha = 1,
-     line.plot = FALSE, # T, F, or "bezier"
-     line.color = "#FFFF66",
-     line.alpha = 0.5
-)
-
-#custom settings
-plot(faces("test")[[1]],
-     img.plot = FALSE,
-     pt.plot = TRUE,
-     pt.color = "dodgerblue",
-     pt.shape = 1,
-     pt.alpha = 0.5,
-     line.plot = TRUE,
-     border.color = "black",
-     border.width = 10 # in pixels
-)
-
+plot(faces("test")[[1]])
 }

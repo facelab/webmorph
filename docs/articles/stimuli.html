@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">webmorphR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9004</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9005</span>
       </span>
     </div>
 
@@ -63,10 +63,13 @@
       <a href="../articles/img-manip.html">Image Manipulations</a>
     </li>
     <li>
-      <a href="../articles/web.html">Web Integration</a>
+      <a href="../articles/figures.html">Making Figures</a>
     </li>
     <li>
       <a href="../articles/stimuli.html">Making Stimuli</a>
+    </li>
+    <li>
+      <a href="../articles/web.html">Web Integration</a>
     </li>
   </ul>
 </li>
@@ -123,16 +126,14 @@
 <code class="sourceCode R"><span class="va">subset</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/faces.html">faces</a></span><span class="op">(</span><span class="st">"london"</span>, pattern <span class="op">=</span> <span class="st">"(025|062|099|126|129)"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span><span class="fl">.5</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">subset</span>, nrow <span class="op">=</span> <span class="fl">1</span>,
-     save <span class="op">=</span> <span class="st">"fig/subset.jpg"</span>, fig.width <span class="op">=</span> <span class="fl">10</span>, fig.height <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
-<p><img src="fig/subset.jpg" width="100%"></p>
+<span class="fu"><a href="../reference/plot_fig.html">plot_fig</a></span><span class="op">(</span><span class="va">subset</span>, <span class="fl">10</span>, <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<p><img src="stimuli_files/figure-html/unnamed-chunk-2-1.png" width="100%"></p>
 <p>Let’s align the images using Procrustes normalisation to the position of the first image. They need to have templates fitted to do this. The argument <code>patch = TRUE</code> tries to match the background colour as closely as possible.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">normalised</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/align.html">align</a></span><span class="op">(</span><span class="va">subset</span>, patch <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">normalised</span>, nrow <span class="op">=</span> <span class="fl">1</span>,
-     save <span class="op">=</span> <span class="st">"fig/norm.jpg"</span>, fig.width <span class="op">=</span> <span class="fl">10</span>, fig.height <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
-<p><img src="fig/norm.jpg" width="100%"></p>
+<span class="fu"><a href="../reference/plot_fig.html">plot_fig</a></span><span class="op">(</span><span class="va">normalised</span>, <span class="fl">10</span>, <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<p><img src="stimuli_files/figure-html/unnamed-chunk-3-1.png" width="100%"></p>
 <p>Now we can make an average version of these faces. This uses the morphing functions available on the web app, so you need to have a webmorph account.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">avg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/makeAvg.html">makeAvg</a></span><span class="op">(</span><span class="va">normalised</span><span class="op">)</span>
@@ -144,12 +145,10 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">wm_files</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fileUpload.html">fileUpload</a></span><span class="op">(</span><span class="va">normalised</span>, <span class="st">"/newfolder/"</span><span class="op">)</span>
 <span class="va">avg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/makeAvg.html">makeAvg</a></span><span class="op">(</span><span class="va">wm_files</span><span class="op">)</span></code></pre></div>
-<p>If you set the arguments save, fig.width, and fig.height to <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>, the plot will save and display using <code><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">knitr::include_graphics()</a></code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">avg</span>, pt.plot <span class="op">=</span> <span class="cn">TRUE</span>, line.plot <span class="op">=</span> <span class="cn">TRUE</span>, 
-     labels <span class="op">=</span> <span class="st">"Average Face"</span>, label_y <span class="op">=</span> <span class="fl">0.05</span>, label_size <span class="op">=</span> <span class="fl">8</span>,
-     save <span class="op">=</span> <span class="st">"fig/avg.jpg"</span>, fig.width <span class="op">=</span> <span class="fl">6</span>, fig.height <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></code></pre></div>
-<p><img src="fig/avg.jpg" width="50%"></p>
+<code class="sourceCode R"><span class="fu"><a href="../reference/plot_fig.html">plot_fig</a></span><span class="op">(</span><span class="va">avg</span>, <span class="fl">6</span>, <span class="fl">6</span>, pt.plot <span class="op">=</span> <span class="cn">TRUE</span>, line.plot <span class="op">=</span> <span class="cn">TRUE</span>, 
+     labels <span class="op">=</span> <span class="st">"Average Face"</span>, label_y <span class="op">=</span> <span class="fl">0.05</span>, label_size <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
+<p><img src="stimuli_files/figure-html/unnamed-chunk-6-1.png" width="50%"></p>
 <p>You can use this average face to transform the individual faces in distinctiveness and averageness.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">avgdist</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/makeTrans.html">makeTrans</a></span><span class="op">(</span>trans_img <span class="op">=</span> <span class="va">normalised</span>,
@@ -168,13 +167,13 @@
 <span class="co">#&gt; ... 2 of 2 deleted</span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"More Distinctive"</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>,
-         <span class="st">"Original              "</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>,
-         <span class="st">"More Average   "</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span><span class="op">)</span>
+         <span class="st">"Original"</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>,
+         <span class="st">"More Average"</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">avgdist</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, <span class="va">normalised</span>, <span class="va">avgdist</span><span class="op">[</span><span class="fl">6</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="va">lab</span>, nrow <span class="op">=</span> <span class="fl">3</span>, label_x <span class="op">=</span> <span class="fl">.4</span>, label_y <span class="op">=</span> <span class="fl">.92</span>,
-       save <span class="op">=</span> <span class="st">"fig/avgtrans.jpg"</span>, fig.width <span class="op">=</span> <span class="fl">10</span>, fig.height <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></code></pre></div>
-<p><img src="fig/avgtrans.jpg" width="100%"></p>
+  <span class="fu"><a href="../reference/plot_fig.html">plot_fig</a></span><span class="op">(</span><span class="fl">9</span>, <span class="fl">6</span>, labels <span class="op">=</span> <span class="va">lab</span>, nrow <span class="op">=</span> <span class="fl">3</span>, border.width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, 
+           label.position <span class="op">=</span> <span class="st">"top left"</span>, label.y <span class="op">=</span> <span class="fl">1.15</span><span class="op">)</span></code></pre></div>
+<p><img src="stimuli_files/figure-html/unnamed-chunk-8-1.png" width="100%"></p>
 <p>Now you can rename and save your individual stimuli in a directory to use in studies.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">orig_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">subset</span><span class="op">)</span>

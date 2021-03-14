@@ -11,7 +11,7 @@
 
 \item{y}{omitted}
 
-\item{...}{Arguments to be passed to ggplot2 (width, height, pt.color, pt.size, pt.shape, bg.color, bg.fill) or cowplot::plot_grid (label_x, label_y, label_size, label_fontfamily, label_fontface, label_colour, hjust, vjust, nrow, ncol)}
+\item{...}{Arguments to be passed to \code{\link{plot_fig}}}
 }
 \value{
 plot
@@ -20,6 +20,6 @@ plot
 Plot webmorph_list
 }
 \examples{
-faces("test") \%>\% plot(pt.plot = TRUE)
+plot(faces("test"))
 
 }

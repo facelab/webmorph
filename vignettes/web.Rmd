@@ -103,7 +103,7 @@ Now you can read in the stimuli to webmorphR.
 ```{r, fig.width = 10*2, fig.height = 4*2}
 stimlist <- read_stim("test")
 
-plot(stimlist, pt.plot = TRUE, line.plot = TRUE, nrow = 2)
+plot_fig(stimlist, 10, 4, pt.plot = TRUE, line.plot = TRUE, nrow = 2)
 ```
 
 
@@ -127,21 +127,13 @@ avg4 <- makeAvg(f4, "test/avg4", norm = "twopoint")
 
 Concatenate the resulting stimulus lists and plot them.
 
-```{r, fig.width = 8, fig.height = 2.7}
+```{r}
 averages <- c(avg1, avg2, avg3, avg4)
 
-p <- plot(averages, labels = 1:4, nrow = 1, 
-     label_size = 12, label_x = .05, label_colour = "white")
+plot_fig(averages, 8, 2.7, labels = 1:4, label.position = "top left",
+     label.size = 6, label.colour = "white")
 ```
 
-
-WebmorphR plots are just ggplots, so you can use `ggsave()` to save them to a file. You might need to set scale = 2 to match what you see after the R chunk when running interactively in RStudio (this is an RStudio bug that affects all plots).
-
-```{r}
-ggplot2::ggsave("fig/average_fig.jpg", plot = p, 
-                width = 8, height = 2.7, scale = 2)
-knitr::include_graphics("fig/average_fig.jpg")
-```
 
 ## Create Transforms
 
@@ -162,12 +154,12 @@ sexdim <- makeTrans(trans_img = "/composites/f_multi.jpg",
 ```
 
 
-```{r, echo = FALSE, fig.width = 10, fig.height = 2}
-plot(sexdim, nrow = 1,
+```{r, echo = FALSE}
+plot_fig(sexdim,  10, 2,
      labels = paste0(steps * 100, "%"),
-     label_x = 0.15, label_y = .9,
-     label_size = 5,
-     label_colour = "dodgerblue3")
+     label.position = "top left",
+     label.size = 5,
+     label.colour = "dodgerblue3")
 ```
 
 Or you can transform a set of images. Non-image files will be ignored, so you can get the contents of a directory on webmorph.org with `dirLoad()`.
@@ -187,8 +179,8 @@ masc <- makeTrans(trans_img = comp,
                   texture = 0)
 ```
 
-```{r, echo = FALSE, fig.width = 10, fig.height = 4}
-plot(masc, nrow = 2)
+```{r, echo = FALSE}
+plot_fig(masc, 10, 4, nrow = 2)
 ```
 
 
@@ -203,8 +195,8 @@ batch <- readr::read_tsv("test/templates/_batchTrans.txt",
 b <- batchTrans(batch)
 ```
 
-```{r, echo = FALSE, fig.width = 10, fig.height = 2}
-plot(b, nrow = 1)
+```{r, echo = FALSE}
+plot_fig(b, 10, 2, nrow = 1)
 ```
 
 ## Manage Files
@@ -230,13 +222,12 @@ fileDelete(tp[1:2])
 ```{r}
 # clean up uploaded directories
 dirDelete("/twopoint_avg/")
-dirDelete("/trans_test/")
 ```
 
 
 ```{r, echo = FALSE}
 elapsed <- (Sys.time() - starttime) %>%
-  as.numeric() %>%
+  as.numeric(units="mins") %>%
   round(1)
 ```
 

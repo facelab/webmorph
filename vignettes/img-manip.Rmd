@@ -31,28 +31,6 @@ path <- system.file("extdata/test/", package = "webmorphR")
 stimlist <- read_stim(path)
 ```
 
-The lines are currently plotted as straight lines, but Lisa will add in the proper bezier curves soon.
-
-```{r, fig.cap="Original Images and Templates"}
-plot(stimlist, pt.plot = TRUE, line.plot = TRUE)
-```
-
-
-## Delete some points
-
-```{r, fig.cap="Point removal"}
-
-remove_points <- frl_features("imprecise")
-stimlist %>%
-  pt_delete(remove_points) %>%
-  plot(img.plot = FALSE,
-       pt.plot = TRUE,
-       pt.shape = "index", 
-       pt.colour = "black", 
-       line.plot = TRUE, 
-       line.colour = list("black", rainbow(6)),
-       border.width = 10)
-```
 
 ## Resize
 
@@ -61,7 +39,7 @@ Resizing your images at the start of a chain can make everything go faster if yo
 ```{r resize, fig.cap="Resized Images"}
 stimlist %>%
   resize(.1) %>%
-  plot()
+  plot_fig(8, 4, labels = "")
 ```
 
 
@@ -70,7 +48,7 @@ stimlist %>%
 ```{r rotate, fig.cap="Rotated Images and Templates"}
 stimlist %>%
   rotate(45, patch = TRUE) %>%
-  plot(pt.plot = TRUE)
+  plot_fig(8, 4, pt.plot = TRUE, labels = "")
 ```
 
 
@@ -78,11 +56,11 @@ stimlist %>%
 
 You can set the new width, height, x-offset and y-offset in pixels (must be > 2) or proportions.
 
-```{r crop, fig.width = 6, fig.height = 4, fig.cap="Cropped Images and Templates"}
+```{r crop, fig.cap="Cropped Images and Templates"}
 stimlist %>%
   crop(width = .6, height = .8, 
        x_off = .2, y_off = .1) %>%
-  plot(pt.plot = TRUE)
+  plot_fig(6, 4, pt.plot = TRUE, labels = "")
 ```
 
 Negative offsets or widths larger than the image dimensions add a margin. You can set the colour with `fill`.
@@ -91,7 +69,7 @@ Negative offsets or widths larger than the image dimensions add a margin. You ca
 stimlist %>%
   crop(width = 1.2, height = 1.2, 
        fill = c("dodgerblue", "hotpink")) %>%
-  plot()
+  plot_fig(8, 4, labels = "")
 ```
 
 Or you can use the `patch` function to get the median colour from a patch of the image. If you set `patch` to `TRUE`, this will default to the top left 10 pixel square, or you can set the boundaries of the patch manually.
@@ -101,12 +79,12 @@ stimlist %>%
   crop(width = 1.2, height = 1.2, 
        x_off = -0.1, y_off = -0.1,
        patch = c(x1=1, x2=338, y1=1, y2=10)) %>%
-  plot()
+  plot_fig(8, 4, labels = "")
 ```
 
 You can use the `bounds()` function to get the minimum and maximum x- and y-values from a list of templates, then use that to set the cropping. In the example below, the images are cropped so there is 100 pixels of padding around the boundaries, calculated across all images. 
 
-```{r bounds, fig.width = 8, fig.height = 2.2}
+```{r bounds}
 lisa <- faces("lisa")
 b <- bounds(lisa)
 padding <- 100
@@ -116,7 +94,7 @@ lisa %>%
        height = b$max_y - b$min_y + padding*2,
        x_off = b$min_x - padding,
        y_off = b$min_y - padding) %>%
-  plot(pt.plot = TRUE, labels = "", nrow = 1)
+  plot_fig(12, 3.5, pt.plot = TRUE, labels = "")
 ```
 
 Set `each` to TRUE to calculate the boundaries separately for each template in the list instead of the full set.
@@ -131,7 +109,7 @@ lisa %>%
        height = b$max_y - b$min_y + padding*2,
        x_off = b$min_x - padding,
        y_off = b$min_y - padding) %>%
-  plot(pt.plot = TRUE, labels = "", nrow = 1)
+  plot_fig(12, 3.5, pt.plot = TRUE, labels = "")
 ```
 
 ## Align
@@ -142,44 +120,36 @@ You can align a set of images on two points. By default, these are the first two
 stimlist %>%
   align(x1 = 350, y1 = 350, x2 = 450, y2 = 450,
         width = 800, height = 800, fill = "grey80") %>%
-  plot(pt.plot = TRUE)
+  plot_fig(8, 4, pt.plot = TRUE, labels = "")
 ```
 
 If you have a set of misaligned images and don't fill in coordinates or dimensions, `align()` will align to the coordinates and dimensions for the first image. The images below use the Face++ template (they were auto-delineated on webmorph), so points 63 and 81 are the eye points.
 
 
-```{r realign1, fig.width = 8, fig.height = 2}
+```{r realign1}
 align(lisa, pt1 = 63, pt2 = 81, fill = "grey80") %>% 
-  plot(nrow = 1)
+  plot_fig(12, 4, labels = "")
 ```
 
 Or you can specify the reference image by index or name.
 
-```{r realign2, fig.width = 8, fig.height = 2}
+```{r realign2}
 align(lisa, pt1 = 63, pt2 = 81, 
       ref_img = "lisa3", patch = TRUE) %>% 
-  plot(nrow = 1)
+  plot_fig(12, 4, labels = "")
 ```
 
 ## Procrustes Align 
 
 You can set the `procrustes` argument to TRUE to procrustes-align the images and templates.
 
-```{r procrustes, fig.width = 12, fig.height = 8}
-
-orig <- plot(lisa, pt.plot = TRUE, 
-             labels = "", nrow = 1)
+```{r procrustes}
 
 # any two points that are standard on the image
 # should work for procrustes alignment
-lisa_proc <- align(lisa, pt1 = 63, pt2 = 81,
-                      procrustes = TRUE, patch = TRUE)
-
-procr <- plot(lisa_proc, pt.plot = TRUE, 
-              labels = "", nrow = 1)
-
-cowplot::plot_grid(orig, procr, nrow = 2, 
-                   labels = c("original", "procrustes-aligned"))
+align(lisa, pt1 = 63, pt2 = 81,
+      procrustes = TRUE, patch = TRUE) %>%
+  plot_fig(12, 4, labels = "")
 ```
 
 Currently, [webmorph](https://webmorph.org) does not have this capability, but you can download your images and tems, procrustes align them with the R package, save the images and templates, and upload them back to webmorph.
@@ -188,19 +158,19 @@ Currently, [webmorph](https://webmorph.org) does not have this capability, but y
 
 You can also chain image manipulation commands. 
 
-```{r chain, fig.cap="Manipulated Images and Templates"}
+```{r chain}
 stimlist %>%
   rotate(c(45, -45)) %>%
   crop(.5, .5) %>%
   crop(1.1, 1.1, fill = "dodgerblue") %>%
-  plot()
+  plot_fig(8, 4, labels = "")
 ```
 
 ## Repeating images
 
 You can use `rep()` to repeat images in a stimlist. Here, we repeat the faces 3 times each, apply 6 different rotations with different background colours, crop them to the same size, and plot them with 6 different template point colours.
 
-```{r rep, fig.width = 6, fig.height = 4}
+```{r rep}
 
 rainbow <- c(pink = "#983E82",
              orange = "#E2A458",
@@ -213,7 +183,7 @@ stimlist %>%
   rep(each = 3) %>%
   rotate(seq(10, 60, 10), fill = rainbow) %>%
   crop(500, 500, fill = rainbow) %>%
-  plot(pt.plot = TRUE, pt.color = rainbow, pt.size = 0.25, labels = "")
+  plot_fig(6, 4, pt.plot = TRUE, pt.color = rainbow, pt.size = 0.25, nrow = 2, labels = "")
 ```
 
 
