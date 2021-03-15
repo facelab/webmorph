@@ -4,8 +4,8 @@ test_that("one", {
   p <- plot(x, border.width = 20, border.colour= "red")
 
   expect_equal(class(p), c("gg", "ggplot"))
-  expect_equal(p$coordinates$limits$x, c(0, x$width))
-  expect_equal(p$coordinates$limits$y, c(0, x$height))
+  expect_equal(p$coordinates$limits$x, c(-20, x$width+20))
+  expect_equal(p$coordinates$limits$y, c(-20, x$height+20))
 })
 
 test_that("two", {

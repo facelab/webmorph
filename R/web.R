@@ -316,7 +316,7 @@ makeAvg <- function(files, outname = tempfile(),
       paste0("/", ., "/")
     files <- fileUpload(files, tdir)
     # delete on exit
-    on.exit(fileDelete(files))
+    on.exit(dirDelete(tdir))
   }
 
   project_id <- getProjectID(files)
@@ -396,17 +396,17 @@ makeTrans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
     # upload to temp dir first and # delete on exit
     tdir <- sample(c(LETTERS, 0:9), 10) %>% paste(collapse = "") %>% paste0("/", ., "/")
     trans_img <- fileUpload(trans_img, tdir)
-    on.exit(fileDelete(trans_img))
+    on.exit(dirDelete(tdir))
   }
   if ("webmorph_list" %in% class(from_img)) {
     tdir <- sample(c(LETTERS, 0:9), 10) %>% paste(collapse = "") %>% paste0("/", ., "/")
     from_img <- fileUpload(from_img, tdir)
-    on.exit(fileDelete(from_img))
+    on.exit(dirDelete(tdir))
   }
   if ("webmorph_list" %in% class(to_img)) {
     tdir <- sample(c(LETTERS, 0:9), 10) %>% paste(collapse = "") %>% paste0("/", ., "/")
     to_img <- fileUpload(to_img, tdir)
-    on.exit(fileDelete(to_img))
+    on.exit(dirDelete(tdir))
   }
 
   # set up a batch file
@@ -566,3 +566,19 @@ transform <- function(batch,
 
   read_stim(c(imgname, temname))
 }
+
+
+# auto_delineate <- function(files) {
+#   if ("webmorph_list" %in% class(files)) {
+#     stimlist <- files
+#     # upload to temp dir first
+#     tdir <- sample(c(LETTERS, 0:9), 10) %>%
+#       paste(collapse = "") %>%
+#       paste0("/", ., "/")
+#     files <- fileUpload(files, tdir)
+#     # delete on exit
+#     on.exit(dirDelete(tdir))
+#   }
+#
+#   x <- lapply(files, web, script = "temFaceplusplus")
+# }
